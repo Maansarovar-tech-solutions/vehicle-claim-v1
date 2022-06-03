@@ -56,11 +56,13 @@ export class ClaimFormComponent implements OnInit,OnChanges {
 
   ngOnInit(): void {
     console.log('Vehicle-Response Data',this.vehicleResponseData)
-    this.PolicyReferenceNumber=this.vehicleResponseData?.PolicyReferenceNumber;
-    this.VehicleChassisNumber=this.vehicleResponseData.VehicleChassisNumber;
-    this.VehicleCode=this.vehicleResponseData?.VehicleCode;
-    this.claimType=this.vehicleResponseData?.claimType;
-    this.claimTypeId=this.vehicleResponseData?.claimTypeId;
+    if(this.vehicleResponseData){
+      this.PolicyReferenceNumber=this.vehicleResponseData?.PolicyReferenceNumber;
+      this.VehicleChassisNumber=this.vehicleResponseData.VehicleChassisNumber;
+      this.VehicleCode=this.vehicleResponseData?.VehicleCode;
+      this.claimType=this.vehicleResponseData?.claimType;
+      this.claimTypeId=this.vehicleResponseData?.claimTypeId;
+    }
     this.onInitialFetchData();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -101,7 +103,6 @@ export class ClaimFormComponent implements OnInit,OnChanges {
     this.onCreateFormControl();
 
     this.claimTypeList = await this.onGetClaimTypeList() || [];
-    console.log("Claimmmmmmmmmmmmmmm",this.claimTypeList);
     this.filterclaimTypeList = this.f.ClaimTypeId.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value, this.claimTypeList)),
@@ -168,7 +169,6 @@ export class ClaimFormComponent implements OnInit,OnChanges {
 
 
   claimTypeText = (option: any) => {
-    console.log("Claimmmmmmmmmmmmmmm2",option);
     if (!option) return '';
     let index = this.claimTypeList.findIndex((make: any) => make.Code == option);
     return this.claimTypeList[index].CodeDescription;
@@ -183,14 +183,17 @@ export class ClaimFormComponent implements OnInit,OnChanges {
     let index = this.insurCompanyList.findIndex((obj: any) => obj.Code == code);
     return this.insurCompanyList[index].CodeDescription;
   }
-
-
   private _filter(value: any, data: any[]): any[] {
     if (value == null) {
       value = '';
     }
     const filterValue = value.toLowerCase();
     return data.filter((option) => option?.CodeDescription?.toLowerCase().includes(filterValue));
+  }
+
+
+  onGetPolicyInformation(){
+
   }
 
 

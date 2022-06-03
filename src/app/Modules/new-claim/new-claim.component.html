@@ -4,16 +4,17 @@
 <div class="page-content">
 
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
+  <mat-step>
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Insured Information</ng-template>
       <app-vehicle-form (moveNext)="moveNext($event)"></app-vehicle-form>
     </form>
   </mat-step>
   <ng-container *ngIf="!isPolicyForm">
-  <mat-step [stepControl]="secondFormGroup" label="Accident information">
+  <mat-step label="Accident information">
     <form [formGroup]="secondFormGroup">
-      <ng-container *ngIf="vehicleResponseData != undefined">
+      <!-- *ngIf="vehicleResponseData != undefined" -->
+      <ng-container >
         <app-claim-form [vehicleResponseData]="vehicleResponseData" (moveNext)="moveNext2()"></app-claim-form>
       </ng-container>
     </form>

@@ -54,9 +54,9 @@ a:hover {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-.mat-horizontal-stepper-header {
+/* .mat-horizontal-stepper-header {
     pointer-events: none !important;
-}
+} */
 
 .page-content {
     padding: 10px;
