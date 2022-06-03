@@ -1,0 +1,13 @@
+<div class="page-content">
+    <div class="vision-card">
+        <div class="vision-card-body">
+            <ng-container *ngIf="makeMasterList">
+                <app-masters-grid [cols]="columnHeader" [data]="makeMasterList">
+                </app-masters-grid>
+            </ng-container>
+        </div>
+    </div>
+    <div class="text-center my-4">
+        <button class="vision-btn blue-bg-color" (click)="exportAsXLSX()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Export Body Type Details</button>
+    </div>
+</div>

@@ -1,0 +1,300 @@
+<div class="page-content">
+
+  <ng-container>
+    <form [formGroup]="claimForm">
+      <div class="vision-card">
+        <div class="vision-card-body">
+
+          <div class="claim-form-grid">
+            <div class="claim-form-grid-item">
+              <div class="claim-form-grid-item-title">
+                Accident Information
+              </div>
+              <div class="claim-form-grid-item-body">
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Accident Date</mat-label>
+                      <input matInput [matDatepicker]="picker1" placeholder="Accident Date"
+                        formControlName="AccidentDate" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                      <mat-error *ngIf="(f.AccidentDate.errors) || (!f.AccidentDate.valid && f.AccidentDate.touched)">
+                        <span *ngIf="f.AccidentDate.errors?.required" class="error-text">This field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Accident Location</mat-label>
+                      <input matInput placeholder="Accident Location" formControlName="AccidentLocation">
+                      <mat-error
+                        *ngIf="(f.AccidentLocation.errors) || (!f.AccidentLocation.valid && f.AccidentLocation.touched)">
+                        <span *ngIf="f.AccidentLocation.errors?.required" class="error-text">This field is
+                          required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Accident Description</mat-label>
+                      <input matInput placeholder="Accident Description" formControlName="AccidentDescription">
+                      <mat-error
+                        *ngIf="(f.AccidentDescription.errors) || (!f.AccidentDescription.valid && f.AccidentDescription.touched)">
+                        <span *ngIf="f.AccidentDescription.errors?.required" class="error-text">This field is
+                          required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Claim Type</mat-label>
+                      <input matInput placeholder="Claim Type" formControlName="ClaimTypeId" [matAutocomplete]="auto">
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="claimTypeText">
+                        <mat-option *ngFor="let option of filterclaimTypeList | async" [value]="option.Code">
+                          {{option.CodeDescription}}
+                        </mat-option>
+                      </mat-autocomplete>
+                      <mat-error *ngIf="(f.ClaimTypeId.errors) || (!f.ClaimTypeId.valid && f.ClaimTypeId.touched)">
+                        <span *ngIf="f.ClaimTypeId.errors?.required" class="error-text">This field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Reserve Amount</mat-label>
+                      <input matInput placeholder="Reserve Amount" formControlName="ReserveAmount">
+                      <mat-error
+                        *ngIf="(f.ReserveAmount.errors) || (!f.ReserveAmount.valid && f.ReserveAmount.touched)">
+                        <span *ngIf="f.ReserveAmount.errors?.required" class="error-text">This field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Claim Number</mat-label>
+                      <input matInput placeholder="Claim Number" formControlName="ClaimNumber">
+                      <mat-error *ngIf="(f.ClaimNumber.errors) || (!f.ClaimNumber.valid && f.ClaimNumber.touched)">
+                        <span *ngIf="f.ClaimNumber.errors?.required" class="error-text">This field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <ng-container *ngIf="f.ClaimTypeId.value == '12'">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Salvage Amount</mat-label>
+                        <input matInput placeholder="Salvage Amount" formControlName="SalvageAmount">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                      <div class="py-3">
+                        <mat-slide-toggle formControlName="SalvagePortal">Do You Want Salvage Portal: <span
+                            class="text-primary">{{f.SalvagePortal.value==true?'Yes':'No'}}</span></mat-slide-toggle>
+                      </div>
+                    </div>
+
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="claim-form-grid-item">
+              <div class="claim-form-grid-item-title">
+                Driver License Information
+              </div>
+              <div class="claim-form-grid-item-body">
+                <div class="row">
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field appearance="outline">
+                      <mat-label>License Number</mat-label>
+                      <input matInput placeholder="License Number" formControlName="LicenceNumber">
+                      <mat-error
+                        *ngIf="(f.LicenceNumber.errors) || (!f.LicenceNumber.valid && f.LicenceNumber.touched)">
+                        <span *ngIf="f.LicenceNumber.errors?.required" class="error-text">This field is required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Date Of Birth</mat-label>
+                      <input matInput [matDatepicker]="picker2" placeholder="Date Of Birth"
+                        formControlName="DriverDateOfBirth" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                      <mat-error
+                        *ngIf="(f.DriverDateOfBirth.errors) || (!f.DriverDateOfBirth.valid && f.DriverDateOfBirth.touched)">
+                        <span *ngIf="f.DriverDateOfBirth.errors?.required" class="error-text">This field is
+                          required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Licence Valid Upto</mat-label>
+                      <input matInput [matDatepicker]="picker3" placeholder="Licence Valid Upto"
+                        formControlName="LicenceValidUpto" readonly>
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                      <mat-error
+                        *ngIf="(f.LicenceValidUpto.errors) || (!f.LicenceValidUpto.valid && f.LicenceValidUpto.touched)">
+                        <span *ngIf="f.LicenceValidUpto.errors?.required" class="error-text">This field is
+                          required</span>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="">
+                      <div class="">Gender</div>
+                      <div class="">
+                        <mat-radio-group aria-label="Select an option" formControlName="Gender">
+                          <mat-radio-button value="1">Male</mat-radio-button>
+                          <mat-radio-button value="2">Female</mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="(f.Gender.errors) || (!f.Gender.valid && f.Gender.touched)">
+                          <span *ngIf="f.Gender.errors?.required" class="error-text">This field is required</span>
+                        </mat-error>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-container *ngIf="f.ClaimTypeId.value == '11'">
+              <div class="claim-form-grid-item">
+                <div class="claim-form-grid-item-title">
+                  Others Insurance
+                </div>
+                <div class="claim-form-grid-item-body">
+                  <div class="row">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <mat-form-field class="mat-form-width" appearance="outline">
+                        <mat-label>Plate Char</mat-label>
+                        <input type="text" placeholder="Select Char" matInput formControlName="PlateCode"
+                          [matAutocomplete]="auto1">
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                          [displayWith]="onDisplayPlateCode">
+                          <mat-option *ngFor="let option of filterPlateCodeList | async" [value]="option.Code">
+                            {{option.CodeDescription}}
+                          </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="(f.PlateCode.errors) || (!f.PlateCode.valid && f.PlateCode.touched)">
+                          <span *ngIf="f.PlateCode.errors?.required" class="error-text">This field is required</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Plate Number</mat-label>
+                        <input matInput placeholder="Plate Number" formControlName="PlateNumber">
+                        <mat-error *ngIf="(f.PlateNumber.errors) || (!f.PlateNumber.valid && f.PlateNumber.touched)">
+                          <span *ngIf="f.PlateNumber.errors?.required" class="error-text">This field is required</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Civil Id</mat-label>
+                        <input matInput placeholder="Civil Id" formControlName="CivilId">
+                        <mat-error *ngIf="(f.CivilId.errors) || (!f.CivilId.valid && f.CivilId.touched)">
+                          <span *ngIf="f.CivilId.errors?.required" class="error-text">This field is required</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Chassis Number</mat-label>
+                        <input matInput placeholder="Chassis Number" formControlName="VehicleChassisNumber">
+                        <mat-error
+                          *ngIf="(f.VehicleChassisNumber.errors) || (!f.VehicleChassisNumber.valid && f.VehicleChassisNumber.touched)">
+                          <span *ngIf="f.VehicleChassisNumber.errors?.required" class="error-text">This field is
+                            required</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                      <mat-form-field class="mat-form-width" appearance="outline">
+                        <mat-label>Insurance Company</mat-label>
+                        <input type="text" placeholder="Insurance Company" matInput formControlName="InsuranceId"
+                          [matAutocomplete]="auto2">
+                        <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+                          [displayWith]="onDisplayInsurComp">
+                          <mat-option *ngFor="let option of filterinsurCompanyLis | async" [value]="option.Code">
+                            {{option.CodeDescription}}
+                          </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="(f.InsuranceId.errors) || (!f.InsuranceId.valid && f.InsuranceId.touched)">
+                          <span *ngIf="f.InsuranceId.errors?.required" class="error-text">This field is required</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <div class="claim-form-grid-item">
+              <div class="claim-form-grid-item-title">
+                Vehicle Images
+              </div>
+              <div class="claim-form-grid-item-body">
+                <div class="imag-card" (click)="vehicle.click()">
+                  <input style="display: none;" type="file" #vehicle>
+                  <div>
+                    <div class="center">
+                      <b class="text-dark">
+                        <mat-icon>library_add</mat-icon><br> Add More Documents
+                      </b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-container *ngIf="f.ClaimTypeId.value == '12'">
+              <div class="claim-form-grid-item">
+                <div class="claim-form-grid-item-title">
+                  Quotation
+                </div>
+                <div class="claim-form-grid-item-body">
+                  <div class="imag-card" (click)="quotation.click()">
+                    <input style="display: none;" type="file" #quotation>
+                    <div>
+                      <div class="center">
+                        <b class="text-dark">
+                          <mat-icon>library_add</mat-icon><br> Add More Documents
+                        </b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="claim-form-grid-item">
+                <div class="claim-form-grid-item-title">
+                  Survey Report
+                </div>
+                <div class="claim-form-grid-item-body">
+                  <div class="imag-card" (click)="survey.click()">
+                    <input style="display: none;" type="file" #survey>
+                    <div>
+                      <div class="center">
+                        <b class="text-dark">
+                          <mat-icon>library_add</mat-icon><br> Add More Documents
+                        </b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+          <div class="text-center my-4">
+            <button class="vision-btn blue-bg-color" (click)="onSaveClaimInfo()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+
+
+
+
+
+</div>

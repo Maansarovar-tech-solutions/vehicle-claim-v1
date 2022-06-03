@@ -1,0 +1,365 @@
+<div class="page-content">
+    <div class="vision-card">
+        <div class="vision-card-body">
+            <div class="vision-grid claim-card vision-grid-column-2">
+                <div class="vision-grid-item">
+                    <div class="vision-grid-item-title">
+                        <div>Account Statement</div>
+                        <div></div>
+                    </div>
+                    <div class="vision-grid-item-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Month</mat-label>
+                                    <mat-select>
+                                        <mat-option value="January">January</mat-option>
+                                        <mat-option value="February">February</mat-option>
+                                        <mat-option value="March">March</mat-option>
+                                        <mat-option value="April">April</mat-option>
+                                        <mat-option value="May">May</mat-option>
+                                        <mat-option value="June">June</mat-option>
+                                        <mat-option value="July">July</mat-option>
+                                        <mat-option value="August">August</mat-option>
+                                        <mat-option value="September">September</mat-option>
+                                        <mat-option value="October">October</mat-option>
+                                        <mat-option value="November">November</mat-option>
+                                        <mat-option value="December">December</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Year</mat-label>
+                                    <mat-select>
+                                        <mat-option value="2022">2022</mat-option>
+                                        <mat-option value="2021">2021</mat-option>
+                                        <mat-option value="2020">2020</mat-option>
+                                        <mat-option value="2019">2019</mat-option>
+                                        <mat-option value="2018">2018</mat-option>
+                                        <mat-option value="2017">2017</mat-option>
+                                        <mat-option value="2016">2016</mat-option>
+                                        <mat-option value="2015">2015</mat-option>
+                                        <mat-option value="2014">2014</mat-option>
+                                        <mat-option value="2013">2013</mat-option>
+                                        <mat-option value="2012">2012</mat-option>
+                                        <mat-option value="2011">2011</mat-option>
+                                        <mat-option value="2010">2010</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="card-body" *ngIf="claimType != 'Payable'">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>Gulf Insurance Statement</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>Wala Insurance</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>Qatar Insurance Co</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>National Insurance</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>Oman United Insurance</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                  class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="accordion accordion-flush" id="faqlist" *ngIf="claimType == 'Payable'">
+                                <div class="accordion-item" *ngIf="companyType!='1'">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
+                                          Gulf Insurance Statement
+                                        </button>
+                                    </h2>
+                                    <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                        <div class="accordion-body">
+                                            <div class="d-md-flex flex-md-row" *ngIf="claimType == 'Payable'">
+                                                <div class="flex-fill">
+                                                    <div class="imag-card my-3" (click)="doc.click()">
+                                                        <input style="display: none;" type="file" #doc>
+                                                        <div>
+                                                            <div class="center">
+                                                                <b class="text-dark">
+                                                                  <mat-icon>library_add</mat-icon><br> Add Documents
+                                                                </b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="download-btn-flex">
+                                                    <div class="">
+                                                        <button class="vision-btn green-bg-color mx-2">Remove</button>
+                                                        <button class="vision-btn blue-bg-color mx-2">Download</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
+                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
+                                                    <div class="imgbox" style="
+                                            background-image: url('../../../assets/images/gulf-insu.png');
+                                            background-position: center;
+                                            background-repeat: no-repeat;
+                                            background-size: cover;
+                                            height: 100px;
+                                            padding: 2px;">
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
+                                                        <a mat-raised-button class="mx-1"><i
+                                                class="fas fa-download mx-1"></i></a>
+                                                    </div>
+                                                </mat-card>
+                                          </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item" *ngIf="companyType!='5'">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
+                                          Wala Insurance
+                                        </button>
+                                    </h2>
+                                    <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                        <div class="accordion-body">
+                                            <div class="d-md-flex flex-md-row" *ngIf="claimType == 'Payable'">
+                                                <div class="flex-fill">
+                                                    <div class="imag-card my-3" (click)="doc1.click()">
+                                                        <input style="display: none;" type="file" #doc1>
+                                                        <div>
+                                                            <div class="center">
+                                                                <b class="text-dark">
+                                  <mat-icon>library_add</mat-icon><br> Add Documents
+                                </b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="download-btn-flex">
+                                                    <div class="">
+                                                        <button class="vision-btn green-bg-color mx-2">Remove</button>
+                                                        <button class="vision-btn blue-bg-color mx-2">Download</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
+                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
+                                                    <div class="imgbox" style="
+                                                background-image: url('../../../assets/images/gulf-insu.png');
+                                                background-position: center;
+                                                background-repeat: no-repeat;
+                                                background-size: cover;
+                                                height: 100px;
+                                                padding: 2px;">
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
+                                                        <a mat-raised-button class="mx-1"><i
+                                                    class="fas fa-download mx-1"></i></a>
+                                                    </div>
+                                                </mat-card>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item" *ngIf="companyType!='4'">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3">
+                                          Qatar Insurance Co
+                                        </button>
+                                    </h2>
+                                    <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                        <div class="accordion-body">
+                                            <div class="d-md-flex flex-md-row" *ngIf="claimType == 'Payable'">
+                                                <div class="flex-fill">
+                                                    <div class="imag-card my-3" (click)="doc2.click()">
+                                                        <input style="display: none;" type="file" #doc2>
+                                                        <div>
+                                                            <div class="center">
+                                                                <b class="text-dark">
+                                  <mat-icon>library_add</mat-icon><br> Add Documents
+                                </b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="download-btn-flex">
+                                                    <div class="">
+                                                        <button class="vision-btn green-bg-color mx-2">Remove</button>
+                                                        <button class="vision-btn blue-bg-color mx-2">Download</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
+                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
+                                                    <div class="imgbox" style="
+                                            background-image: url('../../../assets/images/gulf-insu.png');
+                                            background-position: center;
+                                            background-repeat: no-repeat;
+                                            background-size: cover;
+                                            height: 100px;
+                                            padding: 2px;">
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
+                                                        <a mat-raised-button class="mx-1"><i
+                                                class="fas fa-download mx-1"></i></a>
+                                                    </div>
+                                                </mat-card>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item" *ngIf="companyType!='2'">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-4">
+                      National Insurance
+                    </button>
+                                    </h2>
+                                    <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                        <div class="accordion-body">
+                                            <div class="d-md-flex flex-md-row" *ngIf="claimType == 'Payable'">
+                                                <div class="flex-fill">
+                                                    <div class="imag-card my-3" (click)="doc3.click()">
+                                                        <input style="display: none;" type="file" #doc3>
+                                                        <div>
+                                                            <div class="center">
+                                                                <b class="text-dark">
+                                  <mat-icon>library_add</mat-icon><br> Add Documents
+                                </b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="download-btn-flex">
+                                                    <div class="">
+                                                        <button class="vision-btn green-bg-color mx-2">Remove</button>
+                                                        <button class="vision-btn blue-bg-color mx-2">Download</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
+                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
+                                                    <div class="imgbox" style="
+                                            background-image: url('../../../assets/images/gulf-insu.png');
+                                            background-position: center;
+                                            background-repeat: no-repeat;
+                                            background-size: cover;
+                                            height: 100px;
+                                            padding: 2px;">
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
+                                                        <a mat-raised-button class="mx-1"><i
+                                                class="fas fa-download mx-1"></i></a>
+                                                    </div>
+                                                </mat-card>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item" *ngIf="companyType!='3'">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-5">
+                                          Oman United Insurance
+                                        </button>
+                                    </h2>
+                                    <div id="faq-content-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                                        <div class="accordion-body">
+                                            <div class="d-md-flex flex-md-row" *ngIf="claimType == 'Payable'">
+                                                <div class="flex-fill">
+                                                    <div class="imag-card my-3" (click)="doc4.click()">
+                                                        <input style="display: none;" type="file" #doc4>
+                                                        <div>
+                                                            <div class="center">
+                                                                <b class="text-dark">
+                                                                  <mat-icon>library_add</mat-icon><br> Add Documents
+                                                                </b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="download-btn-flex">
+                                                    <div class="">
+                                                        <button class="vision-btn green-bg-color mx-2">Remove</button>
+                                                        <button class="vision-btn blue-bg-color mx-2">Download</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
+                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
+                                                    <div class="imgbox" style="
+                                            background-image: url('../../../assets/images/gulf-insu.png');
+                                            background-position: center;
+                                            background-repeat: no-repeat;
+                                            background-size: cover;
+                                            height: 100px;
+                                            padding: 2px;">
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
+                                                        <a mat-raised-button class="mx-1"><i
+                                                class="fas fa-download mx-1"></i></a>
+                                                    </div>
+                                                </mat-card>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

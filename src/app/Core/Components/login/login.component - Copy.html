@@ -1,0 +1,94 @@
+<div class="login-grid">
+
+    <div class="login-grid-item input-container">
+        <div class="form-content">
+            <div class="w-100">
+                <form [formGroup]="loginForm">
+                    <div class="d-md-flex flex-md-row justify-content-between">
+                        <div class="flex-fill">
+                            <div class="mb-3 mt-3">
+                                <h2 class="logo-name">InsDex</h2>
+                            </div>
+
+                            <div class="input-form-box">
+                                <input type="text" placeholder="Username" class="input-form-control" formControlName="username">
+                                <span class="input-form-icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                            </div>
+                            <div class="input-form-box">
+                                <input type="password" placeholder="Password" class="input-form-control" formControlName="password">
+                                <span class="input-form-icon">
+                  <i class="fas fa-lock"></i>
+                </span>
+                            </div>
+                            <!-- <div class="input-form-box">
+                <select formControlName="InsuranceId" class="input-form-control">
+                  <option value="">Select Insurance</option>
+                  <option *ngFor="let item of insuranceCompany" value="{{item.Code}}" >{{item.CodeDescription}}</option>
+                </select>
+                <span class="input-form-icon">
+                  <i class="fas fa-building"></i>
+                </span>
+              </div> -->
+
+
+                            <div class="mb-3 mt-3">
+                                <div class="login-btn">
+                                    <button class="btn btn-primary w-100" (click)="onSubmit()" [disabled]="!loginForm.valid">Login</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a class="text-primary cursor-pointer">Forgot Password</a>
+                                <a class="text-primary cursor-pointer">Change Password</a>
+                            </div>
+                        </div>
+                        <div class="flex-fill hexagon-bg">
+                            <div class="hexagon-container">
+                                <div class="hexagon-row">
+                                    <div class="hexagon-item">
+                                        <div class="center">
+                                            <carshield-icon></carshield-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hexagon-row">
+                                    <div class="hexagon-item">
+                                        <div class="center">
+                                            <bike-icon></bike-icon>
+                                        </div>
+                                    </div>
+                                    <div class="hexagon-item">
+                                        <div class="center">
+                                            <car-icon></car-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hexagon-row">
+                                    <div class="hexagon-item">
+                                        <div class="center">
+                                            <bus-icon></bus-icon>
+                                        </div>
+                                    </div>
+                                    <div class="hexagon-item">
+                                        <div class="center">
+                                            <van-icon></van-icon>
+                                        </div>
+                                    </div>
+                                    <div class="hexagon-item">
+                                        <div class="center">
+                                            <truck-icon></truck-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

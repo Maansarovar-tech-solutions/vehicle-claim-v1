@@ -1,0 +1,63 @@
+.policy-form-grid {
+    grid-area: main;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.policy-form-grid-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.policy-form-grid-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 10px;
+    color: var(--theme2);
+}
+
+.policy-form-grid-item-body {
+    padding: 20px;
+}
+
+.policy-form-grid .policy-form-grid-item:nth-child(2) {
+    grid-column: span 2;
+}
+
+.policy-form-grid .policy-form-grid-item:nth-child(3) {
+    grid-column: span 3;
+}
+
+.total-claims-grid {
+    grid-area: main;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.total-claims-grid .total-claims-grid-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.total-claims-grid .total-claims-grid-item .total-claims-grid-item-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #0d6efd;
+    color: white;
+}
+
+.total-claims-grid .total-claims-grid-item .list-group-item {
+    display: flex;
+    justify-content: space-between;
+}

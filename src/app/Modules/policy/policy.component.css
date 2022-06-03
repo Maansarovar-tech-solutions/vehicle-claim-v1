@@ -1,0 +1,16 @@
+.vision-grid-column-2{
+  grid-template-columns: 1fr 1fr;
+}
+/* .policy-graph-card .vision-grid-item .vision-grid-item-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} */
+/* .policy-graph-card .vision-grid-item:nth-child(3),
+.policy-graph-card .vision-grid-item:nth-child(4),
+.policy-graph-card .vision-grid-item:nth-child(5){
+  grid-column: span 2;
+} */
+.policy-graph-card .vision-grid-item:nth-child(5){
+  grid-column: span 2;
+}

@@ -1,0 +1,14 @@
+<!-- <div class="breadcrumb-1 flat">
+    <ng-container *ngFor="let breadcrumb of breadcrumbs">
+        <a [routerLink]="breadcrumb.url" routerLinkActive="router-link-active">{{ breadcrumb.label }}</a>
+    </ng-container>
+</div> -->
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <ng-container *ngFor="let breadcrumb of breadcrumbs">
+            <!-- <li class="breadcrumb-item active" aria-current="page">Home</li> -->
+            <li class="breadcrumb-item active" [routerLink]="breadcrumb.url" aria-current="page" routerLinkActive="router-link-active">{{ breadcrumb.label }}</li>
+        </ng-container>
+    </ol>
+</nav>

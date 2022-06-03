@@ -1,0 +1,58 @@
+<form [formGroup]="serachForm">
+
+    <div class="row">
+        <div class="col-md-4 offset-md-8">
+            <div class="input-form-box m-0">
+                <input type="text" placeholder="Search..." class="input-form-control" (keyup)="applyFilter()" formControlName="searchValue">
+                <span class="input-form-icon">
+          <i class="fas fa-search"></i>
+        </span>
+            </div>
+        </div>
+        <!-- <div class="col-md-5">
+      <div class="input-form-box">
+        <select formControlName="InsuranceId" class="input-form-control"
+          (change)="daysFilter.emit(f.InsuranceId.value)">
+          <option value="0">None</option>
+          <option value="10">10-Days</option>
+          <option value="20">20-Days</option>
+          <option value="30">30-Days</option>
+        </select>
+      </div>
+    </div> -->
+    </div>
+</form>
+
+<table style="width: 100% !important;" matTableResponsive mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
+    <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">{{ columnHeader[i]["display"] }}</th>
+        <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="!col.config; else hasConfig">
+                {{ element[col.key] }}
+            </ng-container>
+            <ng-template #hasConfig>
+                <ng-container *ngIf="col.config.isEditActions">
+                    <a class="action-btn list-group-item-primary mx-1" (click)="onEdit.emit(element)">Edit</a>
+                </ng-container>
+                <ng-container *ngIf="col.config.isCodeChar">
+                    {{ element.PlateCharacter }}-{{ element.PlateNumber }}
+                </ng-container>
+
+            </ng-template>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="keys"></tr>
+    <tr mat-row *matRowDef="let row; columns: keys"></tr>
+</table>
+<ng-container *ngIf="!dataSource.data.length">
+    <table width="100%">
+        <tr>
+            <td class="p-3" style="text-align: center" [attr.colspan]="columnHeader?.length">
+                No Records Found!
+            </td>
+        </tr>
+    </table>
+</ng-container>
+<mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>

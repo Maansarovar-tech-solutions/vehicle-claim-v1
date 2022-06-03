@@ -1,0 +1,20 @@
+<h1 mat-dialog-title class="text-danger">You Got Some Errors..!</h1>
+<div mat-dialog-content>
+  <mat-list>
+    <ng-container *ngFor="let item of data">
+      <mat-list-item>
+        <div class="mx-2 fw-400 text-danger">
+        {{item.Field}}<i class="fas fa-arrow-right mx-2"></i>
+        </div>
+        <div class="mx-2" style="text-transform: capitalize;color: gray;">
+        {{item.Message}}
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+
+  </mat-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+</div>

@@ -1,0 +1,45 @@
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.claim-form-grid{
+  grid-area: main;
+ border-radius: 10px;
+ display: grid;
+ grid-auto-rows: auto;
+ grid-gap: 20px;
+ grid-template-columns: 1fr 1fr 1fr;
+}
+.claim-form-grid-item{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+ border-radius: .5rem;
+ overflow: hidden;
+ background-color: #ffffff;
+}
+.claim-form-grid-item-title{
+  display: flex;
+ justify-content: space-between;
+ align-items: center;
+ font-weight: 900;
+ padding: 10px;
+ color: var(--theme2);
+}
+.claim-form-grid-item-body{
+ padding: 20px;
+
+}
+.claim-form-grid .claim-form-grid-item:nth-child(1){
+  grid-column: span 2;
+}
+.claim-form-grid .claim-form-grid-item:nth-child(3){
+  grid-column: span 3;
+}
+.claim-form-grid .claim-form-grid-item:nth-child(4){
+  grid-column: span 3;
+}
+.claim-form-grid .claim-form-grid-item:nth-child(5){
+  grid-column: span 3;
+}
+.claim-form-grid .claim-form-grid-item:nth-child(6){
+  grid-column: span 3;
+}

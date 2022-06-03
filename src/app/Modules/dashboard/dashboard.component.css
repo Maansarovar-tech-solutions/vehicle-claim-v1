@@ -1,0 +1,125 @@
+.vision-grid {
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+}
+
+.vision-grid-column-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.vision-grid-column-4 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.vision-grid-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.vision-grid-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 15px;
+    color: var(--theme2);
+}
+
+.vision-grid-item-body {
+    padding: 10px;
+}
+
+.claim-chart-item {
+    grid-column: span 2;
+}
+
+.claim-card .vision-grid-item {
+    background-color: white;
+}
+
+.claim-card .vision-grid-item .vision-grid-item-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px;
+}
+
+.claim-card-count {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    color: var(--theme2);
+    font-size: 14px;
+}
+
+.claim-card .claim-card-name {
+    font-weight: 900;
+}
+
+.claim-card .claim-card-name {
+    color: var(--theme2);
+}
+
+.claim-status-item .vision-grid-item-body {
+    padding: 10px 20px;
+}
+
+.claim-status-item .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    border: 1.80px solid #ccc;
+    border-radius: .5rem;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.claim-status-item .list-group-item:hover {
+    border: 1.80px solid var(--theme1);
+    box-shadow: rgba(52, 142, 233, 0.2) 0px 8px 24px;
+    transition: .4s;
+}
+
+.claim-status-item .list-group-item:hover .fa-bell {
+    color: var(--theme1);
+    transition: .4s;
+}
+
+.claim-status-item .list-group-item .fa-bell {
+    color: #ccc;
+}
+
+.claims-radio-btn {
+    justify-content: space-between;
+    display: flex;
+}
+
+.claims-radio-btn .claims-radio-btn-item {
+    overflow: hidden;
+    border-radius: .5rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.claims-radio-btn .claims-radio-btn-item .radio-toolbar label {
+    border: 0;
+}
+
+@media (max-width: 800px) {
+    .vision-grid-column-3 {
+        grid-template-columns: 1fr;
+    }
+    .vision-grid-column-4 {
+        grid-template-columns: 1fr;
+    }
+    .claim-chart-item {
+        grid-column: span 1;
+    }
+}

@@ -1,0 +1,12 @@
+.vision-grid-column-4{
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.home-card .vision-grid-item-body{
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+.home-card .vision-grid-item{
+  background-color: var(--theme2);
+  cursor: pointer;
+}

@@ -1,0 +1,48 @@
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header form-heading">
+            User Creation
+        </div>
+        <div class="card-body">
+
+            <div class="row mt-2">
+                <div class="col-md-6 col-lg-6 offset-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>User Name</mat-label>
+                        <input matInput placeholder="Enter User Name">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 col-lg-6 offset-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Position</mat-label>
+                        <input matInput placeholder="Enter Position Of User">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 col-lg-6 offset-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput maxlength="10" placeholder="Enter Mobile Number">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6 col-lg-6 offset-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>OTP</mat-label>
+                        <input matInput maxlength="10" placeholder="Enter OTP">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="mx-2" mat-raised-button color="warn" (click)="getBack()">Back</button>
+                <button mat-raised-button color="primary" type="submit" disabled>
+                  Submit
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

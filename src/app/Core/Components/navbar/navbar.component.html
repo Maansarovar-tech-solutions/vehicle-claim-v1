@@ -1,0 +1,267 @@
+<mat-toolbar>
+  <mat-toolbar-row class="toolbar-row-1">
+    <span class="example-spacer"></span>
+    <div mat-button [matMenuTriggerFor]="menu" class="user-sec">
+      <img src="../../../../assets/images/user.png" class="user-img" />
+      <i class="	fas fa-angle-down down-aro"></i>
+    </div>
+    <button (click)="onLogOut()" class="logout-btn123 btn btn-small">
+      <span>Logout</span>
+      <i class="fas fa-sign-out-alt mx-2"></i>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item><i class="fas fa-angle-right mr-5"></i>{{LoginDetails?.LoginResponse?.LoginId}}</button>
+      <button mat-menu-item><i
+          class="fas fa-angle-right mr-5"></i>{{LoginDetails?.LoginResponse?.InsuranceCompanyName}}
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="toolbar-row-2">
+    <div class="logos">
+      <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="../../../../assets/images/gulf-insu.png"
+      class="img-fluid">
+    <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="../../../../assets/images/qic-insu.png"
+      class="img-fluid">
+     </div>
+    <span class="example-spacer"></span>
+     <div class="">
+      <div class="search-input-box">
+        <select [(ngModel)]="searchBy" [ngModelOptions]="{standalone: true}" class="form-select form-select-sm">
+          <option value="">Search By</option>
+          <option value='Chassis Number'>Chassis No</option>
+          <option value='PolicyNo'>Policy No</option>
+        </select>
+
+        <div class="input-group input-group-sm">
+        <input type="text" class="form-control form-control-sm"  [ngModelOptions]="{standalone: true}" [(ngModel)]="searchValue">
+         <span class="input-group-text"  (click)="onSearchDetails()"><i class='fas fa-search'></i></span>
+
+       </div>
+      </div>
+    </div>
+
+
+
+    <!-- <div class="px-2">
+      <mat-form-field appearance="legacy" class="form-control123 search-fld-top">
+        <mat-label>Search By</mat-label>
+        <mat-select [(ngModel)]="searchBy" [ngModelOptions]="{standalone: true}">
+          <mat-option value='Chassis Number'>Chassis No</mat-option>
+          <mat-option value='Civil Id'>Policy No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="px-222">
+      <mat-form-field appearance="legacy" class="search-fld-top">
+        <input matInput placeholder="Search..." [ngModelOptions]="{standalone: true}" [(ngModel)]="searchValue">
+      </mat-form-field>
+    </div>
+    <div class="px-2222">
+      <button type="button" mat-raised-button123 class="btn-tp-search" (click)="onSearchDetails()"><i
+          class='fas fa-search'></i></button>
+    </div> -->
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="toolbar-row-3">
+    <nav class="navbar navbar-expand-sm bg-light nave-style">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Policy')" (click)="onNavigation('Policy');">Policy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Claim')" (click)="onNavigation('Claims');">Claim</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Receivable')" (click)="onNavigation('Receivable')">Claim Receivable</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="onNavigation('Payable');">Claim
+                Payable</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Account Statement</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Receivable Account Statement')" (click)="onNavigation(6)">Receivable</a></li>
+                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Payable Account Statement')" (click)="onNavigation(7)">Payable</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">Reports</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Masters</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="redirectMake()">Make Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectModel()">Model Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectBodyType()">Body Type Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectColour()">Colour Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectIns()">Insurance Company Master</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="getApiDetails();">
+                API Doc
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<!-- <div class="row">
+  <div class="col-md-7 col-3">
+    <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="../../../../assets/images/gulf-insu.png"
+      class="img-fluid">
+    <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="../../../../assets/images/qic-insu.png"
+      class="img-fluid">
+  </div>
+  <div class="col-md-5 col-9  text-right top-nave-right">
+    <div class="search-sec">
+      <span class="example-spacer"></span>
+      <div class="px-2">
+        <mat-form-field appearance="legacy" class="form-control123 search-fld-top">
+          <mat-label>Search By</mat-label>
+          <mat-select [(ngModel)]="searchBy" [ngModelOptions]="{standalone: true}">
+            <mat-option value='Chassis Number'>Chassis No</mat-option>
+            <mat-option value='Civil Id'>Policy No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="px-222">
+        <mat-form-field appearance="legacy" class="search-fld-top">
+          <input matInput placeholder="Search..." [ngModelOptions]="{standalone: true}" [(ngModel)]="searchValue">
+        </mat-form-field>
+      </div>
+      <div class="px-2222">
+        <button type="button" mat-raised-button123 class="btn-tp-search" (click)="onSearchDetails()"><i
+            class='fas fa-search'></i></button>
+      </div>
+    </div>
+  </div>
+
+</div> -->
+<!-- <nav class="navbar navbar-expand-sm bg-light nave-style">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="step === '1'">Policy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="step === '2'"
+            (click)="onNavigation('Claims');onSetActiveBtn('2')">Claim</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="step === '3'"
+            (click)="onNavigation('Receivable');onSetActiveBtn('3')">Claim Receivable</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="step === '4'" (click)="onNavigation('Payable');onSetActiveBtn('4')">Claim
+            Payable</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Account Statement</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="onNavigation(6)">Receivable</a></li>
+            <li><a class="dropdown-item" (click)="onNavigation(7)">Payable</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="step === '5'" (click)="onSetActiveBtn('5')">Reports</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Masters</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" (click)="redirectMake()">Make Master</a></li>
+            <li><a class="dropdown-item" (click)="redirectModel()">Model Master</a></li>
+            <li><a class="dropdown-item" (click)="redirectBodyType()">Body Type Master</a></li>
+            <li><a class="dropdown-item" (click)="redirectColour()">Colour Master</a></li>
+            <li><a class="dropdown-item" (click)="redirectIns()">Insurance Company Master</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="step === '6'" (click)="getApiDetails();onSetActiveBtn('6')">API
+            Doc</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+
+
+
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="side" opened="false">
+    <div class="menuconatiner">
+
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="d-md-flex flex-md-row breadcrumb-container">
+      <div class="">
+        <app-breadcrumb></app-breadcrumb>
+      </div>
+      <div class="">
+        <div class="well text-right">
+          <div *ngIf="pageName == 'Receivable'">
+            <button type="button" (click)="onStartNewClaim(11)" class="report-btn"><img
+                src="../../../../assets/images/recovery.png" class="report-icon" /> <span class="report-text">Add
+                Recovery Claim</span></button>
+          </div>
+          <div *ngIf="pageName == 'Claim'">
+            <button type="button" (click)="onStartNewClaim(12)" class="report-btn"><img
+                src="../../../../assets/images/losses.png" class="report-icon" /> <span
+                class="report-text">Claim</span></button>
+          </div>
+          <div *ngIf="pageName == 'Policy'">
+            <button type="button" (click)="onStartNewClaim('Policy')" class="report-btn"><img
+                src="../../../../assets/images/losses.png" class="report-icon" /> <span
+                class="report-text">Policy</span></button>
+          </div>
+
+          <ng-container *ngIf="pageName == 'Vehicle Search'">
+            <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo()"><img
+              src="../../../../assets/images/losses.png" class="report-icon" /> <span
+              class="report-text">Add Claim</span>
+          </button>
+          <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo()"><img
+              src="../../../../assets/images/losses.png" class="report-icon" /> <span
+              class="report-text">Add Recovery Claim</span>
+          </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <hr class="m-0 p-0">
+
+    <div class="main-content">
+      <div *ngIf="showIframe">
+        <iframe src="http://192.168.1.9:8081/swagger-ui/" WIDTH='98%' style="margin-left:20px;min-height: 900px;"
+          HEIGHT='100%'>
+        </iframe>
+      </div>
+
+      <div class="router-content" *ngIf="!showIframe">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

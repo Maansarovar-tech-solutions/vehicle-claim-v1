@@ -1,0 +1,217 @@
+<!-- <mat-tab-group dynamicHeight (selectedTabChange)="onTabChanged($event);">
+    <mat-tab label="Chassis Number">
+        <form [formGroup]="chassisForm">
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-md-4 offset-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Chassis Number</mat-label>
+                            <input matInput placeholder="Chassis Number" formControlName="chassisno">
+                            <mat-error *ngIf="(f.chassisno.errors) || (!f.chassisno.valid && f.chassisno.touched)">
+                                <span *ngIf="f.chassisno.errors?.required" class="error-text">This field is required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="padding: 12px 0;">
+                            <button mat-raised-button color="accent" [disabled]="!chassisForm.valid" (click)="onSearchDetails()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+
+    </mat-tab>
+    <mat-tab label="Civil Id">
+        <form [formGroup]="civilForm">
+            <div class="p-3">
+                <div class="row">
+                    <div class="col-md-4 offset-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Civil Id</mat-label>
+                            <input matInput placeholder="Civil Id" formControlName="civilno">
+                            <mat-error *ngIf="(f1.civilno?.errors) || (!f1.civilno?.valid && f1.civilno?.touched)">
+                                <span *ngIf="f1.civilno?.errors?.required" class="error-text">This field is required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="padding: 12px 0;">
+                            <button mat-raised-button color="accent" [disabled]="!civilForm.valid" (click)="onSearchDetails()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </mat-tab>
+</mat-tab-group> -->
+
+<ng-container *ngIf="chassisSection">
+    <div class="vision-card" *ngIf="isClaimDetails">
+
+        <div class="vision-card-body">
+            <ng-container *ngFor="let item of claimDetails;let id =index;">
+                <div class="card mt-1">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class='policy-form-grid-item-title p-0'>Exist Claim-{{id+1}} </div>
+                            <div class="cursor-pointer policy-form-grid-item-title p-0" (click)="onViewClaimData(item)">View Claim <span class="mx-2"><i class="fas fa-chevron-circle-right"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-1">
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Claim Type</b></label><br>
+                                <span>{{item.ClaimTypeDesc}}</span>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Claim Number</b></label><br>
+                                <span>{{item.ClaimNumber}}</span>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Claim Intimated Date</b></label><br>
+                                <span>{{item.ClaimIntimatedDate}}</span>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <label><b>Claim Status</b></label><br>
+                                <span>{{item.StatusDesc}}</span>
+                            </div>
+                            <hr class="m-0 p-0">
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- <div class="total-claims-grid">
+                <ng-container *ngFor="let item of claimDetails;let id =index;">
+                    <div class="total-claims-grid-item">
+                        <div class="total-claims-grid-item-title">
+                            <div>Exist Claim-{{id+1}} </div>
+                            <div class="cursor-pointer">View Claim <span class="mx-2"><i class="fas fa-chevron-circle-right"></i></span></div>
+                        </div>
+                        <div class="total-claims-grid-item-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div>Claim Type</div>
+                                    <div>{{item.ClaimTypeDesc}}</div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Claim Number</div>
+                                    <div>{{item.ClaimNumber}}</div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Claim Intimated Date</div>
+                                    <div>{{item.ClaimIntimatedDate}}</div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div>Insurance Type</div>
+                                    <div>{{item.InsuranceTypeDesc}}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div> -->
+        </div>
+    </div>
+    <div class="vision-card">
+        <div class="vision-card-body">
+            <div class="policy-form-grid-item">
+                <div class="policy-form-grid-item-title">
+                    Insurance Information
+                </div>
+                <div class="policy-form-grid-item-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Policy No</b></label><br> {{policyNo}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Civil ID</b></label><br> {{civilId}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Insurance Type</b></label><br> {{insuranceType}}
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Insurance Start Date</b></label><br> {{insuranceStartDate}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Insurance End Date</b></label><br> {{insuranceEndDate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="vision-card">
+        <div class="vision-card-body">
+            <div class="policy-form-grid-item">
+                <div class="policy-form-grid-item-title">
+                    Vehicle Information
+                </div>
+                <div class="policy-form-grid-item-body">
+                    <div class="row mb-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Vehicle Make</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleMakeDesc}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Vehicle Model</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleModelDesc}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Vehicle Body</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleBodyDes}}</span>
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-1 mb-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Registration Type</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.RegistrationTypeDesc}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Manufacture Year</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.ManufactureYear}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Colour</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.ColorDesc}}</span>
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-1 mb-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Plate Char</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.PlateCharacter}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Plate Number</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.PlateNumber}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Chassis Number</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleChassisNumber}}</span>
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Engine Number</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleEngineNumber}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<div mat-dialog-actions [align]="'center'">
+    <!-- <button mat-raised-button [mat-dialog-close]="false">Close</button> -->
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="getBack()" routerLinkActive="router-link-active">Back</button>
+</div>

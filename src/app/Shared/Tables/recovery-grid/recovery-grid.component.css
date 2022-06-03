@@ -1,0 +1,22 @@
+.mat-table,.mat-paginator{
+  background-color: transparent;
+ }
+.action-btn{
+  text-decoration: none !important;
+  cursor: pointer;
+  padding: 5px 8px;
+}
+.action-btn:hover{
+  color: initial !important;
+}
+th.mat-header-cell {
+  background-color: grey;
+  color: white;
+}
+.mat-table th,
+.mat-table td {
+    padding: 8px 10px !important;
+    white-space: nowrap !important;
+
+}
+
