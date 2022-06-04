@@ -468,7 +468,7 @@ export class VehicleFormComponent implements OnInit {
               type: 'success',
             });
           }
-          this.moveNext.emit({VehicleChassisNumber:data?.Result?.VehicleChassisNumber});
+          this.moveNext.emit({VehicleChassisNumber:data?.Result?.VehicleChassisNumber,PolicyNumber:this.f.PolicyNumber.value});
         }
 
       },

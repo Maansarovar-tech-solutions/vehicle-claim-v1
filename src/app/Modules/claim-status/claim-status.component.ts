@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import * as Mydatas from '../../app-config.json';
 import { AddVehicleService } from '../add-vehicle/add-vehicle.service';
+import { NewClaimService } from '../new-claim/new-claim.service';
 @Component({
   selector: 'app-claim-status',
   templateUrl: './claim-status.component.html',
@@ -28,6 +29,7 @@ export class ClaimStatusComponent implements OnInit {
   public vehicleInformation:any;
   public statusName:any='';
   public recoveryType:any='';
+  public recoveryPolicyInfo:any;
   claimType: string | null;
   imageUrl: any;
   uploadDocList: any[]=[];
@@ -38,6 +40,7 @@ export class ClaimStatusComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
+    private newClaimService:NewClaimService,
     private activatedRoute: ActivatedRoute,
     private router:Router
 
@@ -156,6 +159,7 @@ export class ClaimStatusComponent implements OnInit {
     }
   }
 
+
   onGetClaimDetails(event:any) {
     let userDetails = this.userDetails?.LoginResponse;
     let UrlLink = `${this.ApiUrl1}api/view/claim`;
@@ -174,7 +178,7 @@ export class ClaimStatusComponent implements OnInit {
           this.policyInformation=this.claimInformation?.PolicyInformation;
           this.recoveryInformation=this.claimInformation?.RecoveryInformation;
           this.vehicleInformation=this.claimInformation?.VehicleInformation;
-          this.f.reqAmount.setValue(this.commonInformation.ReserveAmount);
+          this.f.reqAmount.setValue(this.accidentInformation.TotalValue);
           this.f.acceAmount.setValue(this.commonInformation.AcceptedReserveAmount);
           console.log(this.recoveryType);
           if(this.recoveryType == 'Payable'){
@@ -185,7 +189,7 @@ export class ClaimStatusComponent implements OnInit {
 
           }
 
-
+          this.onGetPolicyInformation();
           this.getCurrentStatusList(event);
         }
       },
@@ -211,6 +215,23 @@ export class ClaimStatusComponent implements OnInit {
       (err) => { }
     );
   }
+
+  onGetPolicyInformation() {
+    let UrlLink = `${this.ApiUrl1}api/searchvehicleinfo`;
+    let ReqObj = {
+      "VehicleChassisNumber": this.recoveryInformation?.VehicleChassisNumber
+    }
+    return this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
+      console.log("Search Data", data);
+      if (data) {
+          this.recoveryPolicyInfo = data?.Result;
+      }
+    }, (err) => { })
+  }
+
+
+
+
   setOwnerTrackList(data:any){
     this.ownerColumnHeader = [
       { key: "StatusDesc", display: "Description" },

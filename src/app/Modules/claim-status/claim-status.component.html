@@ -95,23 +95,33 @@
               <ul class="list-group list-group-flush ">
                 <li class="list-group-item">
                   <div>Vehicle Value</div>
-                  <div></div>
+                  <div>
+                    <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.VehicleValue}}">
+                  </div>
                 </li>
                 <li class="list-group-item">
                   <div>Repair Cost</div>
-                  <div>{{accidentInformation?.RepairCost}}</div>
+                  <div>
+                    <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.RepairCost}}">
+                  </div>
                 </li>
                 <li class="list-group-item">
                   <div>No Of Days</div>
-                  <div>{{accidentInformation?.NoOfDays}}</div>
+                  <div>
+                    <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.NoOfDays}}">
+                  </div>
                 </li>
                 <li class="list-group-item">
                   <div>Per Day Cost</div>
-                  <div>{{accidentInformation?.PerDayCost}}</div>
+                  <div>
+                    <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.PerDayCost}}">
+                  </div>
                 </li>
                 <li class="list-group-item">
                   <div>Total Value</div>
-                  <div>{{accidentInformation?.TotalValue}}</div>
+                  <div>
+                    <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.TotalValue}}">
+                  </div>
                 </li>
               </ul>
             </div>
@@ -119,7 +129,7 @@
         </div>
         <div class="recovery-claim-information-item">
           <div class="recovery-claim-information-item-title">
-            Basic Information
+            Vehicle Information
           </div>
           <div class="recovery-claim-information-item-body">
             <ul class="list-group list-group-flush ">
@@ -208,10 +218,45 @@
         </div>
         <div class="recovery-claim-information-item">
           <div class="recovery-claim-information-item-title">
-            Basic Information
+            Vehicle Information
           </div>
           <div class="recovery-claim-information-item-body">
-              <div class="text-center">Not Available</div>
+              <!-- <div class="text-center">Not Available</div> -->
+              <ul class="list-group list-group-flush ">
+                <li class="list-group-item">
+                  <div>Make</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.VehicleMakeDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Model</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.VehicleModelDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Body Type</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.VehicleBodyDes}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Color</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.ColorDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Plate Number</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.PlateCharacter}}-{{recoveryPolicyInfo?.VehicleDetails?.PlateNumber}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Registration Type</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.RegistrationTypeDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Year.Of.Manufacturing</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.ManufactureYear}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Chassis No</div>
+                  <div>{{recoveryPolicyInfo?.VehicleDetails?.VehicleChassisNumber}}</div>
+                </li>
+              </ul>
+
           </div>
         </div>
         <div class="recovery-claim-information-item recovery-claim-information-status-item">

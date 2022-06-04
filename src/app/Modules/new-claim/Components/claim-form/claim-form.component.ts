@@ -32,10 +32,11 @@ export class ClaimFormComponent implements OnInit {
   public AccidentNumber: any = '';
   public ClaimReferenceNumber = '';
   public PolicyReferenceNumber = '';
+  public VehicleChassisNumber:any;
   public VehicleCode = '';
   public claimTypeId: any = '';
   public policyAndVehicle: any;
-  @Input('VehicleChassisNumber') VehicleChassisNumber: any = '';
+  @Input('VehicleChassisNumber') VehicleDetails: any = '';
   @Output('moveNext') moveNext = new EventEmitter();
 
   constructor(
@@ -50,7 +51,7 @@ export class ClaimFormComponent implements OnInit {
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.claimEditReq = JSON.parse(sessionStorage.getItem("claimEditReq") || '{}');
-    console.log("VehicleChassisNumber", this.VehicleChassisNumber);
+    console.log("VehicleDetails", this.VehicleDetails);
   }
 
   ngOnInit(): void {
@@ -116,7 +117,8 @@ export class ClaimFormComponent implements OnInit {
   onGetPolicyInformation() {
     let UrlLink = `${this.ApiUrl1}api/searchvehicleinfo`;
     let ReqObj = {
-      "VehicleChassisNumber": this.VehicleChassisNumber
+      "VehicleChassisNumber": this.VehicleDetails?.VehicleChassisNumber,
+      "PolicyNumber":this.VehicleDetails?.PolicyNumber
     }
     return this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
       console.log("Search Data", data);

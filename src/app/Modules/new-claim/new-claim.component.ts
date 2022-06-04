@@ -49,7 +49,7 @@ export class NewClaimComponent implements OnInit,AfterViewChecked {
   moveNext(event: any) {
     console.log(event)
     if (event?.VehicleChassisNumber) {
-      this.VehicleChassisNumber = event.VehicleChassisNumber;
+      this.VehicleChassisNumber = event;
       if(this.isClaimForm != 'true'){
         this.myStepper.next();
       }

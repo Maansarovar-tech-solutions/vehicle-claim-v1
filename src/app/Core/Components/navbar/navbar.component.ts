@@ -261,7 +261,7 @@ export class NavbarComponent implements OnInit {
   onMoveClaimInfo(id:any){
     console.log(this.searchData);
     sessionStorage.setItem('claimTypeId',id);
-    this.router.navigate(['/Home/policy/new-policy'],{ queryParams: {isClaimForm:true,VehicleChassisNumber:this.searchData.VehicleChassisNumber} });
+    this.router.navigate(['/Home/policy/new-policy'],{ queryParams: {isClaimForm:true,VehicleChassisNumber:this.searchData.VehicleChassisNumber,PolicyNumber:this.searchData?.PolicyNumber} });
 
   }
 
