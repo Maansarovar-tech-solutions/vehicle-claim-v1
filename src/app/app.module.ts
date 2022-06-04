@@ -36,6 +36,8 @@ import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
 import { AccountStatementComponent } from './Modules/account-statement/account-statement.component';
 import { BreadcrumbComponent } from './Modules/breadcrumb/breadcrumb.component';
 import { PolicyComponent } from './Modules/policy/policy.component';
+import { AddNewLoginDetailsComponent } from './Modules/admin/loginCreation/add-new-login-details/add-new-login-details.component';
+import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-login-details/new-login-details.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { PolicyComponent } from './Modules/policy/policy.component';
     BreadcrumbComponent,
     ClaimStatusComponent,
     ExistingClaimComponent,
+    AddNewLoginDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -134,7 +134,15 @@ const routes: Routes = [
         breadcrumb: 'Insurance Master',
       },
   },
-
+  {
+    path: 'NewLoginDetails',
+    loadChildren: () =>
+      import('../admin/loginCreation/new-login-details/new-login-details.module').then((n) => n.NewLoginDetailsModule),
+      data: {
+        title: "New Login Details",
+        breadcrumb: 'New Login Details',
+      },
+  },
 ];
 
 @NgModule({

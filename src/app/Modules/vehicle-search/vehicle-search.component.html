@@ -50,6 +50,68 @@
 </mat-tab-group> -->
 
 <ng-container *ngIf="chassisSection">
+    <div class="vision-card">
+        <div class="vision-card-body">
+            <div class="policy-form-grid-item">
+                <div class="policy-form-grid-item-title">
+                    Vehicle Information
+                </div>
+                <div class="policy-form-grid-item-body">
+                    <div class="row mb-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Vehicle Make</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleMakeDesc}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Vehicle Model</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleModelDesc}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Vehicle Body</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleBodyDes}}</span>
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-1 mb-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Registration Type</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.RegistrationTypeDesc}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Manufacture Year</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.ManufactureYear}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Colour</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.ColorDesc}}</span>
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-1 mb-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Plate Char</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.PlateCharacter}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Plate Number</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.PlateNumber}}</span>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Chassis Number</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleChassisNumber}}</span>
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Engine Number</b></label><br>
+                            <span>{{searchedDetails?.VehicleDetails.VehicleEngineNumber}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="vision-card" *ngIf="isClaimDetails">
 
         <div class="vision-card-body">
@@ -148,68 +210,7 @@
             </div>
         </div>
     </div>
-    <div class="vision-card">
-        <div class="vision-card-body">
-            <div class="policy-form-grid-item">
-                <div class="policy-form-grid-item-title">
-                    Vehicle Information
-                </div>
-                <div class="policy-form-grid-item-body">
-                    <div class="row mb-1">
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Vehicle Make</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.VehicleMakeDesc}}</span>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Vehicle Model</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.VehicleModelDesc}}</span>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Vehicle Body</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.VehicleBodyDes}}</span>
-                        </div>
-                        <hr class="m-0 p-0">
-                    </div>
-                    <div class="row mt-1 mb-1">
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Registration Type</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.RegistrationTypeDesc}}</span>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Manufacture Year</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.ManufactureYear}}</span>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Colour</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.ColorDesc}}</span>
-                        </div>
-                        <hr class="m-0 p-0">
-                    </div>
-                    <div class="row mt-1 mb-1">
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Plate Char</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.PlateCharacter}}</span>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Plate Number</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.PlateNumber}}</span>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Chassis Number</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.VehicleChassisNumber}}</span>
-                        </div>
-                        <hr class="m-0 p-0">
-                    </div>
-                    <div class="row mt-1">
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Engine Number</b></label><br>
-                            <span>{{searchedDetails?.VehicleDetails.VehicleEngineNumber}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </ng-container>
 <div mat-dialog-actions [align]="'center'">
     <!-- <button mat-raised-button [mat-dialog-close]="false">Close</button> -->
