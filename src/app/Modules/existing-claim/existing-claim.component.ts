@@ -137,12 +137,12 @@ export class ExistingClaimComponent implements OnInit {
           },
           { key: "ClaimIntimatedDate", display: "Claimintimate Date" },
 
-          // {
-          //   key: "actions", display: "Edit",
-          //   config: {
-          //     isEditActions: true,
-          //   },
-          // },
+          {
+            key: "actions", display: "Edit",
+            config: {
+              isEditActions: true,
+            },
+          },
         ];
         this.claimList = data?.Result;
       },

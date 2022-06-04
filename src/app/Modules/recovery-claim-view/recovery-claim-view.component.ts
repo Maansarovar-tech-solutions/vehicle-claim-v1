@@ -189,7 +189,7 @@ export class RecoveryClaimViewComponent implements OnInit {
 
   onTplEdit(event: any) {
     sessionStorage.setItem('claimEditReq', JSON.stringify(event));
-    this.router.navigate(['/Home/New-Claim/Claim-Form']);
+    this.router.navigate(['/Home/New-Claim']);
   }
 
   onProcced(event: any) {

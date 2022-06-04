@@ -1,10 +1,14 @@
 <div class="page-content">
   <div class="vision-card">
     <div class="vision-card-body">
+      <div class="middle-line"></div>
       <div class="recovery-claim-information">
         <div class="recovery-claim-information-item">
+           <div class="fault-tag fault-tag-green">
+            Not At Fault
+           </div>
           <div class="recovery-claim-information-item-title">
-            <span>{{policyInformation?.InsuranceCompanyName}} - Not At Fault</span>
+            <span>{{policyInformation?.InsuranceCompanyName}}</span>
             <div class="flag-green">
 
             </div>
@@ -23,28 +27,15 @@
                 <div>Plate Number</div>
                 <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
               </li>
-              <li class="list-group-item">
-                <div>Policy Number</div>
-                <div>{{policyInformation?.PolicyNumber}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Policy Start Date</div>
-                <div>{{policyInformation?.InsuranceStartDate}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Policy End Date</div>
-                <div>{{policyInformation?.InsuranceEndDate}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Insurance Type</div>
-                <div>{{policyInformation?.InsuranceTypeDesc}}</div>
-              </li>
             </ul>
           </div>
         </div>
         <div class="recovery-claim-information-item">
+          <div class="fault-tag fault-tag-red">
+            At Fault
+           </div>
           <div class="recovery-claim-information-item-title">
-            <span>{{recoveryInformation?.InsuranceCompanyName}} - At Fault</span>
+            <span>{{recoveryInformation?.InsuranceCompanyName}}</span>
             <div class="flag-red">
 
             </div>
@@ -66,6 +57,163 @@
             </ul>
           </div>
         </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            <span>Cost Information - Not At Fault</span>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Vehicle Value</div>
+                <div>{{accidentInformation?.VehicleValue}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Repair Cost</div>
+                <div>{{accidentInformation?.RepairCost}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>No Of Days</div>
+                <div>{{accidentInformation?.NoOfDays}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Per Day Cost</div>
+                <div>{{accidentInformation?.PerDayCost}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Total Value</div>
+                <div>{{accidentInformation?.TotalValue}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            <span>Cost Information - At Fault</span>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <div class="recovery-claim-information-item-body">
+              <ul class="list-group list-group-flush ">
+                <li class="list-group-item">
+                  <div>Vehicle Value</div>
+                  <div></div>
+                </li>
+                <li class="list-group-item">
+                  <div>Repair Cost</div>
+                  <div>{{accidentInformation?.RepairCost}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>No Of Days</div>
+                  <div>{{accidentInformation?.NoOfDays}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Per Day Cost</div>
+                  <div>{{accidentInformation?.PerDayCost}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Total Value</div>
+                  <div>{{accidentInformation?.TotalValue}}</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            Basic Information
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Make</div>
+                <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Model</div>
+                <div>{{vehicleInformation?.VehicleModelDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Body Type</div>
+                <div>{{vehicleInformation?.VehicleBodyDes}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Color</div>
+                <div>{{vehicleInformation?.ColorDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Plate Number</div>
+                <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Registration Type</div>
+                <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Year.Of.Manufacturing</div>
+                <div>{{vehicleInformation?.ManufactureYear}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Chassis No</div>
+                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
+              </li>
+            </ul>
+            <div id="demo" class="collapse">
+              <ul class="list-group list-group-flush ">
+                <li class="list-group-item">
+                  <div>Accident Date</div>
+                  <div>{{accidentInformation?.AccidentDate}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Accident Location</div>
+                  <div>{{accidentInformation?.AccidentLocation}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Accident Description</div>
+                  <div>{{accidentInformation?.AccidentDescription}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Claim Type</div>
+                  <div>{{accidentInformation?.ClaimTypeDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Intimated Date</div>
+                  <div>{{accidentInformation?.ClaimIntimatedDate}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Reserve Amount</div>
+                  <div>{{commonInformation?.ReserveAmount}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>License Number</div>
+                  <div>{{driverInformation?.LicenceNumber}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Date Of Birth</div>
+                  <div>{{driverInformation?.DriverDateOfBirth}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Licence Valid Upto</div>
+                  <div>{{driverInformation?.LicenceValidUpto}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Gender</div>
+                  <div>{{driverInformation?.GenderDesc}}</div>
+                </li>
+
+              </ul>
+            </div>
+            <div class="view-more-btn text-end">
+              <a data-bs-toggle="collapse" data-bs-target="#demo">View More</a>
+            </div>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            Basic Information
+          </div>
+          <div class="recovery-claim-information-item-body">
+              <div class="text-center">Not Available</div>
+          </div>
+        </div>
         <div class="recovery-claim-information-item recovery-claim-information-status-item">
           <div class="recovery-claim-information-item-title">
             <span>Status Update</span>
@@ -81,7 +229,8 @@
                     <label class="vision-form-label label-green">Requested Amount</label>
                     <input type="number" class="vision-form-control" formControlName="reqAmount">
                   </div>
-                  <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+                  <ng-container
+                    *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
                     <div class="vision-form-control-box">
                       <label class="vision-form-label">Status</label>
                       <select class="vision-form-control" formControlName="claimStatus">
@@ -105,9 +254,10 @@
                 <div class="px-2 flex-fill">
                   <div class="vision-form-control-box">
                     <label class="vision-form-label label-red">Accepted Amount</label>
-                    <input type="number" class="vision-form-control"  formControlName="acceAmount">
+                    <input type="number" class="vision-form-control" formControlName="acceAmount">
                   </div>
-                  <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+                  <ng-container
+                    *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
                     <div class="imag-card my-3" (click)="doc.click()">
                       <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
                       <div>
@@ -142,121 +292,15 @@
                 </div>
               </div>
             </form>
-            <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+            <ng-container
+              *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
               <div class="text-center my-4">
                 <button class="vision-btn blue-bg-color" (click)="onUpdateClaimStatus()">Submit</button>
               </div>
             </ng-container>
           </div>
         </div>
-        <div class="recovery-claim-information-item">
-          <div class="recovery-claim-information-item-title">
-            Basic Information
-          </div>
-          <div class="recovery-claim-information-item-body">
-            <div class="row">
-              <div class="col-6">
-                <ul class="list-group list-group-flush ">
-                  <li class="list-group-item">
-                    <div>Make</div>
-                    <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Model</div>
-                    <div>{{vehicleInformation?.VehicleModelDesc}}</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Body Type</div>
-                    <div>{{vehicleInformation?.VehicleBodyDes}}</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Color</div>
-                    <div>{{vehicleInformation?.ColorDesc}}</div>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-6">
-                <ul class="list-group list-group-flush ">
-                  <li class="list-group-item">
-                    <div>Accident Date</div>
-                    <div>{{accidentInformation?.AccidentDate}}</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Accident Location</div>
-                    <div>{{accidentInformation?.AccidentLocation}}</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Accident Description</div>
-                    <div>{{accidentInformation?.AccidentDescription}}</div>
-                  </li>
-                  <li class="list-group-item">
-                    <div>Claim Type</div>
-                    <div>{{accidentInformation?.ClaimTypeDesc}}</div>
-                  </li>
 
-                </ul>
-              </div>
-              <div class="col-12">
-                <div id="demo" class="collapse">
-                  <div class="row">
-                    <div class="col-6">
-                      <ul class="list-group list-group-flush ">
-                        <li class="list-group-item">
-                          <div>Plate Number</div>
-                          <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>Registration Type</div>
-                          <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>Year.Of.Manufacturing</div>
-                          <div>{{vehicleInformation?.ManufactureYear}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>Chassis No</div>
-                          <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
-                        </li>
-
-                      </ul>
-                    </div>
-                    <div class="col-6">
-                      <ul class="list-group list-group-flush ">
-                        <li class="list-group-item">
-                          <div>Intimated Date</div>
-                          <div>{{accidentInformation?.ClaimIntimatedDate}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>Reserve Amount</div>
-                          <div>{{commonInformation?.ReserveAmount}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>License Number</div>
-                          <div>{{driverInformation?.LicenceNumber}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>Date Of Birth</div>
-                          <div>{{driverInformation?.DriverDateOfBirth}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>Licence Valid Upto</div>
-                          <div>{{driverInformation?.LicenceValidUpto}}</div>
-                        </li>
-                        <li class="list-group-item">
-                          <div>Gender</div>
-                          <div>{{driverInformation?.GenderDesc}}</div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="text-end my-2">
-              <span class="view-more"  data-bs-toggle="collapse" data-bs-target="#demo">View More</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -323,12 +367,12 @@
                       <div class="col-4">Remarks</div>
                     </div>
                     <ng-container *ngFor="let item of recoveryTrackList">
-                    <div class="row">
-                      <div class="col-4">{{item?.StatusDesc}}</div>
-                      <div class="col-4">{{item?.EntryDate}}</div>
-                      <div class="col-4">{{item?.Remarks}}</div>
-                    </div>
-                  </ng-container>
+                      <div class="row">
+                        <div class="col-4">{{item?.StatusDesc}}</div>
+                        <div class="col-4">{{item?.EntryDate}}</div>
+                        <div class="col-4">{{item?.Remarks}}</div>
+                      </div>
+                    </ng-container>
                   </li>
                 </ul>
               </div>
@@ -353,12 +397,12 @@
                       <div class="col-4">Remarks</div>
                     </div>
                     <ng-container *ngFor="let item of ownerTrackList">
-                    <div class="row">
-                      <div class="col-4">{{item?.StatusDesc}}</div>
-                      <div class="col-4">{{item?.EntryDate}}</div>
-                      <div class="col-4">{{item?.Remarks}}</div>
-                    </div>
-                  </ng-container>
+                      <div class="row">
+                        <div class="col-4">{{item?.StatusDesc}}</div>
+                        <div class="col-4">{{item?.EntryDate}}</div>
+                        <div class="col-4">{{item?.Remarks}}</div>
+                      </div>
+                    </ng-container>
                   </li>
                 </ul>
 

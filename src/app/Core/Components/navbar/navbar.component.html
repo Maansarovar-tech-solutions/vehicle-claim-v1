@@ -73,17 +73,17 @@
 
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" [class.active]="isCurrentRoute('Policy')" (click)="onNavigation('Policy');">Policy</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [class.active]="isCurrentRoute('Claim')" (click)="onNavigation('Claims');">Claim</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" [class.active]="isCurrentRoute('Receivable')" (click)="onNavigation('Receivable')">Claim Receivable</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="onNavigation('Payable');">Claim
                 Payable</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Claim')" (click)="onNavigation('Claims');">Claim</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Policy')" (click)="onNavigation('Policy');">Policy</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Account Statement</a>
@@ -232,17 +232,22 @@
                 class="report-text">Claim</span></button>
           </div>
           <div *ngIf="pageName == 'Policy'">
+            <button type="button" (click)="onUploadPolicy()" class="report-btn"><img
+                src="../../../../assets/images/losses.png" class="report-icon" /> <span
+                class="report-text">Upload Policy</span></button>
+          </div>
+          <div *ngIf="pageName == 'Policy'">
             <button type="button" (click)="onStartNewClaim('Policy')" class="report-btn"><img
                 src="../../../../assets/images/losses.png" class="report-icon" /> <span
-                class="report-text">Policy</span></button>
+                class="report-text">Add Policy</span></button>
           </div>
 
           <ng-container *ngIf="pageName == 'Vehicle Search'">
-            <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo()"><img
+            <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(12)"><img
               src="../../../../assets/images/losses.png" class="report-icon" /> <span
               class="report-text">Add Claim</span>
           </button>
-          <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo()"><img
+          <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(11)"><img
               src="../../../../assets/images/losses.png" class="report-icon" /> <span
               class="report-text">Add Recovery Claim</span>
           </button>

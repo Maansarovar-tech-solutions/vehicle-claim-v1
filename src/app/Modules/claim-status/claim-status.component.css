@@ -165,7 +165,8 @@
 .recovery-claim-information-item{
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: .5rem;
-  overflow: hidden;
+  /* overflow: hidden; */
+  padding: 0.155rem;
   background-color: #ffffff;
 }
 .recovery-claim-information-item-title{
@@ -184,16 +185,19 @@
 }
 .recovery-claim-information-item:nth-child(1){
   border: 1px solid green;
+  position: relative;
 }
 .recovery-claim-information-item:nth-child(2){
   border: 1px solid red;
+  position: relative;
+
 }
-.recovery-claim-information-item:nth-child(4){
+/* .recovery-claim-information-item:nth-child(4){
   grid-column: span 2;
 }
 .recovery-claim-information-item:nth-child(3){
   grid-column: span 2;
-}
+} */
 
 .triangle-down {
   width: 0;
@@ -250,14 +254,13 @@
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
 }
-
-.view-more{
+.view-more-btn a{
   color:#0547f3;
   border-bottom: 1px solid #0547f3;
   cursor: pointer;
   padding: 0 .5rem;
-
 }
+
 .label-red{
   color: red;
 }
@@ -267,3 +270,27 @@
 .status-list .list-group-item{
   display: block !important;
 }
+.fault-tag-red{
+  background-color: red;
+
+}
+.fault-tag-green{
+  background-color: green;
+
+}
+.fault-tag{
+  position: absolute;
+  display: flex;
+  top: 0;
+  padding: .5rem;
+  color: white;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.155rem;
+}
+/* .middle-line{
+  position: absolute;
+  height: 100vh;
+  border:1px solid green;
+
+} */
