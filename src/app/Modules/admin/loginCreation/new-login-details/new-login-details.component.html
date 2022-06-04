@@ -1,0 +1,56 @@
+<div class="page-content">
+    <div class="vision-card">
+
+        <div class="vision-card-body">
+
+            <div class="claim-form-grid">
+                <div class="claim-form-grid-item">
+                    <div class="claim-form-grid-item-title">
+                        <h4>Login Creation</h4>
+                    </div>
+                    <div class="claim-form-grid-item-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="pb-1">
+                                    <mat-form-field class="full-width">
+                                        <input matInput name="UserName" [(ngModel)]="userName" placeholder="UserName" value="" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="pb-1">
+                                    <mat-form-field class="full-width">
+                                        <input matInput name="EmailId" [(ngModel)]="emailId" placeholder="Email Id" value="" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="pb-1">
+                                    <mat-form-field class="full-width">
+                                        <input matInput name="MobileNo" [(ngModel)]="mobileNo" placeholder="Mobile No" value="" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="pb-1">
+                                    <Label>Status*</Label><br>
+                                    <mat-radio-group name="status" [(ngModel)]="statusValue">
+                                        <mat-radio-button value="Y">Active</mat-radio-button>&nbsp;
+                                        <mat-radio-button value="N">DeActive</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="Remarks" [(ngModel)]="remarks" placeholder="Remarks" value="" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

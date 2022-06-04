@@ -161,7 +161,9 @@ export class NavbarComponent implements OnInit {
       this.showIframe = true;
     else this.showIframe = false;
   }
-
+  getUserCreation(){
+    this.router.navigate(['Home/NewLoginDetails']);
+  }
   addClaim() {
     this.router.navigate(['Home/New-Claim/Claim-Form']);
   }
