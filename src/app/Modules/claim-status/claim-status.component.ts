@@ -43,6 +43,8 @@ export class ClaimStatusComponent implements OnInit {
   veiwSelectedDocUrl: any;
   closeResult: any;
   @ViewChild('content') content : any;
+  @ViewChild('content1') content1 : any;
+  documentAIDetails: any[]=[];
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
@@ -199,6 +201,46 @@ export class ClaimStatusComponent implements OnInit {
       .catch((err) => { });
     return response;
   }
+  generateApiDetails(index:any){
+    let UrlLink = `${this.ApiUrl1}api/trueinspect/uploadimage`;
+    let ReqObj = {
+      "ClaimNo":  this.claimDetails?.ClaimReferenceNumber,
+      "ListOfPath": [this.uploadedDocList[index].FilePathName
+      ]
+    }
+    this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.assessment_id){
+          this.uploadedDocList = [];
+          this.onGetUploadedDocuments();
+        }
+      },
+      (err) => { }
+    );
+  }
+  viewApiDetails(index:any){
+    let UrlLink = `${this.ApiUrl1}api/trueinspect/imagereport`;
+    let ReqObj = {
+      "assessment_id": this.uploadedDocList[index].Assessmentid,
+      "Filename": this.uploadedDocList[index].FileName
+    }
+    this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.documentAIDetails = data;
+        this.modalService.open(this.content1);
+      },
+      (err) => { }
+    );
+  }
+  onDownloadImage(documentData:any,fileData:any){
+    var a = document.createElement("a");
+      a.href = fileData;
+      a.download = documentData.Filename;
+      document.body.appendChild(a);
+      a.click();
+  }
   saveDocuments(){
     let i=0;
     let userDetails = this.userDetails?.LoginResponse;
@@ -212,7 +254,8 @@ export class ClaimStatusComponent implements OnInit {
         "file":document.url,
         "DocumentTypeId":document.DocTypeId,
         "FileName":document.filename,
-        "Devicefrom": "WebApplication"
+        "Devicefrom": "WebApplication",
+        "DocApplicable": "CLAIM_INFO"
       }
       this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
         (data: any) => {
