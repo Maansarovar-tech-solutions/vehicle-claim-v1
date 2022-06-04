@@ -1,10 +1,11 @@
+import { NewClaimService } from './../../new-claim.service';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Toaster } from 'ngx-toast-notifications';
-import { Observable } from 'rxjs';
+import { Observable, merge, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
 import * as Mydatas from '../../../../app-config.json';
@@ -14,7 +15,7 @@ import * as Mydatas from '../../../../app-config.json';
   templateUrl: './claim-form.component.html',
   styleUrls: ['./claim-form.component.css']
 })
-export class ClaimFormComponent implements OnInit,OnChanges {
+export class ClaimFormComponent implements OnInit {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public claimForm!: FormGroup;
@@ -29,19 +30,18 @@ export class ClaimFormComponent implements OnInit,OnChanges {
   public filterinsurCompanyLis!: Observable<any[]>;
   public claimEditReq: any;
   public AccidentNumber: any = '';
-  public ClaimReferenceNumber='';
-  public PolicyReferenceNumber='';
-  public VehicleChassisNumber='';
-  public VehicleCode='';
-  public claimType:any='';
-  public claimTypeId:any='';
-
-  @Input('vehicleResponseData') vehicleResponseData:any;
+  public ClaimReferenceNumber = '';
+  public PolicyReferenceNumber = '';
+  public VehicleCode = '';
+  public claimTypeId: any = '';
+  public policyAndVehicle: any;
+  @Input('VehicleChassisNumber') VehicleChassisNumber: any = '';
   @Output('moveNext') moveNext = new EventEmitter();
 
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
+    private newClaimService: NewClaimService,
     private datePipe: DatePipe,
     private toaster: Toaster,
     private activatedRoute: ActivatedRoute,
@@ -50,24 +50,34 @@ export class ClaimFormComponent implements OnInit,OnChanges {
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.claimEditReq = JSON.parse(sessionStorage.getItem("claimEditReq") || '{}');
-    console.log(this.claimEditReq)
-
+    console.log("VehicleChassisNumber", this.VehicleChassisNumber);
   }
 
   ngOnInit(): void {
-    console.log('Vehicle-Response Data',this.vehicleResponseData)
-    if(this.vehicleResponseData){
-      this.PolicyReferenceNumber=this.vehicleResponseData?.PolicyReferenceNumber;
-      this.VehicleChassisNumber=this.vehicleResponseData.VehicleChassisNumber;
-      this.VehicleCode=this.vehicleResponseData?.VehicleCode;
-      this.claimType=this.vehicleResponseData?.claimType;
-      this.claimTypeId=this.vehicleResponseData?.claimTypeId;
-    }
-    this.onInitialFetchData();
-  }
-  ngOnChanges(changes: SimpleChanges): void {
+    this.onCreateFormControl();
+    this.onGetPolicyInformation();
+
+    combineLatest([
+      this.f.VehicleValue.valueChanges.pipe(startWith(0)),
+      this.f.RepairCost.valueChanges.pipe(startWith(0)),
+      this.f.NoOfDays.valueChanges.pipe(startWith(0)),
+      this.f.PerDayCost.valueChanges.pipe(startWith(0)),
+    ]
+    ).subscribe(([
+      VehicleValue,
+      RepairCost,
+      NoOfDays,
+      PerDayCost
+    ]) => {
+      const dataList = [VehicleValue, RepairCost,NoOfDays,PerDayCost]
+      let vehicleAndRepair = dataList[0] + dataList[1];
+      let noDaysAndPerDay = dataList[2] * dataList[3];
+      let totalValue = vehicleAndRepair + noDaysAndPerDay;
+      this.f.TotalValue.setValue(totalValue);
+    });
 
   }
+
 
 
 
@@ -77,16 +87,21 @@ export class ClaimFormComponent implements OnInit,OnChanges {
       AccidentLocation: ['', Validators.required],
       AccidentDescription: ['', Validators.required],
       ClaimTypeId: ['', Validators.required],
-      ReserveAmount: ['', Validators.required],
+      PoliceReferenceNo: ['', Validators.required],
       ClaimNumber: ['', Validators.required],
       SalvageAmount: [''],
       SalvagePortal: [true],
 
 
-      LicenceNumber: ['', Validators.required],
-      DriverDateOfBirth: ['', Validators.required],
-      LicenceValidUpto: ['', Validators.required],
-      Gender: ['1', Validators.required],
+      LicenceNumber: [''],
+      DriverDateOfBirth: [''],
+      LicenceValidUpto: [''],
+      Gender: ['1'],
+      VehicleValue: [0, Validators.required],
+      RepairCost: [0, Validators.required],
+      NoOfDays: [0, Validators.required],
+      PerDayCost: [0, Validators.required],
+      TotalValue: [0, Validators.required],
 
       PlateCode: ['', Validators.required],
       PlateNumber: ['', Validators.required],
@@ -98,9 +113,36 @@ export class ClaimFormComponent implements OnInit,OnChanges {
   }
   get f() { return this.claimForm.controls; };
 
+  onGetPolicyInformation() {
+    let UrlLink = `${this.ApiUrl1}api/searchvehicleinfo`;
+    let ReqObj = {
+      "VehicleChassisNumber": this.VehicleChassisNumber
+    }
+    return this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
+      console.log("Search Data", data);
+      if (data) {
+        this.policyAndVehicle = data?.Result
+        this.claimTypeId = sessionStorage.getItem('claimTypeId');
+        let VehicleDetails = data?.Result?.VehicleDetails;
+        let PolicyInformation = data?.Result?.PolicyInformation;
+        this.PolicyReferenceNumber = PolicyInformation?.PolicyReferenceNumber;
+        this.VehicleChassisNumber = VehicleDetails.VehicleChassisNumber;
+        this.VehicleCode = VehicleDetails?.VehicleCode;
+        this.f.LicenceNumber.setValue(PolicyInformation.CivilId);
+        var driverDOB = new Date();
+        driverDOB.setFullYear(driverDOB.getFullYear() - 18);
+        var licenValidDate = new Date();
+        licenValidDate.setFullYear(licenValidDate.getFullYear() + 1);
+        this.f.DriverDateOfBirth.setValue(driverDOB);
+        this.f.LicenceValidUpto.setValue(licenValidDate);
+
+        this.onInitialFetchData();
+
+      }
+    }, (err) => { })
+  }
 
   async onInitialFetchData() {
-    this.onCreateFormControl();
 
     this.claimTypeList = await this.onGetClaimTypeList() || [];
     this.filterclaimTypeList = this.f.ClaimTypeId.valueChanges.pipe(
@@ -130,7 +172,7 @@ export class ClaimFormComponent implements OnInit,OnChanges {
 
     this.f.ClaimTypeId.setValue(this.claimTypeId);
     const ctrl = this.claimForm.get('ClaimTypeId')!;
-    if(this.claimTypeId == '11'){
+    if (this.claimTypeId == '11') {
       ctrl.disable();
     }
 
@@ -192,9 +234,7 @@ export class ClaimFormComponent implements OnInit,OnChanges {
   }
 
 
-  onGetPolicyInformation(){
 
-  }
 
 
 
@@ -228,16 +268,15 @@ export class ClaimFormComponent implements OnInit,OnChanges {
           this.f.AccidentLocation.setValue(AccidentInformation?.AccidentLocation);
           this.f.AccidentDescription.setValue(AccidentInformation?.AccidentDescription);
           this.f.ClaimTypeId.setValue(AccidentInformation?.ClaimTypeId);
-          this.f.ReserveAmount.setValue(AccidentInformation?.ReserveAmount);
           this.f.ClaimNumber.setValue(AccidentInformation?.ClaimNumber);
 
           this.f.LicenceNumber.setValue(DriverInformation?.LicenceNumber);
-          this.f.DriverDateOfBirth.setValue(this.onDateFormatt(DriverInformation?.DriverDateOfBirth));
-          this.f.LicenceValidUpto.setValue(this.onDateFormatt(DriverInformation?.LicenceValidUpto));
-          this.f.Gender.setValue(DriverInformation?.Gender);
+          // this.f.DriverDateOfBirth.setValue(this.onDateFormatt(DriverInformation?.DriverDateOfBirth));
+          // this.f.LicenceValidUpto.setValue(this.onDateFormatt(DriverInformation?.LicenceValidUpto));
+          // this.f.Gender.setValue(DriverInformation?.Gender);
           this.AccidentNumber = AccidentInformation?.AccidentNumber;
-          this.ClaimReferenceNumber=claim?.ClaimReferenceNumber;
-          this.PolicyReferenceNumber=claim?.PolicyReferenceNumber;
+          this.ClaimReferenceNumber = claim?.ClaimReferenceNumber;
+          this.PolicyReferenceNumber = claim?.PolicyReferenceNumber;
 
           this.f.CivilId.setValue(RecoveryInformation?.CivilId);
           this.f.PlateCode.setValue(RecoveryInformation?.PlateCode);
@@ -266,9 +305,14 @@ export class ClaimFormComponent implements OnInit,OnChanges {
         "AccidentDescription": this.f.AccidentDescription.value,
         "AccidentLocation": this.f.AccidentLocation.value,
         "ClaimNumber": this.f.ClaimNumber.value,
-        "ReserveAmount": this.f.ReserveAmount.value,
         "ClaimTypeId": this.f.ClaimTypeId.value,
-        "PolicyReferenceNumber": this.PolicyReferenceNumber
+        "PolicyReferenceNumber": this.PolicyReferenceNumber,
+        "PoliceReferenceNo": this.f.PoliceReferenceNo.value,
+        "VehicleValue": this.f.VehicleValue.value,
+        "RepairCost": this.f.RepairCost.value,
+        "NoOfDays": this.f.NoOfDays.value,
+        "PerDayCost": this.f.PerDayCost.value,
+        "TotalValue": this.f.TotalValue.value,
       },
       "CommonInformation": {
         "ClaimReferenceNumber": this.ClaimReferenceNumber,

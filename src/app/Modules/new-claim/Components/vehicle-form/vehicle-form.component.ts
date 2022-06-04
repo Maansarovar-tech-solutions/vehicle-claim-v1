@@ -79,7 +79,7 @@ export class VehicleFormComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(
       (params: any) => {
 
-        if(params?.isPolicyForm){
+        if(params?.isPolicyForm || params?.isClaimForm){
           this.isPolicyForm = params?.isPolicyForm;
           console.log(params)
         }else{
@@ -468,15 +468,8 @@ export class VehicleFormComponent implements OnInit {
               type: 'success',
             });
           }
-          let obj ={
-            ...data?.Result,
-            "claimType":this.claimType,
-             "claimTypeId":this.claimTypeId
-          }
-          this.moveNext.emit({screen:1,data:obj});
+          this.moveNext.emit({VehicleChassisNumber:data?.Result?.VehicleChassisNumber});
         }
-
-
 
       },
       (err) => { }

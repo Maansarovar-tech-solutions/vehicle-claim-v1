@@ -204,7 +204,6 @@ export class NavbarComponent implements OnInit {
     sessionStorage.removeItem("claimEditReq");
     sessionStorage.removeItem("policyEditReq");
 
-
     if(id =='Policy'){
       this.router.navigate(['/Home/policy/new-policy'],{ queryParams: { isPolicyForm: true } });
     }else{
@@ -261,9 +260,10 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  onMoveClaimInfo(){
-   console.log(this.searchData);
-    this.router.navigate(['/Home/policy/new-policy'],{ queryParams: {data:this.searchData,isClaimForm: true } });
+  onMoveClaimInfo(id:any){
+    console.log(this.searchData);
+    sessionStorage.setItem('claimTypeId',id);
+    this.router.navigate(['/Home/policy/new-policy'],{ queryParams: {isClaimForm:true,VehicleChassisNumber:this.searchData.VehicleChassisNumber} });
 
   }
 
@@ -273,6 +273,10 @@ export class NavbarComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]);
+  }
+
+  onUploadPolicy(){
+
   }
 
 }
