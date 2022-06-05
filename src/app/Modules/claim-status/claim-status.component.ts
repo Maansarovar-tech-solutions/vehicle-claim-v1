@@ -7,6 +7,7 @@ import * as Mydatas from '../../app-config.json';
 import { AddVehicleService } from '../add-vehicle/add-vehicle.service';
 import Swal from 'sweetalert2';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NewClaimService } from '../new-claim/new-claim.service';
 declare var $:any;
 @Component({
   selector: 'app-claim-status',
@@ -31,6 +32,7 @@ export class ClaimStatusComponent implements OnInit {
   public vehicleInformation:any;
   public statusName:any='';
   public recoveryType:any='';
+  public recoveryPolicyInfo:any;
   claimType: string | null;
   imageUrl: any;
   uploadDocList: any[]=[];
@@ -49,7 +51,9 @@ export class ClaimStatusComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
     private activatedRoute: ActivatedRoute,
-    private router:Router,private modalService:NgbModal
+    private router:Router,
+    private modalService:NgbModal,
+    private newClaimService:NewClaimService,
 
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
@@ -244,15 +248,21 @@ export class ClaimStatusComponent implements OnInit {
   saveDocuments(){
     let i=0;
     let userDetails = this.userDetails?.LoginResponse;
-    let j = 0;
+    let j = 0;let docDesc:any;
     for(let document of this.uploadDocList){
       let UrlLink = `${this.ApiUrl1}upload`;
+      if(document.DocTypeId){
+        let docList:any = this.docTypeList.filter((option) => option?.Code?.toLowerCase().includes(document.DocTypeId));
+        console.log("Filtered DocList",docList)
+        docDesc = docList.CodeDescription;
+      }
       let ReqObj = {
         "ClaimNumber": this.claimDetails?.ClaimReferenceNumber,
         "UpdatedBy": userDetails?.LoginId,
         "InsuranceId": userDetails?.InsuranceId,
         "file":document.url,
         "DocumentTypeId":document.DocTypeId,
+        "DocDesc": docDesc,
         "FileName":document.filename,
         "Devicefrom": "WebApplication",
         "DocApplicable": "CLAIM_INFO"
@@ -352,9 +362,25 @@ export class ClaimStatusComponent implements OnInit {
           this.uploadDocList.push({ 'url': this.imageUrl,'DocTypeId':'','filename':element.name, 'JsonString': {} });
 
         }
-      
+
     }
     console.log("Final File List",this.uploadDocList)
+  }
+
+  onGetPolicyInf(VehicleChassisNumber:any){
+    let UrlLink = `${this.ApiUrl1}api/chassissearch`;
+    let ReqObj = {
+      "VehicleChassisNumber":"KNAFU4114B59164564"
+    }
+    return this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
+      console.log("Search Data", data);
+      if (data) {
+       this.recoveryPolicyInfo = data?.Result;
+      }
+      if(data?.ErrorMessage?.length >0){
+
+      }
+    }, (err) => { })
   }
 
   onGetClaimDetails(event:any) {
@@ -377,6 +403,7 @@ export class ClaimStatusComponent implements OnInit {
           this.vehicleInformation=this.claimInformation?.VehicleInformation;
           this.f.reqAmount.setValue(this.commonInformation.ReserveAmount);
           this.f.acceAmount.setValue(this.commonInformation.AcceptedReserveAmount);
+          this.onGetPolicyInf(this.recoveryInformation?.VehicleChassisNumber)
           console.log(this.recoveryType);
           if(this.recoveryType == 'Payable'){
             this.f.reqAmount.disable();

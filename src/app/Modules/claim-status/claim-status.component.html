@@ -1,326 +1,369 @@
 <div class="page-content">
-    <div class="vision-card">
-        <div class="vision-card-body">
-            <div class="middle-line"></div>
-            <div class="recovery-claim-information">
-                <div class="recovery-claim-information-item">
-                    <div class="fault-tag fault-tag-green">
-                        Not At Fault
-                    </div>
-                    <div class="recovery-claim-information-item-title">
-                        <span>{{policyInformation?.InsuranceCompanyName}}</span>
-                        <div class="flag-green">
+  <div class="vision-card">
+    <div class="vision-card-body">
+      <div class="middle-line"></div>
+      <div class="recovery-claim-information">
+        <div class="recovery-claim-information-item">
+          <div class="fault-tag fault-tag-green">
+            Not At Fault
+          </div>
+          <div class="recovery-claim-information-item-title">
+            <span>{{policyInformation?.InsuranceCompanyName}}</span>
+            <div class="flag-green">
 
-                        </div>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <ul class="list-group list-group-flush ">
-                            <li class="list-group-item">
-                                <div>Civil Id</div>
-                                <div>{{policyInformation?.CivilId}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Chassis No</div>
-                                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Plate Number</div>
-                                <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item">
-                    <div class="fault-tag fault-tag-red">
-                        At Fault
-                    </div>
-                    <div class="recovery-claim-information-item-title">
-                        <span>{{recoveryInformation?.InsuranceCompanyName}}</span>
-                        <div class="flag-red">
-
-                        </div>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <ul class="list-group list-group-flush ">
-                            <li class="list-group-item">
-                                <div>Civil Id</div>
-                                <div>{{recoveryInformation?.CivilId}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Chassis No</div>
-                                <div>{{recoveryInformation?.VehicleChassisNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Plate Number</div>
-                                <div>{{recoveryInformation?.PlateCharacter}}-{{recoveryInformation?.PlateNumber}}</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item">
-                    <div class="recovery-claim-information-item-title">
-                        <span>Cost Information - Not At Fault</span>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <ul class="list-group list-group-flush ">
-                            <li class="list-group-item">
-                                <div>Vehicle Value</div>
-                                <div>{{accidentInformation?.VehicleValue}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Repair Cost</div>
-                                <div>{{accidentInformation?.RepairCost}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>No Of Days</div>
-                                <div>{{accidentInformation?.NoOfDays}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Per Day Cost</div>
-                                <div>{{accidentInformation?.PerDayCost}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Total Value</div>
-                                <div>{{accidentInformation?.TotalValue}}</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item">
-                    <div class="recovery-claim-information-item-title">
-                        <span>Cost Information - At Fault</span>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <div class="recovery-claim-information-item-body">
-                            <ul class="list-group list-group-flush ">
-                                <li class="list-group-item">
-                                    <div>Vehicle Value</div>
-                                    <div></div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Repair Cost</div>
-                                    <div>{{accidentInformation?.RepairCost}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>No Of Days</div>
-                                    <div>{{accidentInformation?.NoOfDays}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Per Day Cost</div>
-                                    <div>{{accidentInformation?.PerDayCost}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Total Value</div>
-                                    <div>{{accidentInformation?.TotalValue}}</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item">
-                    <div class="recovery-claim-information-item-title">
-                        Basic Information
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <ul class="list-group list-group-flush ">
-                            <li class="list-group-item">
-                                <div>Make</div>
-                                <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Model</div>
-                                <div>{{vehicleInformation?.VehicleModelDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Body Type</div>
-                                <div>{{vehicleInformation?.VehicleBodyDes}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Color</div>
-                                <div>{{vehicleInformation?.ColorDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Plate Number</div>
-                                <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Registration Type</div>
-                                <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Year.Of.Manufacturing</div>
-                                <div>{{vehicleInformation?.ManufactureYear}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Chassis No</div>
-                                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
-                            </li>
-                        </ul>
-                        <div id="demo" class="collapse">
-                            <ul class="list-group list-group-flush ">
-                                <li class="list-group-item">
-                                    <div>Accident Date</div>
-                                    <div>{{accidentInformation?.AccidentDate}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Accident Location</div>
-                                    <div>{{accidentInformation?.AccidentLocation}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Accident Description</div>
-                                    <div>{{accidentInformation?.AccidentDescription}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Claim Type</div>
-                                    <div>{{accidentInformation?.ClaimTypeDesc}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Intimated Date</div>
-                                    <div>{{accidentInformation?.ClaimIntimatedDate}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Reserve Amount</div>
-                                    <div>{{commonInformation?.ReserveAmount}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>License Number</div>
-                                    <div>{{driverInformation?.LicenceNumber}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Date Of Birth</div>
-                                    <div>{{driverInformation?.DriverDateOfBirth}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Licence Valid Upto</div>
-                                    <div>{{driverInformation?.LicenceValidUpto}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Gender</div>
-                                    <div>{{driverInformation?.GenderDesc}}</div>
-                                </li>
-
-                            </ul>
-                        </div>
-                        <div class="view-more-btn text-end">
-                            <a data-bs-toggle="collapse" data-bs-target="#demo">View More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item">
-                    <div class="recovery-claim-information-item-title">
-                        Basic Information
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <div class="text-center">Not Available</div>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item recovery-claim-information-status-item">
-                    <div class="recovery-claim-information-item-title">
-                        <span>Status Update</span>
-                        <span>
-                        <telegram-icon></telegram-icon>
-                      </span>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <form [formGroup]="claimStatusForm">
-                            <div class="d-md-flex flex-md-row mb-2">
-                                <div class="px-2 flex-fill">
-                                    <div class="vision-form-control-box">
-                                        <label class="vision-form-label label-green">Requested Amount</label>
-                                        <input type="number" class="vision-form-control" formControlName="reqAmount">
-                                    </div>
-                                    <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
-                                        <div class="vision-form-control-box">
-                                            <label class="vision-form-label">Status</label>
-                                            <select class="vision-form-control" formControlName="claimStatus">
-                                        <option value="">Select</option>
-                                        <ng-container *ngFor="let item of claimStatusList">
-                                          <option value="{{item.StatusCode}}"
-                                            *ngIf="(item?.StatusCode == 'PED' || item?.StatusCode=='CRES') || (recoveryType == 'Payable')">
-                                            {{item.StatusDesc}}</option>
-                                        </ng-container>
-                                      </select>
-                                        </div>
-                                        <div class="vision-form-control-box">
-                                            <label class="vision-form-label">Remarks</label>
-                                            <textarea rows="2" class="vision-form-control" formControlName="claimStatusRemarks">
-                                        </textarea>
-                                        </div>
-                                    </ng-container>
-
-
-                                </div>
-                                <div class="px-2 flex-fill">
-                                    <div class="vision-form-control-box">
-                                        <label class="vision-form-label label-red">Accepted Amount</label>
-                                        <input type="number" class="vision-form-control" formControlName="acceAmount">
-                                    </div>
-                                    <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
-                                        <div class="imag-card my-3" (click)="doc.click()">
-                                            <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
-                                            <div>
-                                                <div class="center">
-                                                    <b class="text-dark">
-                                                  <mat-icon>library_add</mat-icon><br> Add Documents
-                                                </b>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </ng-container>
-
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
             </div>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Civil Id</div>
+                <div>{{policyInformation?.CivilId}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Chassis No</div>
+                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Plate Number</div>
+                <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
+              </li>
+            </ul>
+          </div>
         </div>
-    </div>
-    <div class="vision-card" *ngIf="uploadDocList.length!=0">
-        <div class="vision-card-body">
-            <div class="view-claim-information">
-                <div class="view-claim-information-item document-info">
-                    <div class="recovery-claim-information-item-title">
-                        <span>Selected Documents</span>
-                        <span>
-                    <telegram-icon></telegram-icon>
-                  </span>
-                    </div>
-                    <div class="view-claim-information-item-body">
-                        <ng-container *ngIf="uploadDocList.length!=0">
+        <div class="recovery-claim-information-item">
+          <div class="fault-tag fault-tag-red">
+            At Fault
+          </div>
+          <div class="recovery-claim-information-item-title">
+            <span>{{recoveryInformation?.InsuranceCompanyName}}</span>
+            <div class="flag-red">
 
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">S.No</th>
-                                        <th scope="col">FileName</th>
-                                        <th scope="col">Doument Type</th>
-                                        <th scope="col">View</th>
-                                        <th scope="col">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let document of uploadDocList;let i=index">
-                                        <th scope="row">{{i+1}}</th>
-                                        <td>{{document.filename}}</td>
-                                        <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
-                                      <option value="">Select</option>
-                                      <option *ngFor="let item of docTypeList" [value]="item.Code">{{item.CodeDescription}}</option>
-                                    </select></td>
-                                        <td>
-                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onViewDocument(i)"><i
-                                            class="fa fa-eye"></i></a>
-                                        </td>
-                                        <td>
-                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i
-                                            class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2 p-1" *ngFor="let item of uploadDocList;let i =index">
+            </div>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Civil Id</div>
+                <div>{{recoveryInformation?.CivilId}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Chassis No</div>
+                <div>{{recoveryInformation?.VehicleChassisNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Plate Number</div>
+                <div>{{recoveryInformation?.PlateCharacter}}-{{recoveryInformation?.PlateNumber}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            <span>Cost Information - Not At Fault</span>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Vehicle Value</div>
+                <div>{{accidentInformation?.VehicleValue}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Repair Cost</div>
+                <div>{{accidentInformation?.RepairCost}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>No Of Days</div>
+                <div>{{accidentInformation?.NoOfDays}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Per Day Cost</div>
+                <div>{{accidentInformation?.PerDayCost}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Total Value</div>
+                <div>{{accidentInformation?.TotalValue}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            <span>Cost Information - At Fault</span>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <div class="recovery-claim-information-item-body">
+              <ul class="list-group list-group-flush ">
+                <li class="list-group-item">
+                  <div>Vehicle Value</div>
+                  <div><input type="text" class="form-control form-control-sm" value="{{accidentInformation?.VehicleValue}}"></div>
+                </li>
+                <li class="list-group-item">
+                  <div>Repair Cost</div>
+                  <div>
+                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.RepairCost}}">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div>No Of Days</div>
+                  <div>
+                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.NoOfDays}}">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div>Per Day Cost</div>
+                  <div>
+                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.PerDayCost}}">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div>Total Value</div>
+                  <div>
+                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.TotalValue}}">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            Vehicle Information
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Make</div>
+                <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Model</div>
+                <div>{{vehicleInformation?.VehicleModelDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Body Type</div>
+                <div>{{vehicleInformation?.VehicleBodyDes}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Color</div>
+                <div>{{vehicleInformation?.ColorDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Plate Number</div>
+                <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Registration Type</div>
+                <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Year.Of.Manufacturing</div>
+                <div>{{vehicleInformation?.ManufactureYear}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Chassis No</div>
+                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
+              </li>
+            </ul>
+            <div id="demo" class="collapse">
+              <ul class="list-group list-group-flush ">
+                <li class="list-group-item">
+                  <div>Accident Date</div>
+                  <div>{{accidentInformation?.AccidentDate}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Accident Location</div>
+                  <div>{{accidentInformation?.AccidentLocation}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Accident Description</div>
+                  <div>{{accidentInformation?.AccidentDescription}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Claim Type</div>
+                  <div>{{accidentInformation?.ClaimTypeDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Intimated Date</div>
+                  <div>{{accidentInformation?.ClaimIntimatedDate}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Reserve Amount</div>
+                  <div>{{commonInformation?.ReserveAmount}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>License Number</div>
+                  <div>{{driverInformation?.LicenceNumber}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Date Of Birth</div>
+                  <div>{{driverInformation?.DriverDateOfBirth}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Licence Valid Upto</div>
+                  <div>{{driverInformation?.LicenceValidUpto}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Gender</div>
+                  <div>{{driverInformation?.GenderDesc}}</div>
+                </li>
+
+              </ul>
+            </div>
+            <div class="view-more-btn text-end">
+              <a data-bs-toggle="collapse" data-bs-target="#demo">View More</a>
+            </div>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="recovery-claim-information-item-title">
+            Vehicle Information
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Make</div>
+                <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Model</div>
+                <div>{{vehicleInformation?.VehicleModelDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Body Type</div>
+                <div>{{vehicleInformation?.VehicleBodyDes}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Color</div>
+                <div>{{vehicleInformation?.ColorDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Plate Number</div>
+                <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Registration Type</div>
+                <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Year.Of.Manufacturing</div>
+                <div>{{vehicleInformation?.ManufactureYear}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Chassis No</div>
+                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item recovery-claim-information-status-item">
+          <div class="recovery-claim-information-item-title">
+            <span>Status Update</span>
+            <span>
+              <telegram-icon></telegram-icon>
+            </span>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <form [formGroup]="claimStatusForm">
+              <div class="d-md-flex flex-md-row mb-2">
+                <div class="px-2 flex-fill">
+                  <div class="vision-form-control-box">
+                    <label class="vision-form-label label-green">Requested Amount</label>
+                    <input type="number" class="vision-form-control" formControlName="reqAmount">
+                  </div>
+                  <ng-container
+                    *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+                    <div class="vision-form-control-box">
+                      <label class="vision-form-label">Status</label>
+                      <select class="vision-form-control" formControlName="claimStatus">
+                        <option value="">Select</option>
+                        <ng-container *ngFor="let item of claimStatusList">
+                          <option value="{{item.StatusCode}}"
+                            *ngIf="(item?.StatusCode == 'PED' || item?.StatusCode=='CRES') || (recoveryType == 'Payable')">
+                            {{item.StatusDesc}}</option>
+                        </ng-container>
+                      </select>
+                    </div>
+                    <div class="vision-form-control-box">
+                      <label class="vision-form-label">Remarks</label>
+                      <textarea rows="2" class="vision-form-control" formControlName="claimStatusRemarks">
+                                        </textarea>
+                    </div>
+                  </ng-container>
+
+
+                </div>
+                <div class="px-2 flex-fill">
+                  <div class="vision-form-control-box">
+                    <label class="vision-form-label label-red">Accepted Amount</label>
+                    <input type="number" class="vision-form-control" formControlName="acceAmount">
+                  </div>
+                  <ng-container
+                    *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+                    <div class="imag-card my-3" (click)="doc.click()">
+                      <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
+                      <div>
+                        <div class="center">
+                          <b class="text-dark">
+                            <mat-icon>library_add</mat-icon><br> Add Documents
+                          </b>
+                        </div>
+                      </div>
+                    </div>
+
+                  </ng-container>
+
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="vision-card" *ngIf="uploadDocList.length!=0">
+    <div class="vision-card-body">
+      <div class="view-claim-information">
+        <div class="view-claim-information-item document-info">
+          <div class="recovery-claim-information-item-title">
+            <span>Selected Documents</span>
+            <span>
+              <telegram-icon></telegram-icon>
+            </span>
+          </div>
+          <div class="view-claim-information-item-body">
+            <ng-container *ngIf="uploadDocList.length!=0">
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">FileName</th>
+                    <th scope="col">Doument Type</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let document of uploadDocList;let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{document.filename}}</td>
+                    <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
+                        <option value="">Select</option>
+                        <option *ngFor="let item of docTypeList" [value]="item.Code">{{item.CodeDescription}}</option>
+                      </select></td>
+                    <td>
+                      <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                        (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
+                    </td>
+                    <td>
+                      <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                        (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2 p-1" *ngFor="let item of uploadDocList;let i =index">
                             <div class="text-center">
                                 <span>{{item.filename}}</span>
                             </div>
@@ -333,84 +376,87 @@
                                 padding: 2px;">
                             </div>
                             <div class="d-flex justify-content-center">
-                               
+
                                 <a mat-raised-button class="mx-1" (click)="onDeleteDocument(i)"><i
                                     class="far fa-trash-alt"></i></a>
                             </div>
                         </mat-card> -->
-                        </ng-container>
-                    </div>
-                </div>
-            </div>
+            </ng-container>
+          </div>
         </div>
+      </div>
     </div>
-    <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
-        <div class="text-center my-4">
-            <button class="vision-btn blue-bg-color" (click)="onFormSubmit()">Submit</button>
-        </div>
-    </ng-container>
-    <div class="vision-card">
-        <div class="vision-card-body">
-            <div class="view-claim-information">
-                <div class="view-claim-information-item document-info">
-                    <div class="view-claim-information-item-title">
-                        <ng-container *ngIf="claimType == 'Receivable'">
-                            <span>Documents Submitted</span>
-                        </ng-container>
-                        <ng-container *ngIf="claimType == 'Payable'">
-                            <span>Documents Received</span>
-                        </ng-container>
-                        <span>
-                          <caraccident-icon></caraccident-icon>
-                        </span>
-                    </div>
-                    <div class="view-claim-information-item-body">
-                        <ng-container *ngIf="uploadedDocList.length==0">
-                            <div class="text-center">
-                                <p>No Document Available</p>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="uploadedDocList.length!=0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">S.No</th>
-                                        <th scope="col">FileName</th>
-                                        <th scope="col">Doument Type</th>
-                                        <th scope="col">View</th>
-                                        <th scope="col" *ngIf="claimType == 'Receivable'">Delete</th>
-                                        <th scope="col">Download</th>
-                                        <th scope="col">AI Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let document of uploadedDocList;let i=index">
-                                        <th scope="row">{{i+1}}</th>
-                                        <td>{{document.FileName}}</td>
-                                        <td>{{document.DocDesc}}</td>
-                                        <td>
-                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onViewUploadedDocument(i)"><i
-                                            class="fa fa-eye"></i></a>
-                                        </td>
-                                        <td *ngIf="claimType == 'Receivable'">
-                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteUploadedDoc(i)"><i
-                                            class="fa fa-trash"></i></a>
-                                        </td>
-                                        <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i)"><i
-                                        class="fa fa-download"></i></a></td>
-                                        <td>
-                                            <ng-container *ngIf="document.DocDesc=='Accident Images'">
-                                                <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i)">Get AI</button>
-                                                <button class="btn btn-primary" *ngIf="document.Assessmentid!=null" (click)="viewApiDetails(i)">View AI</button>
-                                            </ng-container>
-                                            <ng-container *ngIf="document.DocDesc!='Accident Images'">
-                                                <p>N/A</p>
-                                            </ng-container>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- <div class="row ml-1">
+  </div>
+  <ng-container
+    *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+    <div class="text-center my-4">
+      <button class="vision-btn blue-bg-color" (click)="onFormSubmit()">Submit</button>
+    </div>
+  </ng-container>
+  <div class="vision-card">
+    <div class="vision-card-body">
+      <div class="view-claim-information">
+        <div class="view-claim-information-item document-info">
+          <div class="view-claim-information-item-title">
+            <ng-container *ngIf="claimType == 'Receivable'">
+              <span>Documents Submitted</span>
+            </ng-container>
+            <ng-container *ngIf="claimType == 'Payable'">
+              <span>Documents Received</span>
+            </ng-container>
+            <span>
+              <caraccident-icon></caraccident-icon>
+            </span>
+          </div>
+          <div class="view-claim-information-item-body">
+            <ng-container *ngIf="uploadedDocList.length==0">
+              <div class="text-center">
+                <p>No Document Available</p>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="uploadedDocList.length!=0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col">FileName</th>
+                    <th scope="col">Doument Type</th>
+                    <th scope="col">View</th>
+                    <th scope="col" *ngIf="claimType == 'Receivable'">Delete</th>
+                    <th scope="col">Download</th>
+                    <th scope="col">AI Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let document of uploadedDocList;let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{document.FileName}}</td>
+                    <td>{{document.DocDesc}}</td>
+                    <td>
+                      <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                        (click)="onViewUploadedDocument(i)"><i class="fa fa-eye"></i></a>
+                    </td>
+                    <td *ngIf="claimType == 'Receivable'">
+                      <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                        (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>
+                    </td>
+                    <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                        (click)="onGetOriginalImage(i)"><i class="fa fa-download"></i></a></td>
+                    <td>
+                      <ng-container *ngIf="document.DocDesc=='Accident Images'">
+                        <button class="btn btn-primary" *ngIf="document.Assessmentid==null"
+                          (click)="generateApiDetails(i)">Get AI</button>
+                        <button class="btn btn-primary" *ngIf="document.Assessmentid!=null"
+                          (click)="viewApiDetails(i)">View AI</button>
+                      </ng-container>
+                      <ng-container *ngIf="document.DocDesc!='Accident Images'">
+                        <p>N/A</p>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <div class="row ml-1">
                             <mat-card class="col-md-3 col-lg-3 col-sm-3" *ngFor="let item of uploadedDocList;let i =index">
                                 <div class="text-center">
                                     <span>{{item.FileName}}</span>
@@ -431,163 +477,163 @@
                                 </div>
                             </mat-card>
                         </div> -->
-                        </ng-container>
-                    </div>
-                </div>
-                <div class="view-claim-information-item view-claim-information-status-item">
-                    <div class="view-claim-information-item-title">
-                        {{recoveryInformation?.InsuranceCompanyName}}
-                        <span>
-              <telegram-icon></telegram-icon>
-            </span>
-                    </div>
-                    <div class="view-claim-information-item-body">
-                        <div class="vision-grid-item">
-                            <div class="vision-grid-item-body">
-                                <ul class="list-group list-group-flush status-list">
-                                    <li class="list-group-item">
-                                        <div class="row fw-bold">
-                                            <div class="col-4">Description</div>
-                                            <div class="col-4">Date & Time</div>
-                                            <div class="col-4">Remarks</div>
-                                        </div>
-                                        <ng-container *ngFor="let item of recoveryTrackList">
-                                            <div class="row">
-                                                <div class="col-4">{{item?.StatusDesc}}</div>
-                                                <div class="col-4">{{item?.EntryDate}}</div>
-                                                <div class="col-4">{{item?.Remarks}}</div>
-                                            </div>
-                                        </ng-container>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="view-claim-information-item view-claim-information-status-item">
-                    <div class="view-claim-information-item-title">
-                        {{policyInformation?.InsuranceCompanyName}}
-                        <span>
-              <telegram-icon></telegram-icon>
-            </span>
-                    </div>
-                    <div class="view-claim-information-item-body">
-                        <div class="vision-grid-item">
-                            <div class="vision-grid-item-body">
-                                <ul class="list-group list-group-flush status-list">
-                                    <li class="list-group-item">
-                                        <div class="row fw-bold">
-                                            <div class="col-4">Description</div>
-                                            <div class="col-4">Date & Time</div>
-                                            <div class="col-4">Remarks</div>
-                                        </div>
-                                        <ng-container *ngFor="let item of ownerTrackList">
-                                            <div class="row">
-                                                <div class="col-4">{{item?.StatusDesc}}</div>
-                                                <div class="col-4">{{item?.EntryDate}}</div>
-                                                <div class="col-4">{{item?.Remarks}}</div>
-                                            </div>
-                                        </ng-container>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
+            </ng-container>
+          </div>
         </div>
+        <div class="view-claim-information-item view-claim-information-status-item">
+          <div class="view-claim-information-item-title">
+            {{recoveryInformation?.InsuranceCompanyName}}
+            <span>
+              <telegram-icon></telegram-icon>
+            </span>
+          </div>
+          <div class="view-claim-information-item-body">
+            <div class="vision-grid-item">
+              <div class="vision-grid-item-body">
+                <ul class="list-group list-group-flush status-list">
+                  <li class="list-group-item">
+                    <div class="row fw-bold">
+                      <div class="col-4">Description</div>
+                      <div class="col-4">Date & Time</div>
+                      <div class="col-4">Remarks</div>
+                    </div>
+                    <ng-container *ngFor="let item of recoveryTrackList">
+                      <div class="row">
+                        <div class="col-4">{{item?.StatusDesc}}</div>
+                        <div class="col-4">{{item?.EntryDate}}</div>
+                        <div class="col-4">{{item?.Remarks}}</div>
+                      </div>
+                    </ng-container>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view-claim-information-item view-claim-information-status-item">
+          <div class="view-claim-information-item-title">
+            {{policyInformation?.InsuranceCompanyName}}
+            <span>
+              <telegram-icon></telegram-icon>
+            </span>
+          </div>
+          <div class="view-claim-information-item-body">
+            <div class="vision-grid-item">
+              <div class="vision-grid-item-body">
+                <ul class="list-group list-group-flush status-list">
+                  <li class="list-group-item">
+                    <div class="row fw-bold">
+                      <div class="col-4">Description</div>
+                      <div class="col-4">Date & Time</div>
+                      <div class="col-4">Remarks</div>
+                    </div>
+                    <ng-container *ngFor="let item of ownerTrackList">
+                      <div class="row">
+                        <div class="col-4">{{item?.StatusDesc}}</div>
+                        <div class="col-4">{{item?.EntryDate}}</div>
+                        <div class="col-4">{{item?.Remarks}}</div>
+                      </div>
+                    </ng-container>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
     </div>
+  </div>
 
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">View Image</h5>
-                <button type="button" class="btn-close" (click)="hide()"></button>
-            </div>
-            <div class="modal-body">
-                <h3 class="text-center">{{viewFileName}}</h3>
-                <img [src]="veiwSelectedDocUrl" width="100%">
-            </div>
-        </div>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View Image</h5>
+        <button type="button" class="btn-close" (click)="hide()"></button>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">{{viewFileName}}</h3>
+        <img [src]="veiwSelectedDocUrl" width="100%">
+      </div>
     </div>
+  </div>
 </ng-template>
 <ng-template #content1 let-c="close" let-d="dismiss">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div *ngFor="let document of documentAIDetails">
-                <div class="row">
-                    <div class="text-center">
-                        <h2>{{document.Filename}}</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <img [src]="document.RawImage" class="img-fluid">
-                        <div class="d-flex justify-content-center">
-                            <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.RawImage)"><i class="far fa-eye mx-1"></i></a> -->
-                            <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.RawImage)"><i
-                                class="fas fa-download mx-1"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img [src]="document.PartsImage" class="img-fluid">
-                        <div class="d-flex justify-content-center">
-                            <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.PartsImage)"><i class="far fa-eye mx-1"></i></a> -->
-                            <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.PartsImage)"><i
-                class="fas fa-download mx-1"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img [src]="document.DamageImage" class="img-fluid">
-                        <div class="d-flex justify-content-center">
-                            <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.DamageImage)"><i class="far fa-eye mx-1"></i></a> -->
-                            <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.DamageImage)"><i
-                class="fas fa-download mx-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-10 offset-1" *ngIf="document.Report.length!=0">
-                        <table border="1" class="table table-hover table-striped responsive">
-                            <thead class="table-info">
-                                <tr>
-                                    <th style="padding:15px;" class="customRow"><b>Part</b></th>
-                                    <th style="padding:15px;" class="customRow"><b>Action</b></th>
-                                    <th style="padding:15px;" class="customRow"><b>Damage</b></th>
-                                    <th style="padding:15px;" class="customRow"><b>Region</b></th>
-                                    <th style="padding:15px;" class="customRow"><b>Damage Severity</b></th>
-                                    <th style="padding:15px;" class="customRow"><b>Internal Damage</b></th>
-                                    <th style="padding:15px;" class="customRow"><b>Percentage</b></th>
-                                    <th style="padding:15px;" class="customRow"><b>Cost Estimation</b></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let entry of  document.Report; let i = index">
-                                    <td style="padding:5px;">{{entry.Part}}</td>
-                                    <td style="padding:5px;">{{entry.Action}} </td>
-                                    <td style="padding:5px;">{{entry.Damage}} </td>
-                                    <td style="padding:5px;">{{entry.Region}} </td>
-                                    <td style="padding:5px;">{{entry.Damageseverity}}</td>
-                                    <td style="padding:5px;">{{entry.InternalDamage}} </td>
-                                    <td style="padding:5px;">{{entry.Percentage}} </td>
-                                    <td style="padding:5px;">{{entry.Costestimation}} </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-9" *ngIf="document.Report.length==0">
-                        <div class="text-center">
-                            <h4>No Damages Found</h4>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-            </div>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div *ngFor="let document of documentAIDetails">
+        <div class="row">
+          <div class="text-center">
+            <h2>{{document.Filename}}</h2>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-md-4">
+            <img [src]="document.RawImage" class="img-fluid">
+            <div class="d-flex justify-content-center">
+              <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.RawImage)"><i class="far fa-eye mx-1"></i></a> -->
+              <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.RawImage)"><i
+                  class="fas fa-download mx-1"></i></a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <img [src]="document.PartsImage" class="img-fluid">
+            <div class="d-flex justify-content-center">
+              <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.PartsImage)"><i class="far fa-eye mx-1"></i></a> -->
+              <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.PartsImage)"><i
+                  class="fas fa-download mx-1"></i></a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <img [src]="document.DamageImage" class="img-fluid">
+            <div class="d-flex justify-content-center">
+              <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.DamageImage)"><i class="far fa-eye mx-1"></i></a> -->
+              <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.DamageImage)"><i
+                  class="fas fa-download mx-1"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-10 offset-1" *ngIf="document.Report.length!=0">
+            <table border="1" class="table table-hover table-striped responsive">
+              <thead class="table-info">
+                <tr>
+                  <th style="padding:15px;" class="customRow"><b>Part</b></th>
+                  <th style="padding:15px;" class="customRow"><b>Action</b></th>
+                  <th style="padding:15px;" class="customRow"><b>Damage</b></th>
+                  <th style="padding:15px;" class="customRow"><b>Region</b></th>
+                  <th style="padding:15px;" class="customRow"><b>Damage Severity</b></th>
+                  <th style="padding:15px;" class="customRow"><b>Internal Damage</b></th>
+                  <th style="padding:15px;" class="customRow"><b>Percentage</b></th>
+                  <th style="padding:15px;" class="customRow"><b>Cost Estimation</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let entry of  document.Report; let i = index">
+                  <td style="padding:5px;">{{entry.Part}}</td>
+                  <td style="padding:5px;">{{entry.Action}} </td>
+                  <td style="padding:5px;">{{entry.Damage}} </td>
+                  <td style="padding:5px;">{{entry.Region}} </td>
+                  <td style="padding:5px;">{{entry.Damageseverity}}</td>
+                  <td style="padding:5px;">{{entry.InternalDamage}} </td>
+                  <td style="padding:5px;">{{entry.Percentage}} </td>
+                  <td style="padding:5px;">{{entry.Costestimation}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-9" *ngIf="document.Report.length==0">
+            <div class="text-center">
+              <h4>No Damages Found</h4>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
     </div>
+  </div>
 </ng-template>
