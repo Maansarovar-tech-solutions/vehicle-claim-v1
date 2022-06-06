@@ -235,7 +235,7 @@ export class ClaimStatusComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.documentAIDetails = data;
-        this.modalService.open(this.content1);
+        this.modalService.open(this.content1, { size: 'xl', backdrop: 'static' });
       },
       (err) => { }
     );
