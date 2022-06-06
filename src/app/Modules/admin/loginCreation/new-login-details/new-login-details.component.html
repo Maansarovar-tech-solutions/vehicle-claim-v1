@@ -1,15 +1,14 @@
 <div class="page-content">
     <div class="vision-card">
 
-        <div class="vision-card-body">
-            <h4>Login Creation</h4>
-            <div class="claim-form-grid">
-                <div class="claim-form-grid-item">
-                    <div class="claim-form-grid-item-title">
+        <div class="vision-card-body" *ngIf="!changePassword">
+            <div class="login-form-grid">
+                <div class="login-form-grid-item login-information-item">
+                    <div class="login-form-grid-item-title">
                         <h4>Personal Information</h4>
                     </div>
-                    <div class="claim-form-grid-item-body">
-                        <div class="row">
+                    <div class="login-form-grid-iteam-body">
+                        <div class="row p-2">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="pb-1">
                                     <mat-form-field class="full-width">
@@ -32,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row p-2">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="pb-1">
                                     <Label>Status*</Label><br>
@@ -50,6 +49,317 @@
                         </div>
                     </div>
                 </div>
+                <div class="login-form-grid-item login-information-item">
+                    <div class="login-form-grid-item-title">
+                        <h4>UserType Information</h4>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="login-form-grid-iteam-body">
+                        <div class="row" style="margin-left: 20px !important;">
+                            <ng-container *ngFor="let product of productList">
+                                <div class="col-md-3 col-lg-3 customHover p-2" (click)="filterRowList(product,'direct')" [class.active]="product.Code==productValue">
+                                    <input type="checkBox" [checked]="checkProductSection(product)" (change)="onProductChange(product,$event)"> &nbsp; {{product.Description}}
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div class="login-form-grid-item login-information-item">
+                            <div class="login-form-grid-item-title mt-1" *ngIf="productName">
+                                <div class="card-title-text ">Add UserType</div>
+                            </div>
+                            <div class="login-form-grid-iteam-body" *ngIf="productName">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>UserType</mat-label>
+                                            <mat-select [(ngModel)]="addUserType" disableOptionCentering (selectionChange)="onChangeNewValue('UserType',$event)">
+                                                <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
+                                                    {{ type.Description }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <mat-form-field appearance="legacy">
+                                            <mat-label>Region</mat-label>
+                                            <mat-select [(ngModel)]="addRegionCode" disableOptionCentering (selectionChange)="onChangeNewValue('RegionCode',$event)">
+                                                <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
+                                                    {{ type.Description }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <mat-form-field class="full-width" [hidden]="(addUserType=='maker' || addUserType=='admin')">
+                                            <input matInput name="SumInsuredStart" [(ngModel)]="addSumInsuredStart" (change)="onChangeNewValue('SumInsuredStart',$event)" placeholder="Sum Insured Start Limit" />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <mat-form-field class="full-width" [hidden]="(addUserType=='maker' || addUserType=='admin')">
+                                            <input matInput name="SumInsuredEnd" [(ngModel)]="addSumInsuredEnd" (change)="onChangeNewValue('SumInsuredEnd',$event)" placeholder="Sum Insured End Limit" />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <button mat-raised-button color="primary" (click)="addNewList()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="login-form-grid-item" [hidden]="showUserList()">
+                            <div class="login-form-grid-item-title">
+                                <span>UserType Information</span>
+                                <div>
+                                    <span>Product - <b>{{productName}}</b></span>
+                                </div>
+
+                                <hr class="m-0 p-0">
+                            </div>
+                            <div class="login-form-grid-iteam-body">
+                                <ng-container *ngIf="makerList.length!=0">
+                                    <div class="login-form-grid-item-title mt-2">
+                                        <div class="card-title-text ">Maker Information</div>
+                                    </div>
+                                    <div class="mt-1 ml-1">
+                                        <div class="" *ngFor="let item of makerList; let i = index">
+                                            <div class="row">
+                                                <div class="col-md-3 col-lg-3" style="margin-left: 20px !important;">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>UserType</mat-label>
+                                                        <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>Region</mat-label>
+                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1 mt-3" *ngIf="((i+1) != depreciationList.length)">
+                                                    <mat-icon style="cursor: pointer; color: #222a45;
+                                                    vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('maker',i)" matTooltip="Delete">delete_forever</mat-icon>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1 mt-3" *ngIf="((i+1) === depreciationList.length)">
+                                                    <mat-icon style="cursor: pointer; color: #222a45; 
+                                                    vertical-align: middle" [style.fontSize]="'20px'" (click)="addDefaultRow()" matTooltip="Add">add_circle</mat-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="adminList.length!=0">
+                                    <div class="login-form-grid-item-title mt-2">
+                                        <div class="card-title-text ">Admin Information</div>
+                                    </div>
+                                    <div class="mt-1 ml-1">
+                                        <div class="" *ngFor="let item of adminList; let i = index">
+                                            <div class="row">
+                                                <div class="col-md-3 col-lg-3" style="margin-left: 20px !important;">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>UserType</mat-label>
+                                                        <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>Region</mat-label>
+                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="pr-1 mt-3" *ngIf="((i+1) != depreciationList.length)">
+                                                        <mat-icon style="cursor: pointer; color: #222a45;
+                                            vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('admin',i)" matTooltip="Delete">delete_forever</mat-icon>
+                                                    </div>
+                                                    <div class="pr-1 mt-3" *ngIf="((i+1) === depreciationList.length)">
+                                                        <mat-icon style="cursor: pointer; color: #222a45; 
+                                            vertical-align: middle" [style.fontSize]="'20px'" (click)="addDefaultRow()" matTooltip="Add">add_circle</mat-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="checkerList.length!=0">
+                                    <div class="login-form-grid-item-title mt-2">
+                                        <div class="card-title-text ">Checker Information</div>
+                                    </div>
+                                    <div class="mt-1 ml-1">
+                                        <div class="" *ngFor="let item of checkerList; let i = index">
+                                            <div class="row">
+                                                <div class="col-md-3 col-lg-3" style="margin-left: 20px !important;">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>UserType</mat-label>
+                                                        <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>Region</mat-label>
+                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                        <input matInput name="SumInsuredStart" [(ngModel)]="item.SumInsuredStart" (change)="onChangeValue('SumInsuredStart',$event,item)" placeholder="Sum Insured Start Limit" />
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                        <input matInput name="SumInsuredEnd" [(ngModel)]="item.SumInsuredEnd" (change)="onChangeValue('SumInsuredEnd',$event,item)" placeholder="Sum Insured End Limit" />
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-1 col-lg-1">
+                                                    <div class="pr-1 mt-3" *ngIf="((i+1) != depreciationList.length)">
+                                                        <mat-icon style="cursor: pointer; color: #222a45;
+                                            vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('checker',i)" matTooltip="Delete">delete_forever</mat-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="approverList.length!=0">
+                                    <div class="login-form-grid-item-title mt-2">
+                                        <div class="card-title-text ">Approver Information</div>
+                                    </div>
+                                    <div class="mt-1 ml-1">
+                                        <div class="" *ngFor="let item of approverList; let i = index">
+                                            <div class="row">
+                                                <div class="col-md-3 col-lg-3" style="margin-left: 20px !important;">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>UserType</mat-label>
+                                                        <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <mat-form-field appearance="legacy">
+                                                        <mat-label>Region</mat-label>
+                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
+                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
+                                                                {{ type.Description }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                        <input matInput name="SumInsuredStart" [(ngModel)]="item.SumInsuredStart" (change)="onChangeValue('SumInsuredStart',$event,item)" placeholder="Sum Insured Start Limit" />
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                        <input matInput name="SumInsuredEnd" [(ngModel)]="item.SumInsuredEnd" (change)="onChangeValue('SumInsuredEnd',$event,item)" placeholder="Sum Insured End Limit" />
+                                                    </mat-form-field>
+
+                                                </div>
+                                                <div class="col-md-1 col-lg-1">
+                                                    <div class="pr-1 mt-2" *ngIf="((i+1) != depreciationList.length)">
+                                                        <mat-icon style="cursor: pointer; color: #222a45;
+                                            vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('approver',i)" matTooltip="Delete">delete_forever</mat-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="login-form-grid-item login-information-item">
+                    <div class="login-form-grid-item-title">
+                        <h4>Login Information</h4>
+                    </div>
+                    <div class="login-form-grid-iteam-body">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4" style="margin-left: 20px !important;">
+                                <mat-form-field class="full-width">
+                                    <input matInput name="LoginId" [(ngModel)]="loginId" placeholder="LoginId" value="" />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-lg-4">
+                                <mat-form-field class="full-width">
+                                    <input type="password" matInput name="password" [(ngModel)]="password" placeholder="Password" value="" />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <mat-form-field class="full-width">
+                                    <input type="password" matInput name="rePassword" [(ngModel)]="rePassword" placeholder="Re Enter Password" value="" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn btn-danger mr-1">Back</button>&nbsp;
+                <button class="btn btn-warning mr-1" (click)="changePassword=!changePassword;editSection=!editSection">Change Password</button>&nbsp;
+                <button class="btn btn-success ml-2">Submit</button>
+            </div>
+        </div>
+        <div class="vision-card-body" *ngIf="changePassword">
+            <div class="login-form-grid">
+                <div class="login-form-grid-item login-information-item">
+                    <div class="login-form-grid-item-title">
+                        <h4>Change Password</h4>
+                    </div>
+                    <div class="login-form-grid-iteam-body">
+                        <div class="row text-center">
+                            <div class="col-md-4 col-lg-4 offset-4">
+                                <mat-form-field class="full-width p-0">
+                                    <input matInput name="oldPassword" [(ngModel)]="oldPassword" placeholder="Old Password" value="" />
+                                </mat-form-field>
+                            </div>
+
+
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-md-4 col-lg-4 offset-4">
+                                <mat-form-field class="full-width p-0">
+                                    <input matInput type="password" name="newPassword" [(ngModel)]="newPassword" placeholder="New Password" value="" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-md-4 col-lg-4 offset-4">
+                                <mat-form-field class="full-width p-0">
+                                    <input matInput type="password" name="reNewPassword" [(ngModel)]="reNewPassword" placeholder="Re-Enter New Password" value="" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn btn-danger mr-1" (click)="changePassword=!changePassword;editSection=!editSection">Back</button>&nbsp;
+                <button class="btn btn-success ml-2" (click)="changePassword=!changePassword;editSection=!editSection">Update</button>
             </div>
         </div>
     </div>
