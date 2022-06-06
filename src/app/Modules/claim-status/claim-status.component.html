@@ -72,13 +72,10 @@
                 <div>{{accidentInformation?.RepairCost}}</div>
               </li>
               <li class="list-group-item">
-                <div>No Of Days</div>
-                <div>{{accidentInformation?.NoOfDays}}</div>
+                <div>No Of Days / Per Day Cost</div>
+                <div>{{accidentInformation?.NoOfDays}} / {{accidentInformation?.PerDayCost}}</div>
               </li>
-              <li class="list-group-item">
-                <div>Per Day Cost</div>
-                <div>{{accidentInformation?.PerDayCost}}</div>
-              </li>
+
               <li class="list-group-item">
                 <div>Total Value</div>
                 <div>{{accidentInformation?.TotalValue}}</div>
@@ -95,30 +92,27 @@
               <ul class="list-group list-group-flush ">
                 <li class="list-group-item">
                   <div>Vehicle Value</div>
-                  <div><input type="text" class="form-control form-control-sm" value="{{accidentInformation?.VehicleValue}}"></div>
+                  <div><input type="text" class="form-control form-control-sm"
+                      value="{{accidentInformation?.VehicleValue}}"></div>
                 </li>
                 <li class="list-group-item">
                   <div>Repair Cost</div>
                   <div>
-                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.RepairCost}}">
+                    <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.RepairCost}}">
                   </div>
                 </li>
                 <li class="list-group-item">
-                  <div>No Of Days</div>
-                  <div>
-                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.NoOfDays}}">
+                  <div>No Of Days / Per Day Cost</div>
+                  <div class="d-flex">
+                    <input type="text" style="width: 70px;" class="form-control form-control-sm" value="{{accidentInformation?.NoOfDays}}">
+                    <input type="text" style="width: 100px;" class="form-control form-control-sm" value="{{accidentInformation?.PerDayCost}}">
                   </div>
                 </li>
-                <li class="list-group-item">
-                  <div>Per Day Cost</div>
-                  <div>
-                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.PerDayCost}}">
-                  </div>
-                </li>
+
                 <li class="list-group-item">
                   <div>Total Value</div>
                   <div>
-                  <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.TotalValue}}">
+                    <input type="text" class="form-control form-control-sm" value="{{accidentInformation?.TotalValue}}">
                   </div>
                 </li>
               </ul>
@@ -218,41 +212,48 @@
           <div class="recovery-claim-information-item-title">
             Vehicle Information
           </div>
-          <div class="recovery-claim-information-item-body">
-            <ul class="list-group list-group-flush ">
-              <li class="list-group-item">
-                <div>Make</div>
-                <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Model</div>
-                <div>{{vehicleInformation?.VehicleModelDesc}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Body Type</div>
-                <div>{{vehicleInformation?.VehicleBodyDes}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Color</div>
-                <div>{{vehicleInformation?.ColorDesc}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Plate Number</div>
-                <div>{{vehicleInformation?.PlateCharacter}}-{{vehicleInformation?.PlateNumber}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Registration Type</div>
-                <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Year.Of.Manufacturing</div>
-                <div>{{vehicleInformation?.ManufactureYear}}</div>
-              </li>
-              <li class="list-group-item">
-                <div>Chassis No</div>
-                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
-              </li>
-            </ul>
+          <div class="recovery-claim-information-item-body" style="position:relative;">
+            <ng-container *ngIf="isNewPolicy">
+              <div class="center" style="margin-top: 100px;">
+                <button class="vision-btn maroon-bg-color" (click)="onEnrichData()">Enrich Data</button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!isNewPolicy">
+              <ul class="list-group list-group-flush ">
+                <li class="list-group-item">
+                  <div>Make</div>
+                  <div>{{recoveryPolicyInfo?.VehicleMakeDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Model</div>
+                  <div>{{recoveryPolicyInfo?.VehicleModelDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Body Type</div>
+                  <div>{{recoveryPolicyInfo?.VehicleBodyDes}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Color</div>
+                  <div>{{recoveryPolicyInfo?.ColorDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Plate Number</div>
+                  <div>{{recoveryPolicyInfo?.PlateCharacter}}-{{recoveryPolicyInfo?.PlateNumber}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Registration Type</div>
+                  <div>{{recoveryPolicyInfo?.RegistrationTypeDesc}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Year.Of.Manufacturing</div>
+                  <div>{{recoveryPolicyInfo?.ManufactureYear}}</div>
+                </li>
+                <li class="list-group-item">
+                  <div>Chassis No</div>
+                  <div>{{recoveryPolicyInfo?.VehicleChassisNumber}}</div>
+                </li>
+              </ul>
+            </ng-container>
           </div>
         </div>
         <div class="recovery-claim-information-item recovery-claim-information-status-item">

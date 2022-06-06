@@ -38,7 +38,10 @@ export class HttpInterceptorService implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           if(event.body?.IsError){
               let ErrorMessage:any =event.body?.ErrorMessage;
+              if(event.url != "http://192.168.1.18:8081/api/chassissearch"){
               this.openDialog(ErrorMessage)
+              }
+
           }
         }
         return event;
