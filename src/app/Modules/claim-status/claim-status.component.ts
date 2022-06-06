@@ -229,7 +229,7 @@ export class ClaimStatusComponent implements OnInit {
     let UrlLink = `${this.ApiUrl2}api/trueinspect/imagereport`;
     let ReqObj = {
       "assessment_id": this.uploadedDocList[index].Assessmentid,
-      "Filename": this.uploadedDocList[index].FileName
+      "Filename": this.uploadedDocList[index].Param
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
