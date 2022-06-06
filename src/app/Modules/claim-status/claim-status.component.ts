@@ -255,38 +255,39 @@ export class ClaimStatusComponent implements OnInit {
       let UrlLink = `${this.ApiUrl1}upload`;
       if(document.DocTypeId){
         let docList:any = this.docTypeList.filter((option) => option?.Code?.toLowerCase().includes(document.DocTypeId));
-        console.log("Filtered DocList",docList)
         docDesc = docList[0].CodeDescription;
+        console.log("Filtered DocList",docList,docDesc);
+        let ReqObj = {
+          "ClaimNumber": this.claimDetails?.ClaimReferenceNumber,
+          "UpdatedBy": userDetails?.LoginId,
+          "InsuranceId": userDetails?.InsuranceId,
+          "file":document.url,
+          "DocumentTypeId":document.DocTypeId,
+          "DocDesc": docDesc,
+          "FileName":document.filename,
+          "Devicefrom": "WebApplication",
+          "DocApplicable": "CLAIM_INFO"
+        }
+        this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+          (data: any) => {
+            console.log(data);
+            let res:any = data;
+            if(res?.ErrorMessage.length!=0){
+              j+=1;
+            }
+            i+=1;
+            if(i==this.uploadDocList.length && j==0){
+              this.router.navigate(['Home']);
+            }
+            else{
+              this.uploadedDocList = [];
+              this.onGetUploadedDocuments();
+            }
+          },
+          (err) => { }
+        );
       }
-      let ReqObj = {
-        "ClaimNumber": this.claimDetails?.ClaimReferenceNumber,
-        "UpdatedBy": userDetails?.LoginId,
-        "InsuranceId": userDetails?.InsuranceId,
-        "file":document.url,
-        "DocumentTypeId":document.DocTypeId,
-        "DocDesc": docDesc,
-        "FileName":document.filename,
-        "Devicefrom": "WebApplication",
-        "DocApplicable": "CLAIM_INFO"
-      }
-      this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
-        (data: any) => {
-          console.log(data);
-          let res:any = data;
-          if(res?.ErrorMessage.length!=0){
-            j+=1;
-          }
-          i+=1;
-          if(i==this.uploadDocList.length && j==0){
-            this.router.navigate(['Home']);
-          }
-          else{
-            this.uploadedDocList = [];
-            this.onGetUploadedDocuments();
-          }
-        },
-        (err) => { }
-      );
+
     }
   }
   onDeleteDocument(index:any) {
