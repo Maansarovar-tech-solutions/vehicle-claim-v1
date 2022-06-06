@@ -38,6 +38,7 @@ import { BreadcrumbComponent } from './Modules/breadcrumb/breadcrumb.component';
 import { PolicyComponent } from './Modules/policy/policy.component';
 import { AddNewLoginDetailsComponent } from './Modules/admin/loginCreation/add-new-login-details/add-new-login-details.component';
 import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-login-details/new-login-details.component';
+import { RecoveryClaimFormComponent } from './Modules/recovery-claim-form/recovery-claim-form.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-logi
     BreadcrumbComponent,
     ClaimStatusComponent,
     ExistingClaimComponent,
-    AddNewLoginDetailsComponent
+    AddNewLoginDetailsComponent,
+    RecoveryClaimFormComponent
   ],
   imports: [
     BrowserModule,

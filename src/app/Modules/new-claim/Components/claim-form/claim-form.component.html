@@ -120,7 +120,8 @@
                       <input matInput placeholder="Police Reference" formControlName="PoliceReferenceNo">
                       <mat-error
                         *ngIf="(f.PoliceReferenceNo.errors) || (!f.PoliceReferenceNo.valid && f.PoliceReferenceNo.touched)">
-                        <span *ngIf="f.PoliceReferenceNo.errors?.required" class="error-text">This field is required</span>
+                        <span *ngIf="f.PoliceReferenceNo.errors?.required" class="error-text">This field is
+                          required</span>
                       </mat-error>
                     </mat-form-field>
                   </div>
@@ -162,8 +163,7 @@
                     <mat-form-field appearance="outline">
                       <mat-label>Vehicle Value</mat-label>
                       <input type="number" matInput placeholder="Vehicle Value" formControlName="VehicleValue">
-                      <mat-error
-                        *ngIf="(f.VehicleValue.errors) || (!f.VehicleValue.valid && f.VehicleValue.touched)">
+                      <mat-error *ngIf="(f.VehicleValue.errors) || (!f.VehicleValue.valid && f.VehicleValue.touched)">
                         <span *ngIf="f.VehicleValue.errors?.required" class="error-text">This field is required</span>
                       </mat-error>
                     </mat-form-field>
@@ -172,8 +172,7 @@
                     <mat-form-field appearance="outline">
                       <mat-label>Repair Cost</mat-label>
                       <input type="number" matInput placeholder="Police Reference" formControlName="RepairCost">
-                      <mat-error
-                        *ngIf="(f.RepairCost.errors) || (!f.RepairCost.valid && f.RepairCost.touched)">
+                      <mat-error *ngIf="(f.RepairCost.errors) || (!f.RepairCost.valid && f.RepairCost.touched)">
                         <span *ngIf="f.RepairCost.errors?.required" class="error-text">This field is required</span>
                       </mat-error>
                     </mat-form-field>
@@ -181,26 +180,24 @@
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12">
 
                     <div class="row">
-                        <div class="col-6">
-                          <mat-form-field appearance="outline">
-                            <mat-label>No.Of.Days</mat-label>
-                            <input type="number" matInput placeholder="No Of Days" formControlName="NoOfDays">
-                            <mat-error
-                              *ngIf="(f.NoOfDays.errors) || (!f.NoOfDays.valid && f.NoOfDays.touched)">
-                              <span *ngIf="f.NoOfDays.errors?.required" class="error-text">This field is required</span>
-                            </mat-error>
-                          </mat-form-field>
-                        </div>
-                        <div class="col-6">
-                          <mat-form-field appearance="outline">
-                            <mat-label>Per Day Cost</mat-label>
-                            <input type="number" matInput placeholder="Per Day Cost" formControlName="PerDayCost">
-                            <mat-error
-                              *ngIf="(f.PerDayCost.errors) || (!f.PerDayCost.valid && f.PerDayCost.touched)">
-                              <span *ngIf="f.PerDayCost.errors?.required" class="error-text">This field is required</span>
-                            </mat-error>
-                          </mat-form-field>
-                        </div>
+                      <div class="col-6">
+                        <mat-form-field appearance="outline">
+                          <mat-label>No.Of.Days</mat-label>
+                          <input type="number" matInput placeholder="No Of Days" formControlName="NoOfDays">
+                          <mat-error *ngIf="(f.NoOfDays.errors) || (!f.NoOfDays.valid && f.NoOfDays.touched)">
+                            <span *ngIf="f.NoOfDays.errors?.required" class="error-text">This field is required</span>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-6">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Per Day Cost</mat-label>
+                          <input type="number" matInput placeholder="Per Day Cost" formControlName="PerDayCost">
+                          <mat-error *ngIf="(f.PerDayCost.errors) || (!f.PerDayCost.valid && f.PerDayCost.touched)">
+                            <span *ngIf="f.PerDayCost.errors?.required" class="error-text">This field is required</span>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
                     </div>
 
                   </div>
@@ -210,9 +207,10 @@
                       <mat-label>Total Value</mat-label>
 
 
-                      <input type="number" value="{{f.VehicleValue}} + {{f.RepairCost}}+{{f.NoOfDays}} /{{f.PerDayCost}}" matInput placeholder="Total Value" formControlName="TotalValue">
-                      <mat-error
-                        *ngIf="(f.TotalValue.errors) || (!f.TotalValue.valid && f.TotalValue.touched)">
+                      <input type="number"
+                        value="{{f.VehicleValue}} + {{f.RepairCost}}+{{f.NoOfDays}} /{{f.PerDayCost}}" matInput
+                        placeholder="Total Value" formControlName="TotalValue">
+                      <mat-error *ngIf="(f.TotalValue.errors) || (!f.TotalValue.valid && f.TotalValue.touched)">
                         <span *ngIf="f.TotalValue.errors?.required" class="error-text">This field is required</span>
                       </mat-error>
                     </mat-form-field>
@@ -349,7 +347,7 @@
 
           </div>
           <div class="text-center my-4">
-            <button class="vision-btn maroon-bg-color" matStepperPrevious>Back</button>
+            <button class="vision-btn maroon-bg-color">Back</button>
             <button class="vision-btn blue-bg-color" (click)="onSaveClaimInfo()">Submit</button>
           </div>
         </div>
