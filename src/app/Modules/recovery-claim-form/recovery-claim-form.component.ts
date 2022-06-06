@@ -76,6 +76,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   public minDate!: Date;
   public InsuranceEndDate: any;
 
+  public showMenu: boolean = true;
   constructor(
     private _formBuilder: FormBuilder,
     private newClaimService: NewClaimService,
@@ -747,6 +748,7 @@ export class RecoveryClaimFormComponent implements OnInit {
               type: 'success',
             });
           }
+          this.showMenu = false;
         }
       },
       (err) => {}
