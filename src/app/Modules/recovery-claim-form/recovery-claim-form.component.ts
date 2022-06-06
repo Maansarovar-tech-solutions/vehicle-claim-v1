@@ -24,6 +24,12 @@ export class RecoveryClaimFormComponent implements OnInit {
   public plateCodeList: any = [];
   public filterPlateCodeListOur!: Observable<any[]>;
   public filterPlateCodeListOther!: Observable<any[]>;
+  public makeList: any[] = [];
+  public filterMakeListOur!: Observable<any[]>;
+  public filterMakeListOther!: Observable<any[]>;
+  public modelList: any[] = [];
+  public filterModelListOur!: Observable<any[]>;
+  public filterModelListOther!: Observable<any[]>;
 
   public claimTypeList: any[] = [];
   public filterclaimTypeList!: Observable<any[]>;
@@ -46,11 +52,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   public insuranceTypeList: any = [];
   public filterinsuranceTypeList!: Observable<any[]>;
   public vehicleMakeId: any = '';
-  public makeList: any[] = [];
-  public filterMakeList!: Observable<any[]>;
   public vehicleModelId: any = '';
-  public modelList: any[] = [];
-  public filterModelList!: Observable<any[]>;
   public vehicleBodyId: any = '';
   public vehicleBodyList: any[] = [];
   public filterVehicleBodyList!: Observable<any[]>;
@@ -86,7 +88,6 @@ export class RecoveryClaimFormComponent implements OnInit {
     this.claimEditReq = JSON.parse(
       sessionStorage.getItem('claimEditReq') || '{}'
     );
-    console.log('VehicleDetails', this.VehicleDetails);
   }
 
   ngOnInit(): void {
@@ -141,8 +142,11 @@ export class RecoveryClaimFormComponent implements OnInit {
       InsuranceEndDate: ['', Validators.required],
       InsuranceTypeId: ['', Validators.required],
 
-      VehicleMakeId: ['', Validators.required],
-      VehicleModelId: ['', Validators.required],
+      VehicleMakeIdOur: ['', Validators.required],
+      VehicleMakeIdOther: ['', Validators.required],
+      VehicleModelIdOur: ['', Validators.required],
+      VehicleModelIdOther: ['', Validators.required],
+
       RegistrationTypeId: ['', Validators.required],
       VehicleBodyId: ['', Validators.required],
       ManufactureYear: ['', Validators.required],
@@ -197,7 +201,11 @@ export class RecoveryClaimFormComponent implements OnInit {
 
     this.makeList = await this.onGetVehicleMakeList();
     console.log('MakeList', this.insuranceTypeList);
-    this.filterMakeList = this.f.VehicleMakeId.valueChanges.pipe(
+    this.filterMakeListOur = this.f.VehicleMakeIdOur.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value, this.makeList))
+    );
+    this.filterMakeListOther = this.f.VehicleMakeIdOther.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value, this.makeList))
     );
@@ -294,14 +302,17 @@ export class RecoveryClaimFormComponent implements OnInit {
 
   async onChangeVehicleMake(Code: any) {
     this.modelList = await this.onGetVehicleModelList(Code);
-    this.filterModelList = this.f.VehicleModelId.valueChanges.pipe(
+    this.filterModelListOur = this.f.VehicleModelIdOur.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterModelList(value, this.modelList))
+    );
+    this.filterModelListOther = this.f.VehicleModelIdOther.valueChanges.pipe(
       startWith(''),
       map((value) => this._filterModelList(value, this.modelList))
     );
   }
   async onChangeVehicleModel(Code: any) {
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == Code);
-
     this.f.VehicleBodyId.setValue(this.modelList[index].BodyDescription);
     this.vehicleBodyId = this.modelList[index].BodyId;
   }
@@ -378,6 +389,11 @@ export class RecoveryClaimFormComponent implements OnInit {
   };
 
   onDisplayVehicleModel = (code: any) => {
+    if (!code) return '';
+    let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
+    return this.modelList[index].ModelDescription;
+  };
+  onDisplayVehicleModelother = (code: any) => {
     if (!code) return '';
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
     return this.modelList[index].ModelDescription;
@@ -524,11 +540,11 @@ export class RecoveryClaimFormComponent implements OnInit {
     return response;
   }
 
-  onGetPolicyInformation() {
+  onGetPolicyInformation(obj: any) {
     let UrlLink = `${this.ApiUrl1}api/searchvehicleinfo`;
     let ReqObj = {
-      VehicleChassisNumber: this.VehicleDetails?.VehicleChassisNumber,
-      PolicyNumber: this.VehicleDetails?.PolicyNumber,
+      VehicleChassisNumber: obj?.VehicleChassisNumber,
+      PolicyNumber: obj?.PolicyNumber,
     };
     return this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -548,8 +564,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           licenValidDate.setFullYear(licenValidDate.getFullYear() + 1);
           this.f.DriverDateOfBirth.setValue(driverDOB);
           this.f.LicenceValidUpto.setValue(licenValidDate);
-
-          this.onInitialFetchData();
+          this.onSaveClaimInfo();
         }
       },
       (err) => {}
@@ -595,7 +610,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       },
       PolicyInformation: {
         PolicyNumber: this.f.PolicyNumber.value,
-        CivilId: this.f.CivilId.value,
+        CivilId: this.f.OurCivilId.value,
         InsuranceStartDate: moment(this.f.InsuranceStartDate.value).format(
           'DD/MM/YYYY'
         ),
@@ -607,15 +622,15 @@ export class RecoveryClaimFormComponent implements OnInit {
       },
       VehicleDetails: [
         {
-          VehicleMakeId: this.f.VehicleMakeId.value,
-          VehicleModelId: this.f.VehicleModelId.value,
+          VehicleMakeId: this.f.VehicleMakeIdOur.value,
+          VehicleModelId: this.f.VehicleModelIdOur.value,
           VehicleBodyId: this.vehicleBodyId,
           RegistrationTypeId: this.f.RegistrationTypeId.value,
           ManufactureYear: this.f.ManufactureYear.value,
           ColorId: this.f.ColorId.value,
-          PlateCode: this.f.PlateCode.value,
-          PlateNumber: this.f.PlateNumber.value,
-          VehicleChassisNumber: this.f.VehicleChassisNumber.value,
+          PlateCode: this.f.OurPlateCode.value,
+          PlateNumber: this.f.OurPlateNumber.value,
+          VehicleChassisNumber: this.f.OurVehicleChassisNumber.value,
           VehicleEngineNumber: this.f.VehicleEngineNumber.value,
           VehicleCode: this.VehicleCode,
         },
@@ -639,10 +654,11 @@ export class RecoveryClaimFormComponent implements OnInit {
               type: 'success',
             });
           }
-          this.moveNext.emit({
+          let obj = {
             VehicleChassisNumber: data?.Result?.VehicleChassisNumber,
             PolicyNumber: this.f.PolicyNumber.value,
-          });
+          };
+          this.onGetPolicyInformation(obj);
         }
       },
       (err) => {}
@@ -696,11 +712,16 @@ export class RecoveryClaimFormComponent implements OnInit {
           'DD/MM/YYYY'
         ),
       },
+
       RecoveryInformation: {
-        CivilId: this.f.CivilId.value,
-        PlateCode: this.f.PlateCode.value,
-        PlateNumber: this.f.PlateNumber.value,
-        VehicleChassisNumber: this.f.VehicleChassisNumber.value,
+        VehMakeId: this.f.VehicleMakeIdOther.value,
+        VehMakeDesc: this.f.VehicleMakeIdOther.value,
+        VehModelId: this.f.VehicleModelIdOther.value,
+        VehModelDesc: this.f.VehicleModelIdOther.value,
+        CivilId: this.f.OtherCivilId.value,
+        PlateCode: this.f.OtherPlateCode.value,
+        PlateNumber: this.f.OtherPlateNumber.value,
+        VehicleChassisNumber: this.f.OtherVehicleChassisNumber.value,
         InsuranceId: this.f.InsuranceId.value,
       },
     };
@@ -726,7 +747,6 @@ export class RecoveryClaimFormComponent implements OnInit {
               type: 'success',
             });
           }
-          this.moveNext.emit();
         }
       },
       (err) => {}

@@ -235,39 +235,41 @@
                                     <mat-form-field class="mat-form-width" appearance="outline">
                                         <mat-label>Vehicle Make</mat-label>
                                         <input type="text" placeholder="Select Make" matInput
-                                            formControlName="VehicleMakeId" [matAutocomplete]="make" required>
+                                            formControlName="VehicleMakeIdOur" [matAutocomplete]="make" required>
                                         <mat-autocomplete autoActiveFirstOption #make="matAutocomplete"
                                             [displayWith]="onDisplayVehicleMake"
                                             (optionSelected)="onChangeVehicleMake($event.option.value)">
-                                            <mat-option *ngFor="let option of filterMakeList | async"
+                                            <mat-option *ngFor="let option of filterMakeListOur | async"
                                                 [value]="option.Code">
                                                 {{option.CodeDescription}}
+
                                             </mat-option>
                                         </mat-autocomplete>
                                         <mat-error
-                                            *ngIf="(f.VehicleMakeId.errors) || (!f.VehicleMakeId.valid && f.VehicleMakeId.touched)">
-                                            <span *ngIf="f.VehicleMakeId.errors?.required" class="error-text">This
+                                            *ngIf="(f.VehicleMakeIdOur.errors) || (!f.VehicleMakeIdOur.valid && f.VehicleMakeIdOur.touched)">
+                                            <span *ngIf="f.VehicleMakeIdOur.errors?.required" class="error-text">This
                                                 field
                                                 is required</span>
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
                                     <mat-form-field class="mat-form-width" appearance="outline">
                                         <mat-label>Vehicle Model</mat-label>
                                         <input type="text" placeholder="Select Model" matInput
-                                            formControlName="VehicleModelId" [matAutocomplete]="model" required>
+                                            formControlName="VehicleModelIdOur" [matAutocomplete]="model" required>
                                         <mat-autocomplete autoActiveFirstOption #model="matAutocomplete"
                                             [displayWith]="onDisplayVehicleModel"
                                             (optionSelected)="onChangeVehicleModel($event.option.value)">
-                                            <mat-option *ngFor="let option of filterModelList | async"
+                                            <mat-option *ngFor="let option of filterModelListOur | async"
                                                 [value]="option.ModelId">
                                                 {{option.ModelDescription}}
                                             </mat-option>
                                         </mat-autocomplete>
                                         <mat-error
-                                            *ngIf="(f.VehicleModelId.errors) || (!f.VehicleModelId.valid && f.VehicleModelId.touched)">
-                                            <span *ngIf="f.VehicleModelId.errors?.required" class="error-text">This
+                                            *ngIf="(f.VehicleModelIdOur.errors) || (!f.VehicleModelIdOur.valid && f.VehicleModelIdOur.touched)">
+                                            <span *ngIf="f.VehicleModelIdOur.errors?.required" class="error-text">This
                                                 field is required</span>
                                         </mat-error>
                                     </mat-form-field>
@@ -449,18 +451,18 @@
                                     <mat-form-field class="mat-form-width" appearance="outline">
                                         <mat-label>Vehicle Make</mat-label>
                                         <input type="text" placeholder="Select Make" matInput
-                                            formControlName="VehicleMakeId" [matAutocomplete]="make" required>
-                                        <mat-autocomplete autoActiveFirstOption #make="matAutocomplete"
+                                            formControlName="VehicleMakeIdOther" [matAutocomplete]="makeOther" required>
+                                        <mat-autocomplete autoActiveFirstOption #makeOther="matAutocomplete"
                                             [displayWith]="onDisplayVehicleMake"
                                             (optionSelected)="onChangeVehicleMake($event.option.value)">
-                                            <mat-option *ngFor="let option of filterMakeList | async"
+                                            <mat-option *ngFor="let option of filterMakeListOther | async"
                                                 [value]="option.Code">
                                                 {{option.CodeDescription}}
                                             </mat-option>
                                         </mat-autocomplete>
                                         <mat-error
-                                            *ngIf="(f.VehicleMakeId.errors) || (!f.VehicleMakeId.valid && f.VehicleMakeId.touched)">
-                                            <span *ngIf="f.VehicleMakeId.errors?.required" class="error-text">This
+                                            *ngIf="(f.VehicleMakeIdOther.errors) || (!f.VehicleMakeIdOther.valid && f.VehicleMakeIdOther.touched)">
+                                            <span *ngIf="f.VehicleMakeIdOther.errors?.required" class="error-text">This
                                                 field
                                                 is required</span>
                                         </mat-error>
@@ -470,18 +472,17 @@
                                     <mat-form-field class="mat-form-width" appearance="outline">
                                         <mat-label>Vehicle Model</mat-label>
                                         <input type="text" placeholder="Select Model" matInput
-                                            formControlName="VehicleModelId" [matAutocomplete]="model">
-                                        <mat-autocomplete autoActiveFirstOption #model="matAutocomplete"
-                                            [displayWith]="onDisplayVehicleModel"
-                                            (optionSelected)="onChangeVehicleModel($event.option.value)">
-                                            <mat-option *ngFor="let option of filterModelList | async"
+                                            formControlName="VehicleModelIdOther" [matAutocomplete]="modelOther">
+                                        <mat-autocomplete autoActiveFirstOption #modelOther="matAutocomplete"
+                                            [displayWith]="onDisplayVehicleModelother">
+                                            <mat-option *ngFor="let option of filterModelListOther | async"
                                                 [value]="option.ModelId">
                                                 {{option.ModelDescription}}
                                             </mat-option>
                                         </mat-autocomplete>
                                         <mat-error
-                                            *ngIf="(f.VehicleModelId.errors) || (!f.VehicleModelId.valid && f.VehicleModelId.touched)">
-                                            <span *ngIf="f.VehicleModelId.errors?.required" class="error-text">This
+                                            *ngIf="(f.VehicleModelIdOther.errors) || (!f.VehicleModelIdOther.valid && f.VehicleModelIdOther.touched)">
+                                            <span *ngIf="f.VehicleModelIdOther.errors?.required" class="error-text">This
                                                 field is required</span>
                                         </mat-error>
                                     </mat-form-field>
@@ -546,7 +547,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <mat-form-field appearance="outline">
-                                                <mat-label>Car Replacement</mat-label>
+                                                <mat-label>Car Replacement - No.Of.Days</mat-label>
                                                 <input type="number" matInput placeholder="No Of Days"
                                                     formControlName="NoOfDays">
                                                 <mat-error
@@ -589,6 +590,9 @@
                                     </mat-form-field>
                                 </div>
 
+                            </div>
+                            <div class="text-center">
+                                <button class="vision-btn blue-bg-color" (click)="onSavePolicyInfo()">Submit</button>
                             </div>
                         </div>
                     </div>
