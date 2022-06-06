@@ -17,6 +17,7 @@ declare var $:any;
 export class ClaimStatusComponent implements OnInit {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public ApiUrl2: any = this.AppConfig.ApiUrl2;
   public claimStatusList: any[] = [];
   public filterclaimStatusList!: Observable<any[]>;
   public claimStatusForm!: FormGroup;
@@ -33,6 +34,7 @@ export class ClaimStatusComponent implements OnInit {
   public statusName:any='';
   public recoveryType:any='';
   public recoveryPolicyInfo:any;
+  public isNewPolicy:boolean=false;
   claimType: string | null;
   imageUrl: any;
   uploadDocList: any[]=[];
@@ -206,7 +208,7 @@ export class ClaimStatusComponent implements OnInit {
     return response;
   }
   generateApiDetails(index:any){
-    let UrlLink = `${this.ApiUrl1}api/trueinspect/uploadimage`;
+    let UrlLink = `${this.ApiUrl2}api/trueinspect/uploadimage`;
     let ReqObj = {
       "ClaimNo":  this.claimDetails?.ClaimReferenceNumber,
       "ListOfPath": [this.uploadedDocList[index].FilePathName
@@ -224,7 +226,7 @@ export class ClaimStatusComponent implements OnInit {
     );
   }
   viewApiDetails(index:any){
-    let UrlLink = `${this.ApiUrl1}api/trueinspect/imagereport`;
+    let UrlLink = `${this.ApiUrl2}api/trueinspect/imagereport`;
     let ReqObj = {
       "assessment_id": this.uploadedDocList[index].Assessmentid,
       "Filename": this.uploadedDocList[index].FileName
@@ -233,7 +235,7 @@ export class ClaimStatusComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.documentAIDetails = data;
-        this.modalService.open(this.content1);
+        this.modalService.open(this.content1, { size: 'xl', backdrop: 'static' });
       },
       (err) => { }
     );
@@ -253,7 +255,6 @@ export class ClaimStatusComponent implements OnInit {
       let UrlLink = `${this.ApiUrl1}upload`;
       if(document.DocTypeId){
         let docList:any = this.docTypeList.filter((option) => option?.Code?.toLowerCase().includes(document.DocTypeId));
-        
         docDesc = docList[0].CodeDescription;
         console.log("Filtered DocList",docList,docDesc);
         let ReqObj = {
@@ -286,7 +287,7 @@ export class ClaimStatusComponent implements OnInit {
           (err) => { }
         );
       }
-      
+
     }
   }
   onDeleteDocument(index:any) {
@@ -372,7 +373,7 @@ export class ClaimStatusComponent implements OnInit {
   onGetPolicyInf(VehicleChassisNumber:any){
     let UrlLink = `${this.ApiUrl1}api/chassissearch`;
     let ReqObj = {
-      "VehicleChassisNumber":"KNAFU4114B59164564"
+      "VehicleChassisNumber":VehicleChassisNumber
     }
     return this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
       console.log("Search Data", data);
@@ -380,9 +381,13 @@ export class ClaimStatusComponent implements OnInit {
        this.recoveryPolicyInfo = data?.Result;
       }
       if(data?.ErrorMessage?.length >0){
-
+          this.isNewPolicy=true;
       }
     }, (err) => { })
+  }
+
+  onEnrichData(){
+    this.router.navigate(['/Home/policy/new-policy'],{ queryParams: { isPolicyForm: true } });
   }
 
   onGetClaimDetails(event:any) {

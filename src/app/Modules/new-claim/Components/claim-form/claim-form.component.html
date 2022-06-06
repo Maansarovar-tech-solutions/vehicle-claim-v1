@@ -179,25 +179,32 @@
                     </mat-form-field>
                   </div>
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                    <mat-form-field appearance="outline">
-                      <mat-label>No.Of.Days</mat-label>
-                      <input type="number" matInput placeholder="No Of Days" formControlName="NoOfDays">
-                      <mat-error
-                        *ngIf="(f.NoOfDays.errors) || (!f.NoOfDays.valid && f.NoOfDays.touched)">
-                        <span *ngIf="f.NoOfDays.errors?.required" class="error-text">This field is required</span>
-                      </mat-error>
-                    </mat-form-field>
+
+                    <div class="row">
+                        <div class="col-6">
+                          <mat-form-field appearance="outline">
+                            <mat-label>No.Of.Days</mat-label>
+                            <input type="number" matInput placeholder="No Of Days" formControlName="NoOfDays">
+                            <mat-error
+                              *ngIf="(f.NoOfDays.errors) || (!f.NoOfDays.valid && f.NoOfDays.touched)">
+                              <span *ngIf="f.NoOfDays.errors?.required" class="error-text">This field is required</span>
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-6">
+                          <mat-form-field appearance="outline">
+                            <mat-label>Per Day Cost</mat-label>
+                            <input type="number" matInput placeholder="Per Day Cost" formControlName="PerDayCost">
+                            <mat-error
+                              *ngIf="(f.PerDayCost.errors) || (!f.PerDayCost.valid && f.PerDayCost.touched)">
+                              <span *ngIf="f.PerDayCost.errors?.required" class="error-text">This field is required</span>
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+                    </div>
+
                   </div>
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Per Day Cost</mat-label>
-                      <input type="number" matInput placeholder="Per Day Cost" formControlName="PerDayCost">
-                      <mat-error
-                        *ngIf="(f.PerDayCost.errors) || (!f.PerDayCost.valid && f.PerDayCost.touched)">
-                        <span *ngIf="f.PerDayCost.errors?.required" class="error-text">This field is required</span>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
+
                   <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <mat-form-field appearance="outline">
                       <mat-label>Total Value</mat-label>
@@ -342,7 +349,7 @@
 
           </div>
           <div class="text-center my-4">
-            <button class="vision-btn maroon-bg-color" (click)="onSaveClaimInfo()">Back</button>
+            <button class="vision-btn maroon-bg-color" matStepperPrevious>Back</button>
             <button class="vision-btn blue-bg-color" (click)="onSaveClaimInfo()">Submit</button>
           </div>
         </div>

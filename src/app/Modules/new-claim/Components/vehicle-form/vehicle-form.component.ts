@@ -54,7 +54,7 @@ export class VehicleFormComponent implements OnInit {
   public VehicleCode: any = '';
   public EditReq: any = {};
   public isVehicleModel: boolean = true;
-  public isPolicyForm:boolean=true;
+  public isPolicyForm:boolean=false;
   public claimDetails: any;
   public isClaimDetails: boolean = false;
   public claimType:any='';
@@ -428,8 +428,8 @@ export class VehicleFormComponent implements OnInit {
       "PolicyInformation": {
         "PolicyNumber": this.f.PolicyNumber.value,
         "CivilId": this.f.CivilId.value,
-        "InsuranceStartDate": this.datePipe.transform(this.f.InsuranceStartDate.value, "dd/MM/yyyy"),
-        "InsuranceEndDate": this.datePipe.transform(this.f.InsuranceEndDate.value, "dd/MM/yyyy"),
+        "InsuranceStartDate":moment(this.f.InsuranceStartDate.value).format("DD/MM/YYYY"),
+        "InsuranceEndDate":moment(this.f.InsuranceEndDate.value).format("DD/MM/YYYY"),
         "InsuranceTypeId": this.f.InsuranceTypeId.value,
         "PolicyReferenceNumber": this.PolicyReferenceNumber
       },
