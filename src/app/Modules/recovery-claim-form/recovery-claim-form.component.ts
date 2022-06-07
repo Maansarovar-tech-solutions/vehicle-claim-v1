@@ -942,6 +942,7 @@ export class RecoveryClaimFormComponent implements OnInit {
             (data: any) => {
               console.log(data);
               let res:any = data;
+              this.myStepper.next();
               if(res?.ErrorMessage.length!=0){
                 j+=1;
               }

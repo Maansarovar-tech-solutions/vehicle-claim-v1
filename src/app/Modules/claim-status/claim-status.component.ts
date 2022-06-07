@@ -124,6 +124,7 @@ export class ClaimStatusComponent implements OnInit {
 
   async onFetchInitialData(){
   this.claimStatusList = await this.onGetInsuranceStatusList()||[];
+
   // let index = this.claimStatusList.findIndex((ele:any)=>ele.StatusCode == this.f.claimStatus.value);
   // console.log(index)
   // this.statusName = this.claimStatusList[index].StatusDesc;

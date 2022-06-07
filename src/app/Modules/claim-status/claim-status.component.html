@@ -334,7 +334,7 @@
                             <div class="d-md-flex flex-md-row mb-2">
                                 <div class="px-2 flex-fill">
                                     <div class="row">
-                                        <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+                                        <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (commonInformation?.Status == 'DNT' && recoveryType == 'Payable') || (recoveryType == 'Payable')">
                                             <div class="col-md-3 col-lg-3">
                                                 <div class="vision-form-control-box">
                                                     <label class="vision-form-label">Status</label>
@@ -342,7 +342,12 @@
                                                         <option value="">Select</option>
                                                         <ng-container *ngFor="let item of claimStatusList">
                                                           <option value="{{item.StatusCode}}"
-                                                            *ngIf="(item?.StatusCode == 'PED' || item?.StatusCode=='CRES') || (recoveryType == 'Payable')">
+                                                            *ngIf="
+                                                            ( (item?.StatusCode == 'PED' && commonInformation?.Status != 'ATP') ||
+                                                             (item?.StatusCode=='CRES' && commonInformation?.Status != 'ATP') ||
+                                                            item?.StatusCode == 'DNT' ||
+                                                            (item?.StatusCode == 'CNT' && commonInformation?.Status != 'ATP')) ||
+                                                             (recoveryType == 'Payable' && commonInformation?.Status != 'DNT' )">
                                                             {{item.StatusDesc}}</option>
                                                         </ng-container>
                                                     </select>
@@ -393,7 +398,7 @@
                     <div class="view-claim-information-item-body">
                         <div class="row">
                             <div class="col-md-4 col-lg-4 offset-8">
-                                <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+                                <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
                                     <div class="imag-card my-3" (click)="doc.click()">
                                         <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
                                         <div>
@@ -619,7 +624,7 @@
             </div>
         </div>
     </div>
-    <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
+    <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')">
         <div class="text-center my-4">
             <button class="vision-btn blue-bg-color" (click)="onFormSubmit()">Submit</button>
         </div>
