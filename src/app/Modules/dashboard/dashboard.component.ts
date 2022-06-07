@@ -113,12 +113,12 @@ export class DashboardComponent implements OnInit {
     );
   }
   leftMenuIcon:any = {
-    "PED": "../../assets/images/open.png",
-    "REJ" : "../../assets/images/rejected.png",
-    "ACP" : "../../assets/images/temporary.png",
-    "CREQ" : "../../assets/images/clarification-requested.png",
-    "SETL" : "../../assets/images/settlement.png",
-    "CRES" : "../../assets/images/clarified.png"
+    "PED": "./assets/images/open.png",
+    "REJ" : "./assets/images/rejected.png",
+    "ACP" : "./assets/images/temporary.png",
+    "CREQ" : "./assets/images/clarification-requested.png",
+    "SETL" : "./assets/images/settlement.png",
+    "CRES" : "./assets/images/clarified.png"
   }
   onGetTplClaimRecoveryList() {
     let UrlLink = `${this.ApiUrl1}api/dashboard/recovery/statuscount`;

@@ -10,8 +10,8 @@ import { NgModule } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { RecoveryClaimViewRoutingModule } from './recovery-claim-view-routing.module';
 import { ClaimTrackingComponent } from '../claim-tracking/claim-tracking.component';
-
-
+import {TimelineModule} from 'primeng/timeline';
+import { CardModule } from "primeng/card";
 @NgModule({
   declarations: [
     RecoveryClaimViewComponent,
@@ -26,7 +26,9 @@ import { ClaimTrackingComponent } from '../claim-tracking/claim-tracking.compone
     NgSelectModule,
     NgApexchartsModule,
     IconsModule,
-    TablesModule
+    TablesModule,
+    TimelineModule,
+    CardModule
   ],
 
   providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],

@@ -1,197 +1,217 @@
 .view-claim-information {
-  grid-area: main;
-  border-radius: 10px;
-  display: grid;
-  grid-auto-rows: auto;
-  grid-gap: 20px;
-  grid-template-columns: 1fr 1fr 1fr;
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.customborder {
+    border: 0.5px solid grey;
+    border-radius: 10px;
+}
+
+.imag-card {
+    height: 30px !important;
 }
 
 .view-claim-information-item {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  border-radius: .5rem;
-  overflow: hidden;
-  background-color: #ffffff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
 }
 
 .view-claim-information-item-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 900;
-  padding: 10px;
-  color: var(--theme1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 10px;
+    color: var(--theme1);
 }
 
 .view-claim-information-status-item {
-  grid-column: span 3;
+    grid-column: span 3;
 }
 
 .view-claim-information-status-item .status-radio-grid {
-  padding: 10px;
+    padding: 10px;
 }
 
 .status-radio-grid {
-  grid-area: main;
-  display: grid;
-  grid-auto-rows: auto;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 1fr 1fr;
+    grid-area: main;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .insurance-details .insurance-details-strip {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 4rem;
-  padding: 15px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  color: white;
-  background-color: #0d6efd;
-  border-radius: 1.5rem;
-
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 4rem;
+    padding: 15px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: white;
+    background-color: #0d6efd;
+    border-radius: 1.5rem;
 }
 
-
 .status-update-grid {
-  grid-area: main;
-  border-radius: 10px;
-  display: grid;
-  grid-auto-rows: auto;
-  grid-gap: 20px;
-  grid-template-columns: 1fr 1fr;
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr;
 }
 
 .status-update-grid-item {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  min-height: 100px;
-  border-radius: .5rem;
-  overflow: hidden;
-  background-color: #ffffff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    min-height: 100px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
 }
 
 .policy-info-strip {
-  border-radius: 1rem;
+    border-radius: 1rem;
 }
 
 .policy-info-strip .view-claim-information-item-title {
-  padding: 10px 20px;
-  color: white;
-  background-color: #0547f3;
-  justify-content: start;
-
+    padding: 10px 20px;
+    color: white;
+    background-color: #0547f3;
+    justify-content: start;
 }
 
 .policy-info-strip .policy-info-strip-icon {
-  background-color: white;
-  padding: 10px;
-  border-radius: 50%;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.25),
-              0 2px 2px rgba(0,0,0,0.20),
-              0 4px 4px rgba(0,0,0,0.15),
-              0 8px 8px rgba(0,0,0,0.10),
-              0 16px 16px rgba(0,0,0,0.05);
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.20), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.10), 0 16px 16px rgba(0, 0, 0, 0.05);
 }
 
 .policy-info-strip .policy-info-strip-title {
-  margin: 0 .8rem;
+    margin: 0 .8rem;
 }
 
 .policy-info-strip-label {
-  font-weight: 900;
+    font-weight: 900;
 }
 
 .policy-info-strip-value {
-  font-weight: 600;
-  font-size: 14px;
-
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .view-claim-information .list-group-flush .list-group-item {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .view-claim-information-item-remarks {
-  grid-column: span 3;
+    grid-column: span 3;
 }
 
 .view-claim-information-item-remarks .view-claim-information-item-body {
-  padding: 10px 20px;
+    padding: 10px 20px;
 }
 
 .claim-type:first-child {
-  grid-column-end: 4;
-}
-.claim-type .view-claim-information-item-title{
-  background-color: #0ec772;
-  font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 1.1px;
-}
-.policy-info{
-  grid-column-start: 1;
+    grid-column-end: 4;
 }
 
-.document-info{
-  grid-column: span 3;
+.claim-type .view-claim-information-item-title {
+    background-color: #0ec772;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
 }
 
-.document-preview .bg-light{
-  margin: .5rem;
+.policy-info {
+    grid-column-start: 1;
 }
-.document-preview .doc-preview{
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.doc-download{
-  text-align: center;
-  color: var(--theme1);
-}
-.fault-company .view-claim-information-item-title{
- color: var(--theme2);
- font-weight: 900;
 
+.document-info {
+    grid-column: span 3;
 }
-.recovery-claim-information{
-  grid-area: main;
-  border-radius: 10px;
-  display: grid;
-  grid-auto-rows: auto;
-  grid-gap: 20px;
-  grid-template-columns: 1fr 1fr;
+
+.document-preview .bg-light {
+    margin: .5rem;
 }
-.recovery-claim-information-item{
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  border-radius: .5rem;
-  /* overflow: hidden; */
-  padding: 0.155rem;
-  background-color: #ffffff;
+
+.document-preview .doc-preview {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.recovery-claim-information-item-title{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 900;
-  padding: 10px;
-  color: var(--theme1);
+
+.doc-download {
+    text-align: center;
+    color: var(--theme1);
 }
+
+.fault-company .view-claim-information-item-title {
+    color: var(--theme2);
+    font-weight: 900;
+}
+
+.recovery-claim-information {
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.recovery-claim-information-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    /* overflow: hidden; */
+    padding: 0.155rem;
+    background-color: #ffffff;
+}
+
+.recovery-claim-information-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 10px;
+    color: var(--theme1);
+}
+
 .recovery-claim-information .list-group-flush .list-group-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.300rem 0.7rem;
-  font-size: 14.5px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.300rem 0.7rem;
+    font-size: 14.5px;
 }
-.recovery-claim-information-item:nth-child(1){
-  border: 1px solid green;
-  position: relative;
-}
-.recovery-claim-information-item:nth-child(2){
-  border: 1px solid red;
-  position: relative;
 
+.recovery-claim-information-item:nth-child(1) {
+    border: 1px solid green;
+    position: relative;
 }
+
+.recovery-claim-information-item:nth-child(2) {
+    border: 1px solid red;
+    position: relative;
+}
+
+.ownerDoc {
+    border: 1px solid green;
+}
+
+.recoveryDoc {
+    border: 1px solid red;
+}
+
+
 /* .recovery-claim-information-item:nth-child(4){
   grid-column: span 2;
 }
@@ -200,94 +220,104 @@
 } */
 
 .triangle-down {
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-top: 100px solid red;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 100px solid red;
 }
+
 .flag-green {
-  width: 35px;
-  height: 30px;
-  box-sizing: content-box;
-  padding-top: 10px;
-  position: relative;
-  background: green;
-  color: white;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-align: center;
-  text-transform: uppercase;
+    width: 35px;
+    height: 30px;
+    box-sizing: content-box;
+    padding-top: 10px;
+    position: relative;
+    background: green;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
 }
+
 .flag-green:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-bottom: 10px solid #fff;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid #fff;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
 }
+
 .flag-red {
-  width: 35px;
-  height: 30px;
-  box-sizing: content-box;
-  padding-top: 10px;
-  position: relative;
-  background: red;
-  color: white;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-align: center;
-  text-transform: uppercase;
+    width: 35px;
+    height: 30px;
+    box-sizing: content-box;
+    padding-top: 10px;
+    position: relative;
+    background: red;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
 }
+
 .flag-red:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-bottom: 10px solid #fff;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-}
-.view-more-btn a{
-  color:#0547f3;
-  border-bottom: 1px solid #0547f3;
-  cursor: pointer;
-  padding: 0 .5rem;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid #fff;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
 }
 
-.label-red{
-  color: red;
+.view-more-btn a {
+    color: #0547f3;
+    border-bottom: 1px solid #0547f3;
+    cursor: pointer;
+    padding: 0 .5rem;
 }
-.label-green{
-  color: green;
-}
-.status-list .list-group-item{
-  display: block !important;
-}
-.fault-tag-red{
-  background-color: red;
 
+.label-red {
+    color: red;
 }
-.fault-tag-green{
-  background-color: green;
 
+.label-green {
+    color: green;
 }
-.fault-tag{
-  position: absolute;
-  display: flex;
-  top: 0;
-  padding: .5rem;
-  color: white;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 0.155rem;
+
+.status-list .list-group-item {
+    display: block !important;
 }
+
+.fault-tag-red {
+    background-color: red;
+}
+
+.fault-tag-green {
+    background-color: green;
+}
+
+.fault-tag {
+    position: absolute;
+    display: flex;
+    top: 0;
+    padding: .5rem;
+    color: white;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0.155rem;
+}
+
+
 /* .middle-line{
   position: absolute;
   height: 100vh;
