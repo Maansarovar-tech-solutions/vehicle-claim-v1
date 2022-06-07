@@ -37,7 +37,15 @@
                 <ng-container *ngIf="col.config.isCodeChar">
                     {{ element.PlateCharacter }}-{{ element.PlateNumber }}
                 </ng-container>
-
+                <ng-container *ngIf="col.config.isViewClaim">
+                    <a class="action-btn list-group-item-primary mx-1" (click)="onEdit.emit(element)">View</a>
+                </ng-container>
+                <ng-container *ngIf="col.config.isClaimCount && element.ClaimCount!=0">
+                    <a class="action-btn list-group-item-primary mx-1" (click)="onEdit.emit(element)">{{element.ClaimCount}}</a>
+                </ng-container>
+                <ng-container *ngIf="col.config.isClaimCount && element.ClaimCount==0">
+                    <span>N/A</span>
+                </ng-container>
             </ng-template>
         </td>
     </ng-container>

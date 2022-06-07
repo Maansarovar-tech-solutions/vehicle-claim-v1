@@ -222,7 +222,7 @@ export class NavbarComponent implements OnInit {
       // ReqObj = {
       //   "ChassisNo": this.chassisForm.controls['chassisno'].value
       // }
-      UrlLink = `${this.ApiUrl1}api/searchvehicleinfo`;
+      UrlLink = `${this.ApiUrl1}api/search/vehicle/policies`;
       ReqObj = {
         "VehicleChassisNumber": this.searchValue
       }
@@ -239,11 +239,8 @@ export class NavbarComponent implements OnInit {
     return this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
       console.log("Search Data", data);
       this.searchData = data.Result?.VehicleDetails;
-
-      if (this.searchBy == 'Chassis Number' && data.Result) {
         sessionStorage.setItem("searchList", JSON.stringify(data.Result));
         this.router.navigate(['Home/Vehicle-Search'])
-      }
 
     }, (err) => { })
   }
