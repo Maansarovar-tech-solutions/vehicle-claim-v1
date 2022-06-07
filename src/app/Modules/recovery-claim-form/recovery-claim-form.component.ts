@@ -250,14 +250,15 @@ export class RecoveryClaimFormComponent implements OnInit {
 
     this.onGetYears();
     if (Object.keys(this.EditReq).length != 0) {
-      // await this.onPolicyEdit(this.EditReq);
+      // 
       this.onGetClaimDetails(this.EditReq?.VehicleChassisNumber);
     }
 
     if (Object.keys(this.claimEditReq).length !== 0) {
       console.log(this.claimEditReq);
       this.searchValue = this.claimEditReq?.VehicleChassisNumber;
-      // await this.onClaimEdit(this.claimEditReq);
+      //await this.onPolicyEdit(this.claimEditReq);
+      //await this.onClaimEdit(this.claimEditReq);
     }
   }
 
@@ -495,10 +496,10 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.ClaimReferenceNumber = claim?.ClaimReferenceNumber;
           this.PolicyReferenceNumber = claim?.PolicyReferenceNumber;
 
-          this.f.CivilId.setValue(RecoveryInformation?.CivilId);
-          this.f.PlateCode.setValue(RecoveryInformation?.PlateCode);
-          this.f.PlateNumber.setValue(RecoveryInformation?.PlateNumber);
-          this.f.VehicleChassisNumber.setValue(
+          this.f.OurCivilId.setValue(RecoveryInformation?.CivilId);
+          this.f.OurPlateCode.setValue(RecoveryInformation?.PlateCode);
+          this.f.OurPlateNumber.setValue(RecoveryInformation?.PlateNumber);
+          this.f.OurVehicleChassisNumber.setValue(
             RecoveryInformation?.VehicleChassisNumber
           );
           this.f.InsuranceId.setValue(RecoveryInformation?.InsuranceId);

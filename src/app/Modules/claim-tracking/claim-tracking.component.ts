@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddVehicleService } from '../add-vehicle/add-vehicle.service';
 import * as Mydatas from '../../app-config.json';
 
@@ -17,7 +17,7 @@ export class ClaimTrackingComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private addVehicleService: AddVehicleService,
-
+    private router:Router
 
   ) { }
 
@@ -48,5 +48,8 @@ export class ClaimTrackingComponent implements OnInit {
       (err) => { }
     );
   }
-
+  onEditClaim(){
+    sessionStorage.setItem('claimEditReq',JSON.stringify(this.trackingDetails));
+    this.router.navigate(['Home/recovery-claim-form'],{queryParams:event});
+  }
 }
