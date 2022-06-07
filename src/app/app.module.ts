@@ -38,6 +38,8 @@ import { BreadcrumbComponent } from './Modules/breadcrumb/breadcrumb.component';
 import { PolicyComponent } from './Modules/policy/policy.component';
 import { AddNewLoginDetailsComponent } from './Modules/admin/loginCreation/add-new-login-details/add-new-login-details.component';
 import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-login-details/new-login-details.component';
+import { TimelineModule } from 'primeng/timeline';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-logi
     PageHeaderModule,
     ToastNotificationsModule.forRoot({duration: 6000, type: 'primary',position:'top-right'}),
     NgDynamicBreadcrumbModule,
-    ButtonsModule
+    ButtonsModule,
+    TimelineModule,
+    CardModule
   ],
   providers: [
     ɵb,

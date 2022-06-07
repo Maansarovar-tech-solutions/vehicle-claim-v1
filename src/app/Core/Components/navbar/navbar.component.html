@@ -2,7 +2,7 @@
     <mat-toolbar-row class="toolbar-row-1">
         <span class="example-spacer"></span>
         <div mat-button [matMenuTriggerFor]="menu" class="user-sec">
-            <img src="../../../../assets/images/user.png" class="user-img" />
+            <img src="./assets/images/user.png" class="user-img" />
             <i class="	fas fa-angle-down down-aro"></i>
         </div>
         <button (click)="onLogOut()" class="logout-btn123 btn btn-small">
@@ -19,8 +19,8 @@
 
     <mat-toolbar-row class="toolbar-row-2">
         <div class="logos">
-            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="../../../../assets/images/gulf-insu.png" class="img-fluid">
-            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="../../../../assets/images/qic-insu.png" class="img-fluid">
+            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="./assets/images/gulf-insu.png" class="img-fluid">
+            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="./assets/images/qic-insu.png" class="img-fluid">
         </div>
         <span class="example-spacer"></span>
         <div class="">
@@ -108,11 +108,11 @@
                 API Doc
               </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="getUserCreation()">
                               UserCreation
                             </a>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
@@ -124,9 +124,9 @@
 
 <!-- <div class="row">
   <div class="col-md-7 col-3">
-    <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="../../../../assets/images/gulf-insu.png"
+    <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="./assets/images/gulf-insu.png"
       class="img-fluid">
-    <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="../../../../assets/images/qic-insu.png"
+    <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="./assets/images/qic-insu.png"
       class="img-fluid">
   </div>
   <div class="col-md-5 col-9  text-right top-nave-right">
@@ -226,32 +226,32 @@
                 <div class="well text-right">
                     <div *ngIf="pageName == 'Receivable'">
                         <button type="button" (click)="onStartNewClaim(11)" class="report-btn"><img
-                src="../../../../assets/images/recovery.png" class="report-icon" /> <span class="report-text">Add
+                src="./assets/images/recovery.png" class="report-icon" /> <span class="report-text">Add
                 Recovery Claim</span></button>
                     </div>
                     <div *ngIf="pageName == 'Claim'">
                         <button type="button" (click)="onStartNewClaim(12)" class="report-btn"><img
-                src="../../../../assets/images/losses.png" class="report-icon" /> <span
+                src="./assets/images/losses.png" class="report-icon" /> <span
                 class="report-text">Claim</span></button>
                     </div>
                     <div *ngIf="pageName == 'Policy'">
                         <button type="button" (click)="onUploadPolicy()" class="report-btn"><img
-                src="../../../../assets/images/losses.png" class="report-icon" /> <span
+                src="./assets/images/losses.png" class="report-icon" /> <span
                 class="report-text">Upload Policy</span></button>
                     </div>
                     <div *ngIf="pageName == 'Policy'">
                         <button type="button" (click)="onStartNewClaim('Policy')" class="report-btn"><img
-                src="../../../../assets/images/losses.png" class="report-icon" /> <span
+                src="./assets/images/losses.png" class="report-icon" /> <span
                 class="report-text">Add Policy</span></button>
                     </div>
 
                     <ng-container *ngIf="pageName == 'Vehicle Search'">
                         <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(12)"><img
-              src="../../../../assets/images/losses.png" class="report-icon" /> <span
+              src="./assets/images/losses.png" class="report-icon" /> <span
               class="report-text">Add Claim</span>
           </button>
                         <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(11)"><img
-              src="../../../../assets/images/losses.png" class="report-icon" /> <span
+              src="./assets/images/losses.png" class="report-icon" /> <span
               class="report-text">Add Recovery Claim</span>
           </button>
                     </ng-container>

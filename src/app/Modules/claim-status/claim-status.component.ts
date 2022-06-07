@@ -8,6 +8,8 @@ import { AddVehicleService } from '../add-vehicle/add-vehicle.service';
 import Swal from 'sweetalert2';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NewClaimService } from '../new-claim/new-claim.service';
+import { Toaster } from 'ngx-toast-notifications';
+import { PrimeIcons } from "primeng/api";
 declare var $:any;
 @Component({
   selector: 'app-claim-status',
@@ -49,6 +51,9 @@ export class ClaimStatusComponent implements OnInit {
   @ViewChild('content') content : any;
   @ViewChild('content1') content1 : any;
   documentAIDetails: any[]=[];
+  ownerDocList: any;
+  recoveryDocList: any;
+  events1: any[]=[];
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
@@ -56,11 +61,37 @@ export class ClaimStatusComponent implements OnInit {
     private router:Router,
     private modalService:NgbModal,
     private newClaimService:NewClaimService,
-
+    private toaster: Toaster,
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType=sessionStorage.getItem("claimType");
-
+    this.events1 = [
+      {
+        status: "Ordered",
+        date: "15/10/2020 10:30",
+        icon: PrimeIcons.SHOPPING_CART,
+        color: "#9C27B0",
+        image: "game-controller.jpg"
+      },
+      {
+        status: "Processing",
+        date: "15/10/2020 14:00",
+        icon: PrimeIcons.COG,
+        color: "#673AB7"
+      },
+      {
+        status: "Shipped",
+        date: "15/10/2020 16:15",
+        icon: PrimeIcons.ENVELOPE,
+        color: "#FF9800"
+      },
+      {
+        status: "Delivered",
+        date: "16/10/2020 10:00",
+        icon: PrimeIcons.CHECK,
+        color: "#607D8B"
+      }
+    ];
 
     this.activatedRoute.queryParams.subscribe(
       (params: any) => {
@@ -108,8 +139,16 @@ export class ClaimStatusComponent implements OnInit {
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
-        this.uploadedDocList = data.Result.OwnCompanyDocuments;
-        this.uploadedDocList = this.uploadedDocList.concat(data.Result.RecoveryCompanyDocuments);
+        if(this.claimType == 'Receivable'){
+          this.ownerDocList = data.Result.OwnCompanyDocuments;
+          this.recoveryDocList = data.Result.RecoveryCompanyDocuments;
+        }
+        else{
+          this.ownerDocList = data.Result.RecoveryCompanyDocuments;
+          this.recoveryDocList = data.Result.OwnCompanyDocuments;
+        }
+        
+        //this.uploadedDocList = this.uploadedDocList.concat(data.Result.RecoveryCompanyDocuments);
         this.getDocumentTypeList();
       },
       (err) => { }
@@ -277,7 +316,13 @@ export class ClaimStatusComponent implements OnInit {
             }
             i+=1;
             if(i==this.uploadDocList.length && j==0){
-              this.router.navigate(['Home']);
+              this.uploadDocList = [];
+              this.onGetUploadedDocuments();
+              this.toaster.open({
+                text: 'Documents Uploaded Successfully',
+                caption: 'Upload',
+                type: 'success',
+              });
             }
             else{
               this.uploadedDocList = [];
@@ -336,12 +381,12 @@ export class ClaimStatusComponent implements OnInit {
         console.log(data)
         let res:any = data;
         if(res?.ErrorMessage.length==0){
-          if(this.uploadDocList.length!=0){
-            this.saveDocuments();
-          }
-          else{
-            this.router.navigate(['Home']);
-          }
+          this.toaster.open({
+            text: 'Claim Status Updated Successfully',
+            caption: 'Submitted',
+            type: 'success',
+          });
+          this.router.navigate(['Home']);
         }
       },
       (err) => { }
