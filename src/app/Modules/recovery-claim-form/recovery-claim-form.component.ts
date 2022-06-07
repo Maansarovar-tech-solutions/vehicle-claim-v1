@@ -68,6 +68,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   public plateCodeId: any = '';
   public yearList: any[] = [];
   public filterYearList!: Observable<any[]>;
+  public claimResponse:any;
 
   public bodyId: any = '';
   public EditReq: any = {};
@@ -100,6 +101,8 @@ export class RecoveryClaimFormComponent implements OnInit {
     this.claimEditReq = JSON.parse(
       sessionStorage.getItem('claimEditReq') || '{}'
     );
+    this.claimTypeId = sessionStorage.getItem('claimTypeId');
+
   }
 
   ngOnInit(): void {
@@ -126,8 +129,8 @@ export class RecoveryClaimFormComponent implements OnInit {
       AccidentDate: ['', Validators.required],
       ClaimTypeId: ['', Validators.required],
       PoliceReferenceNo: ['', Validators.required],
-      AccidentLocation: ['', Validators.required],
-      AccidentDescription: ['', Validators.required],
+      AccidentLocation: [''],
+      AccidentDescription: [''],
       SalvageAmount: [''],
       SalvagePortal: [true],
 
@@ -143,8 +146,8 @@ export class RecoveryClaimFormComponent implements OnInit {
       OurPlateNumber: ['', Validators.required],
       VehicleMakeIdOur: ['', Validators.required],
       VehicleModelIdOur: ['', Validators.required],
-      VehicleBodyId: ['', Validators.required],
-      RegistrationTypeId: ['', Validators.required],
+      VehicleBodyId: [''],
+      RegistrationTypeId: [''],
       ManufactureYear: ['', Validators.required],
       ColorId: ['', Validators.required],
       OurCivilId: ['', Validators.required],
@@ -243,14 +246,14 @@ export class RecoveryClaimFormComponent implements OnInit {
 
     this.onGetYears();
     if (Object.keys(this.EditReq).length != 0) {
-      await this.onPolicyEdit(this.EditReq);
+      // await this.onPolicyEdit(this.EditReq);
       this.onGetClaimDetails(this.EditReq?.VehicleChassisNumber);
     }
 
     if (Object.keys(this.claimEditReq).length !== 0) {
       console.log(this.claimEditReq);
       this.searchValue = this.claimEditReq?.VehicleChassisNumber;
-      await this.onClaimEdit(this.claimEditReq);
+      // await this.onClaimEdit(this.claimEditReq);
     }
   }
 
@@ -748,6 +751,9 @@ export class RecoveryClaimFormComponent implements OnInit {
       (data: any) => {
         if (data?.Message == 'Success') {
           console.log(data);
+          this.claimResponse = data?.Result;
+          this.ClaimReferenceNumber = this.claimResponse?.ClaimReferenceNumber;
+          this.onGetUploadedDocuments(this.ClaimReferenceNumber);
           sessionStorage.removeItem('claimEditReq');
           if (data?.Result?.Response == 'Saved Successfully') {
             console.log(data?.Result?.Response);

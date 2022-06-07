@@ -55,7 +55,13 @@
                 <div class="vision-grid-item claim-chart-item">
                     <div class="vision-grid-item-title">
                         <div>Total {{statusName}}</div>
-                        <div></div>
+                        <div>
+                          <select [(ngModel)]="selectedDays" class="form-select form-select-sm" (change)="onGetTotalClaimsGraph()">
+                             <ng-container *ngFor="let item of daysDropdown">
+                              <option [ngValue]="item">{{item.startDay}}-{{item.endDay}}</option>
+                             </ng-container>
+                          </select>
+                        </div>
                     </div>
                     <div class="vision-grid-item-body">
                         <ng-container *ngIf="totalGraphClaimCounts">

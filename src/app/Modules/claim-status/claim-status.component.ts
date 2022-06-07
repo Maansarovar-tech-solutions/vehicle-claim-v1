@@ -51,8 +51,8 @@ export class ClaimStatusComponent implements OnInit {
   @ViewChild('content') content : any;
   @ViewChild('content1') content1 : any;
   documentAIDetails: any[]=[];
-  ownerDocList: any;
-  recoveryDocList: any;
+  ownerDocList: any[]=[];
+  recoveryDocList: any[]=[];
   events1: any[]=[];
   constructor(
     private _formBuilder: FormBuilder,
@@ -147,7 +147,7 @@ export class ClaimStatusComponent implements OnInit {
           this.ownerDocList = data.Result.RecoveryCompanyDocuments;
           this.recoveryDocList = data.Result.OwnCompanyDocuments;
         }
-        
+
         //this.uploadedDocList = this.uploadedDocList.concat(data.Result.RecoveryCompanyDocuments);
         this.getDocumentTypeList();
       },
@@ -181,9 +181,9 @@ export class ClaimStatusComponent implements OnInit {
     let userDetails = this.userDetails?.LoginResponse;
     let ReqObj = {
       "ClaimNumber": this.claimDetails?.ClaimReferenceNumber,
-      "DocumentReferenceNumber": this.uploadedDocList[index].DocumentReferenceNumber,
-      "DocumentTypeId": this.uploadedDocList[index].DocTypeId,
-      "InsuranceId": this.uploadedDocList[index]?.InsuranceId
+      "DocumentReferenceNumber": this.ownerDocList[index].DocumentReferenceNumber,
+      "DocumentTypeId": this.ownerDocList[index].DocTypeId,
+      "InsuranceId": this.ownerDocList[index]?.InsuranceId
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -213,9 +213,9 @@ export class ClaimStatusComponent implements OnInit {
         let userDetails = this.userDetails?.LoginResponse;
         let ReqObj = {
           "ClaimNumber": this.claimDetails?.ClaimReferenceNumber,
-          "DocumentReferenceNumber": this.uploadedDocList[index].DocumentReferenceNumber,
-          "DocumentTypeId": this.uploadedDocList[index].DocumentTypeId,
-          "InsuranceId": this.uploadedDocList[index]?.InsuranceId
+          "DocumentReferenceNumber": this.ownerDocList[index].DocumentReferenceNumber,
+          "DocumentTypeId": this.ownerDocList[index].DocumentTypeId,
+          "InsuranceId": this.ownerDocList[index]?.InsuranceId
         }
         this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
           (data: any) => {
@@ -250,14 +250,14 @@ export class ClaimStatusComponent implements OnInit {
     let UrlLink = `${this.ApiUrl2}api/trueinspect/uploadimage`;
     let ReqObj = {
       "ClaimNo":  this.claimDetails?.ClaimReferenceNumber,
-      "ListOfPath": [this.uploadedDocList[index].FilePathName
+      "ListOfPath": [this.ownerDocList[index].FilePathName
       ]
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         if(data.assessment_id){
-          this.uploadedDocList = [];
+          this.ownerDocList = [];
           this.onGetUploadedDocuments();
         }
       },
@@ -267,8 +267,8 @@ export class ClaimStatusComponent implements OnInit {
   viewApiDetails(index:any){
     let UrlLink = `${this.ApiUrl2}api/trueinspect/imagereport`;
     let ReqObj = {
-      "assessment_id": this.uploadedDocList[index].Assessmentid,
-      "Filename": this.uploadedDocList[index].Param
+      "assessment_id": this.ownerDocList[index].Assessmentid,
+      "Filename": this.ownerDocList[index].Param
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -352,13 +352,15 @@ export class ClaimStatusComponent implements OnInit {
     })
   }
   onViewDocument(index:any) {
+    console.log("Recieved View",this.uploadDocList[index]);
     this.viewFileName = this.uploadDocList[index].filename;
     this.veiwSelectedDocUrl = this.uploadDocList[index].url;
     this.modalService.open(this.content);
   }
   onViewUploadedDocument(index:any) {
-    this.viewFileName = this.uploadedDocList[index].FileName;
-    this.veiwSelectedDocUrl = this.uploadedDocList[index].ImgUrl;
+    console.log("Recieved View",this.ownerDocList[index]);
+    this.viewFileName = this.ownerDocList[index].FileName;
+    this.veiwSelectedDocUrl = this.ownerDocList[index].ImgUrl;
     this.modalService.open(this.content);
   }
    hide() {

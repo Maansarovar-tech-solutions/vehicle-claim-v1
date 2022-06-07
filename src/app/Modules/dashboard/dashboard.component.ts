@@ -69,7 +69,11 @@ export class DashboardComponent implements OnInit {
   public totalClaimCounts: any;
   public totalGraphClaimCounts: any;
   public recoveryType: any = '';
-
+  public daysDropdown:any[]=[];
+  public selectedDays:any={
+    startDay:0,
+    endDay:5,
+  };
   constructor(
     private dashboardService: DashboardService,
     private router: Router,
@@ -77,6 +81,24 @@ export class DashboardComponent implements OnInit {
     this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType = sessionStorage.getItem("claimType");
 
+    this.daysDropdown=[
+      {
+        startDay:0,
+        endDay:5,
+      },
+      {
+        startDay:5,
+        endDay:10,
+      },
+      {
+        startDay:10,
+        endDay:20,
+      },
+      {
+        startDay:20,
+        endDay:365,
+      }
+    ]
 
   }
 
@@ -188,12 +210,14 @@ export class DashboardComponent implements OnInit {
   }
 
   onGetTotalClaimsGraph() {
-    let UrlLink = `${this.ApiUrl1}api/graph/datewise`;
+    let UrlLink = `${this.ApiUrl1}api/graph/dayswise`;
     let userDetails = this.LoginDetails?.LoginResponse;
     let ReqObj = {
       "InsuranceId": userDetails?.InsuranceId,
-      "StartDate": "12/03/2022",
-      "EndDate": "30/05/2022",
+      // "StartDate": "12/03/2022",
+      // "EndDate": "30/05/2022",
+      "StartDay":this.selectedDays.startDay,
+      "EndDay": this.selectedDays.endDay,
       "Claim": this.statusName
     }
     this.dashboardService.onPostMethodSync(UrlLink, ReqObj).subscribe(

@@ -103,7 +103,7 @@
                                                     formControlName="SalvageAmount">
                                             </mat-form-field>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                             <div class="py-3">
                                                 <mat-slide-toggle formControlName="SalvagePortal">Do You Want Salvage
                                                     Portal:
@@ -417,7 +417,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="recovery-claim-form-item">
+                        <div class="recovery-claim-form-item" *ngIf="f.ClaimTypeId.value == '11'">
                             <div class="recovery-claim-form-item-title fault-red-green">
                                 Others Vehicle - At Fault
                             </div>
@@ -635,30 +635,34 @@
             </div>
 
             <div class="collapse" [ngClass]="{'show':!showMenu}">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-warning">Claim No</li>
-                    <li class="list-group-item list-group-item-warning">Policy No</li>
-                    <li class="list-group-item list-group-item-warning">Reference No</li>
+                <ul class="list-group claimdetails">
+                    <li class="list-group-item">
+                      <div>Claim Number</div>
+                      <div>{{claimResponse?.ClaimNumber}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <div> Policy No</div>
+                      <div>{{claimResponse?.PolicyNumber}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <div>Vehicle</div>
+                      <div>{{claimResponse?.VehicleMakeDesc}} / {{claimResponse?.VehicleModelDesc}}/{{claimResponse?.vehicleModelDesc}}</div>
+                    </li>
 
                 </ul>
-                <div class="claim-form-grid-item">
+                <div class="claim-form-grid-item mt-3">
                   <div class="claim-form-grid-item-title">
                       Document Information
                   </div>
                   <div class="claim-form-grid-item-body">
-                      <div class="claim-form-grid-item" *ngIf="uploadedDocList.length!=0">
-                          <div class="claim-form-grid-item-title">
-                              <span>Uploaded Documents</span>
-                              <span>
-                              <telegram-icon></telegram-icon>
-                            </span>
-                          </div>
+                      <div class="claim-form-grid-item" *ngIf="uploadedDocList.length!=0  || uploadDocList.length!=0">
+
                           <div class="claim-form-grid-item-body">
-                              <ng-container *ngIf="uploadedDocList.length==0">
+                              <!-- <ng-container *ngIf="uploadedDocList.length==0">
                                   <div class="text-center">
                                       <p>No Document Available</p>
                                   </div>
-                              </ng-container>
+                              </ng-container> -->
                               <ng-container *ngIf="uploadedDocList.length!=0 || uploadDocList.length!=0">
                                   <table class="table">
                                       <thead>
