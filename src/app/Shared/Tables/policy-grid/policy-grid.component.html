@@ -33,6 +33,7 @@
                 <ng-container *ngIf="col.config.isEditActions">
                     <a class="action-btn list-group-item-primary mx-1" (click)="onEdit.emit(element)">Edit</a>
                 </ng-container>
+
                 <ng-container *ngIf="col.config.isCodeChar">
                     {{ element.PlateCharacter }}-{{ element.PlateNumber }}
                 </ng-container>

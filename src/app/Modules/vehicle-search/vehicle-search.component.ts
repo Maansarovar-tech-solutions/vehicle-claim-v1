@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as Mydatas from '../../app-config.json';
 import { Router } from '@angular/router';
 import { VehicleSearchService } from './vehicle-search.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-vehicle-search',
@@ -17,22 +18,29 @@ export class VehicleSearchComponent implements OnInit {
   public selectedTab: string = 'Chassis Number';
   public LoginDetails: any;
   public searchedDetails:any;chassisSection = false;
-  item: any;
+  item: any;claimType:any="";
   policyNo: any;
   civilId: any;
   insuranceStartDate: any;
   insuranceEndDate: any;
   insuranceType: any;
   claimDetails: any;
-  isClaimDetails: boolean = false;
+  isClaimDetails: boolean = false;insuranceList:any[]=[];
+  columnHeader: any;
+  startDate: any;
+  endDate: any;
+  claimList: any[]=[];
+  columnHeader1:any;
   constructor(
     private formBuilder: FormBuilder,
     private vehicleSearchService: VehicleSearchService,
-    private router:Router
+    private router:Router,
+    private datePipe: DatePipe,
   ) {
     this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     console.log("Login Details",this.LoginDetails);
     let searchData = JSON.parse(sessionStorage.getItem("searchList") || '{}');
+    this.claimType = null;
     if(searchData){
       this.chassisSection = true;
         this.onSearchDetails(searchData);
@@ -61,7 +69,30 @@ export class VehicleSearchComponent implements OnInit {
     this.selectedTab = event.tab.textLabel;
     this.searchedDetails=[];
   }
+  daysFilter(event:any){
+    event = Number(event);
+    var enDate = new Date();
+    var startDate = new Date();
+    startDate.setDate(startDate.getDate() - 10);
 
+    var endDD = String(enDate.getDate()).padStart(2, '0');
+    var endMM = String(enDate.getMonth() + 1).padStart(2, '0');
+    var endYYYY = enDate.getFullYear();
+
+    var startDD = String(startDate.getDate()).padStart(2, '0');
+    var startMM = String(startDate.getMonth() + 1).padStart(2, '0');
+    var startYYYY = startDate.getFullYear();
+
+
+    this.startDate = startDD + '/' + startMM + '/' + startYYYY;
+    this.endDate = endDD + '/' + endMM + '/' + endYYYY;
+    console.log(this.startDate,this.endDate);
+    if(event ==0){
+      this.startDate='01/01/2022';
+      this.endDate=this.datePipe.transform(new Date(),"dd/MM/yyyy");;
+
+    }
+  }
 
   onSearchDetails(searchData:any) {
     // var UrlLink = '';
@@ -101,28 +132,76 @@ export class VehicleSearchComponent implements OnInit {
         this.insuranceStartDate = this.searchedDetails.PolicyInformation.InsuranceStartDate;
         this.insuranceEndDate = this.searchedDetails.PolicyInformation.InsuranceEndDate;
         this.insuranceType = this.searchedDetails.PolicyInformation.InsuranceTypeDesc;
-        this.onGetClaimDetails(this.searchedDetails?.VehicleDetails?.VehicleChassisNumber);
+        this.insuranceList = this.searchedDetails.PolicyInformation;
+        if(this.insuranceList.length!=0){
+          this.columnHeader = [
+            { key: "PolicyNumber", display: "Policy No" },
+            { key: "CivilId", display: "Civil Id" },
+            {
+              key: "InsuranceTypeDesc", display: "Insurance Type",
+            },
+            {
+              key: "InsuranceStartDate", display: "Start Date",
+  
+            },
+            { key: "InsuranceEndDate", display: "End Date" },
+  
+            {
+              key: "ClaimCount", display: "Claim Count",
+              config: {
+                isClaimCount: true,
+              },
+            },
+          ];
+        }
+        //this.onGetClaimDetails(this.searchedDetails?.VehicleDetails?.VehicleChassisNumber);
        }
       //  this.item = data?.Result;
 
     //}, (err) => { })
   }
-  onGetClaimDetails(chassis: any) {
+  onGetClaimDetails(event: any) {
     let UrlLink = `${this.ApiUrl1}api/vehicle/claims`;
     let ReqObj = {
-      "VehicleChassisNumber": chassis
+      "VehicleChassisNumber": event.VehicleChassisNumber
 
     }
+    console.log("Event",event)
     this.vehicleSearchService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         console.log("claimDetails", data);
-        if (data?.Message == "Success") {
-          this.claimDetails = data?.Result?.ClaimInformations
-          if (data?.Result?.ClaimInformations.length > 0) {
-            this.isClaimDetails = true;
-          }
-
+        if (data?.Result?.ClaimInformations.length!=0) {
+          this.isClaimDetails = true;
+          this.claimList = data?.Result?.ClaimInformations;
+          this.columnHeader1 = [
+            { key: "ClaimNumber", display: "Claim No" },
+            { key: "ClaimTypeDesc", display: "Claim Type" },
+            {
+              key: "ClaimIntimatedDate", display: "Intimated Date",
+            },
+            {
+              key: "StatusDesc", display: "Claim Status",
+  
+            },
+            {
+              key: "actions", display: "View",
+              config: {
+                isViewClaim: true,
+              },
+            },
+          ];
         }
+        else{
+          this.isClaimDetails=false;
+        }
+        // if (data?.Message == "Success") {
+        //   this.claimDetails = data?.Result?.ClaimInformations
+        //   if (data?.Result?.ClaimInformations.length > 0) {
+        //     this.isClaimDetails = true;
+        //   }
+
+        // }
+        
 
       },
       (err) => { }

@@ -51,8 +51,20 @@
                     </div>
                     <div class="vision-grid-item-body">
                         <div class="row">
-                            <div class="col-6 col-md-12">
-                                <ng-container *ngFor="let item of trackingConversation?.OwnCompanyTrack">
+                            <div class="col-6 col-md-6 text-center">
+                                <ng-container *ngIf="trackingConversation?.OwnCompanyTrack.length!=0">
+                                    <p-timeline [value]="trackingConversation?.OwnCompanyTrack">
+                                        <ng-template pTemplate="content" let-event>
+                                            <small class="p-text-secondary">&#123;&#123;event.EntryDate&#125;&#125;</small>
+
+                                        </ng-template>
+                                        <ng-template pTemplate="opposite" let-event>
+                                            &#123;&#123;event.StatusDesc&#125;&#125;<br>
+                                            <small class="p-text-secondary">&#123;&#123;event.Remarks&#125;&#125;</small>
+                                        </ng-template>
+                                    </p-timeline>
+                                </ng-container>
+                                <!-- <ng-container *ngFor="let item of trackingConversation?.OwnCompanyTrack">
                                     <div class="d-flex justify-content-start hvr-bubble-left active">
                                         <div class="p-2 chat-box">
                                             <ul class="list-group list-group-flush">
@@ -68,10 +80,21 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </ng-container>
+                                </ng-container> -->
                             </div>
-                            <div class="col-6 col-md-12">
-                                <ng-container *ngFor="let item of trackingConversation?.RecoveryCompanyTrack">
+                            <div class="col-6 col-md-6 text-center">
+                                <ng-container *ngIf="trackingConversation?.RecoveryCompanyTrack.length!=0">
+                                    <p-timeline [value]="trackingConversation?.RecoveryCompanyTrack">
+                                        <ng-template pTemplate="content" let-event>
+                                            <small class="p-text-secondary">&#123;&#123;event.EntryDate&#125;&#125;</small>
+                                        </ng-template>
+                                        <ng-template pTemplate="opposite" let-event>
+                                            &#123;&#123;event.StatusDesc&#125;&#125;
+                                        </ng-template>
+                                    </p-timeline>
+                                </ng-container>
+
+                                <!-- <ng-container *ngFor="let item of trackingConversation?.RecoveryCompanyTrack">
                                     <div class="d-flex justify-content-start hvr-bubble-left active mt-4">
                                         <div class="p-2 chat-box">
                                             <ul class="list-group list-group-flush">
@@ -87,7 +110,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </ng-container>
+                                </ng-container> -->
                             </div>
                         </div>
 

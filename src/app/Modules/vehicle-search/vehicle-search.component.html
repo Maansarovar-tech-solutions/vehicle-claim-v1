@@ -112,10 +112,68 @@
             </div>
         </div>
     </div>
+    <div class="vision-card">
+        <div class="vision-card-body">
+            <div class="policy-form-grid-item">
+                <div class="policy-form-grid-item-title">
+                    Policy Information
+                </div>
+                <div class="policy-form-grid-item-body">
+                    <ng-container *ngIf="insuranceList.length!=0">
+                        <app-masters-grid [claimType]="claimType" [cols]="columnHeader" [data]="insuranceList" (daysFilter)="daysFilter($event)" (onEdit)="onGetClaimDetails($event)">
+                        </app-masters-grid>
+                    </ng-container>
+                    <ng-container *ngIf="insuranceList.length==0">
+                        <div class="text-center">
+                            <p>No Data Available</p>
+                        </div>
+                    </ng-container>
+                    <!-- <div class="row mb-2">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Policy No</b></label><br> {{policyNo}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Civil ID</b></label><br> {{civilId}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Insurance Type</b></label><br> {{insuranceType}}
+                        </div>
+                        <hr class="m-0 p-0">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Insurance Start Date</b></label><br> {{insuranceStartDate}}
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <label><b>Insurance End Date</b></label><br> {{insuranceEndDate}}
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="vision-card" *ngIf="isClaimDetails">
 
         <div class="vision-card-body">
-            <ng-container *ngFor="let item of claimDetails;let id =index;">
+            <div class="policy-form-grid-item">
+                <div class="policy-form-grid-item-title">
+                    Claim Information
+                </div>
+                <div class="policy-form-grid-item-body">
+                    <ng-container *ngIf="claimList.length!=0">
+                        <app-masters-grid [claimType]="claimType" [cols]="columnHeader1" [data]="claimList" (daysFilter)="daysFilter($event)" (onEdit)="onViewClaimData($event)">
+                        </app-masters-grid>
+                    </ng-container>
+                    <ng-container *ngIf="claimList.length==0">
+                        <div class="text-center">
+                            <p>No Data Available</p>
+                        </div>
+                    </ng-container>
+                </div>
+
+            </div>
+
+            <!-- <ng-container *ngFor="let item of claimDetails;let id =index;">
                 <div class="card mt-1">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -145,71 +203,10 @@
                         </div>
                     </div>
                 </div>
-            </ng-container>
-            <!-- <div class="total-claims-grid">
-                <ng-container *ngFor="let item of claimDetails;let id =index;">
-                    <div class="total-claims-grid-item">
-                        <div class="total-claims-grid-item-title">
-                            <div>Exist Claim-{{id+1}} </div>
-                            <div class="cursor-pointer">View Claim <span class="mx-2"><i class="fas fa-chevron-circle-right"></i></span></div>
-                        </div>
-                        <div class="total-claims-grid-item-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div>Claim Type</div>
-                                    <div>{{item.ClaimTypeDesc}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Claim Number</div>
-                                    <div>{{item.ClaimNumber}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Claim Intimated Date</div>
-                                    <div>{{item.ClaimIntimatedDate}}</div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div>Insurance Type</div>
-                                    <div>{{item.InsuranceTypeDesc}}</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </ng-container>
+            </ng-container> -->
+        </div>
+    </div>
 
-            </div> -->
-        </div>
-    </div>
-    <div class="vision-card">
-        <div class="vision-card-body">
-            <div class="policy-form-grid-item">
-                <div class="policy-form-grid-item-title">
-                    Insurance Information
-                </div>
-                <div class="policy-form-grid-item-body">
-                    <div class="row mb-2">
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Policy No</b></label><br> {{policyNo}}
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Civil ID</b></label><br> {{civilId}}
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Insurance Type</b></label><br> {{insuranceType}}
-                        </div>
-                        <hr class="m-0 p-0">
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Insurance Start Date</b></label><br> {{insuranceStartDate}}
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                            <label><b>Insurance End Date</b></label><br> {{insuranceEndDate}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </ng-container>
 <div mat-dialog-actions [align]="'center'">
