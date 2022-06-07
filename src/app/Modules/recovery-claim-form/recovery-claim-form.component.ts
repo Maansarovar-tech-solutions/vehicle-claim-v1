@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { Toaster } from 'ngx-toast-notifications';
 import { combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 import * as Mydatas from '../../app-config.json';
 import { NewClaimService } from '../new-claim/new-claim.service';
 
@@ -16,6 +18,7 @@ import { NewClaimService } from '../new-claim/new-claim.service';
 export class RecoveryClaimFormComponent implements OnInit {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public ApiUrl2: any = this.AppConfig.ApiUrl2;
   public claimForm!: FormGroup;
 
   public userDetails: any;
@@ -75,13 +78,21 @@ export class RecoveryClaimFormComponent implements OnInit {
   public claimType: any = '';
   public minDate!: Date;
   public InsuranceEndDate: any;
-
+  uploadedDocList:any[]=[];uploadDocList:any[]=[];
   public showMenu: boolean = true;
+  docTypeList: any[]=[];
+  imageUrl: any;
+  viewFileName: any;@ViewChild('content') content : any;
+  @ViewChild('content1') content1 : any;
+  veiwSelectedDocUrl: any;
+  documentAIDetails: any;
+
   constructor(
     private _formBuilder: FormBuilder,
     private newClaimService: NewClaimService,
     private toaster: Toaster,
-    private router: Router
+    private router: Router,
+    private modalService:NgbModal,
   ) {
     this.userDetails = JSON.parse(
       sessionStorage.getItem('Userdetails') || '{}'
@@ -773,6 +784,240 @@ export class RecoveryClaimFormComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return data.filter((option) =>
       option?.CodeDescription?.toLowerCase().includes(filterValue)
+    );
+  }
+  /*Document Section */
+  onUploadDocuments(target:any,fileType:any,type:any){
+    let event:any = target.target.files;
+    console.log("Event ",event);
+    let fileList = event;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
+
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+          this.uploadDocList.push({ 'url': this.imageUrl,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+
+        }
+
+    }
+    console.log("Final File List",this.uploadDocList)
+  }
+  onViewDocument(index:any) {
+    this.viewFileName = this.uploadDocList[index].filename;
+    this.veiwSelectedDocUrl = this.uploadDocList[index].url;
+    this.modalService.open(this.content, { size: 'xl', backdrop: 'static' });
+  }
+  onViewUploadedDocument(index:any) {
+    this.viewFileName = this.uploadedDocList[index].FileName;
+    this.veiwSelectedDocUrl = this.uploadedDocList[index].ImgUrl;
+    this.modalService.open(this.content);
+  }
+  generateApiDetails(index:any){
+    let UrlLink = `${this.ApiUrl1}api/trueinspect/uploadimage`;
+    let ReqObj = {
+      "ClaimNo":  this.ClaimReferenceNumber,
+      "ListOfPath": [this.uploadedDocList[index].FilePathName
+      ]
+    }
+    this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.assessment_id){
+          this.uploadedDocList = [];
+          this.onGetUploadedDocuments(this.ClaimReferenceNumber);
+        }
+      },
+      (err) => { }
+    );
+  }
+  viewApiDetails(index:any){
+    let UrlLink = `${this.ApiUrl2}api/trueinspect/imagereport`;
+    let ReqObj = {
+      "assessment_id": this.uploadedDocList[index].Assessmentid,
+      "Filename": this.uploadedDocList[index].Param
+    }
+    this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.documentAIDetails = data;
+        this.modalService.open(this.content1, { size: 'xl', backdrop: 'static' });
+      },
+      (err) => { }
+    );
+  }
+  onGetOriginalImage(index:any){
+    let UrlLink = `${this.ApiUrl1}getoriginalimage`;
+    let userDetails = this.userDetails?.LoginResponse;
+    let ReqObj = {
+      "ClaimNumber": this.ClaimReferenceNumber,
+      "DocumentReferenceNumber": this.uploadedDocList[index].DocumentReferenceNumber,
+      "DocumentTypeId": this.uploadedDocList[index].DocTypeId,
+      "InsuranceId": this.uploadedDocList[index]?.InsuranceId
+    }
+    this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        var a = document.createElement("a");
+      a.href = data.Result.ImgUrl;
+      a.download = data.Result.FileName;
+      // start download
+      a.click();
+      },
+      (err) => { }
+    );
+  }
+  onDeleteUploadedDoc(index:any){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let UrlLink = `${this.ApiUrl1}deletedoc`;
+        let userDetails = this.userDetails?.LoginResponse;
+        let ReqObj = {
+          "ClaimNumber": this.ClaimReferenceNumber,
+          "DocumentReferenceNumber": this.uploadedDocList[index].DocumentReferenceNumber,
+          "DocumentTypeId": this.uploadedDocList[index].DocumentTypeId,
+          "InsuranceId": this.uploadedDocList[index]?.InsuranceId
+        }
+        this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+          (data: any) => {
+            console.log(data);
+            this.onGetUploadedDocuments(this.ClaimReferenceNumber);
+          },
+          (err) => { }
+        );
+      }
+    });
+  }
+  saveDocuments(){
+    if(this.ClaimReferenceNumber != undefined && this.ClaimReferenceNumber != ""){
+      let i=0;
+      let userDetails = this.userDetails?.LoginResponse;
+      let j = 0;let docDesc:any;
+      console.log("Upload List",this.uploadDocList)
+      for(let document of this.uploadDocList){
+        let UrlLink = `${this.ApiUrl1}upload`;
+        if(document.DocTypeId){
+          let docList:any = this.docTypeList.filter((option) => option?.Code?.toLowerCase().includes(document.DocTypeId));
+          docDesc = docList[0].CodeDescription;
+          console.log("Filtered DocList",docList,docDesc);
+          let ReqObj = {
+            "ClaimNumber": this.ClaimReferenceNumber,
+            "UpdatedBy": userDetails?.LoginId,
+            "InsuranceId": userDetails?.InsuranceId,
+            "file":document.url,
+            "DocumentTypeId":document.DocTypeId,
+            "DocDesc": docDesc,
+            "FileName":document.filename,
+            "Devicefrom": "WebApplication",
+            "DocApplicable": "CLAIM_INFO"
+          }
+          this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+            (data: any) => {
+              console.log(data);
+              let res:any = data;
+              if(res?.ErrorMessage.length!=0){
+                j+=1;
+              }
+              i+=1;
+              if(i==this.uploadDocList.length && j==0){
+                this.toaster.open({
+                  text: 'Documents Uploaded Successfully',
+                  caption: 'Upload',
+                  type: 'success',
+                });
+                this.uploadDocList = [];
+                this.onGetUploadedDocuments(this.ClaimReferenceNumber);
+              }
+              else{
+                this.uploadedDocList = [];
+                this.onGetUploadedDocuments(this.ClaimReferenceNumber);
+              }
+            },
+            (err) => { }
+          );
+        }
+
+      }
+    }
+    else{
+      this.toaster.open({
+        text: 'Please Enter Valid Claim Number',
+        caption: 'Claim Number',
+        type: 'danger',
+      });
+    }
+  }
+  onGetUploadedDocuments(claimNo:any){
+    let UrlLink = `${this.ApiUrl1}getdoclist`;
+    let userDetails = this.userDetails?.LoginResponse;
+    let ReqObj = {
+      "ClaimNumber":  claimNo,
+      "InsuranceId": userDetails?.InsuranceId,
+      "DocApplicable": "CLAIM_INFO"
+    }
+    this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        this.uploadedDocList = data.Result.OwnCompanyDocuments;
+        this.uploadedDocList = this.uploadedDocList.concat(data.Result.RecoveryCompanyDocuments);
+        this.getDocumentTypeList();
+      },
+      (err) => { }
+    );
+  }
+  hide() {
+    this.modalService.dismissAll();
+  }
+  onDeleteDocument(index:any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+          this.uploadDocList.splice(index,1);
+      }
+    })
+  }
+  onDownloadImage(documentData:any,fileData:any){
+    var a = document.createElement("a");
+      a.href = fileData;
+      a.download = documentData.Filename;
+      document.body.appendChild(a);
+      a.click();
+  }
+  getDocumentTypeList(){
+    let UrlLink = `${this.ApiUrl1}dropdown/doctypes`;
+    let userDetails = this.userDetails?.LoginResponse;
+    let ReqObj = {
+      "InsuranceId": userDetails?.InsuranceId,
+      "DocApplicable":"CLAIM_INFO"
+    }
+    this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log("Document Types",data);
+        this.docTypeList = data.Result;
+      },
+      (err) => { }
     );
   }
 }

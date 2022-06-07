@@ -466,7 +466,7 @@ export class ClaimFormComponent implements OnInit {
             (err) => { }
           );
         }
-  
+
       }
     }
     else{
@@ -571,6 +571,13 @@ export class ClaimFormComponent implements OnInit {
           this.uploadDocList.splice(index,1);
       }
     })
+  }
+  onDownloadImage(documentData:any,fileData:any){
+    var a = document.createElement("a");
+      a.href = fileData;
+      a.download = documentData.Filename;
+      document.body.appendChild(a);
+      a.click();
   }
   getDocumentTypeList(){
     let UrlLink = `${this.ApiUrl1}dropdown/doctypes`;
