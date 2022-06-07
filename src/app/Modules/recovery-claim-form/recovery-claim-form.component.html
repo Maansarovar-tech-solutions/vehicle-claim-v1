@@ -577,10 +577,9 @@
         </div>
         </form>
     </mat-step>
-
     <mat-step>
-      <ng-template matStepLabel>Confirmation</ng-template>
-       <div class="vision-card" style="padding: 1rem 17rem;">
+      <ng-template matStepLabel>Document Upload</ng-template>
+      <div class="vision-card" style="padding: 1rem 17rem;">
         <div class="collapse" [ngClass]="{'show':!showMenu}">
           <ul class="list-group claimdetails">
             <li class="list-group-item">
@@ -695,6 +694,28 @@
             </div>
           </div>
         </div>
+       </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Confirmation</ng-template>
+       <div class="vision-card" style="padding: 1rem 17rem;">
+          <ul class="list-group claimdetails">
+            <li class="list-group-item">
+              <div>Claim Number</div>
+              <div>{{claimResponse?.ClaimNumber}}</div>
+            </li>
+            <li class="list-group-item">
+              <div> Policy No</div>
+              <div>{{claimResponse?.PolicyNumber}}</div>
+            </li>
+            <li class="list-group-item">
+              <div>Vehicle</div>
+              <div>{{claimResponse?.VehicleMakeDesc}} /
+                {{claimResponse?.VehicleModelDesc}}/{{claimResponse?.vehicleModelDesc}}</div>
+            </li>
+
+          </ul>
+
        </div>
     </mat-step>
   </mat-stepper>
