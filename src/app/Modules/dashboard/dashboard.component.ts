@@ -87,15 +87,15 @@ export class DashboardComponent implements OnInit {
         endDay:5,
       },
       {
-        startDay:5,
+        startDay:6,
         endDay:10,
       },
       {
-        startDay:10,
+        startDay:11,
         endDay:20,
       },
       {
-        startDay:20,
+        startDay:21,
         endDay:365,
       }
     ]

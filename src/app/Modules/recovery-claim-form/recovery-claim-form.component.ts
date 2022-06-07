@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -85,8 +86,11 @@ export class RecoveryClaimFormComponent implements OnInit {
   imageUrl: any;
   viewFileName: any;@ViewChild('content') content : any;
   @ViewChild('content1') content1 : any;
+  @ViewChild('stepper') private myStepper!: MatStepper;
+
   veiwSelectedDocUrl: any;
   documentAIDetails: any;
+  isLinear = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -772,6 +776,7 @@ export class RecoveryClaimFormComponent implements OnInit {
             });
           }
           this.showMenu = false;
+          this.myStepper.next();
         }
       },
       (err) => {}
