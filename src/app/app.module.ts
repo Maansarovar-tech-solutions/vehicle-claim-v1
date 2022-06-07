@@ -40,6 +40,7 @@ import { AddNewLoginDetailsComponent } from './Modules/admin/loginCreation/add-n
 import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-login-details/new-login-details.component';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
+import { RecoveryClaimFormComponent } from './Modules/recovery-claim-form/recovery-claim-form.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { CardModule } from 'primeng/card';
     BreadcrumbComponent,
     ClaimStatusComponent,
     ExistingClaimComponent,
-    AddNewLoginDetailsComponent
+    AddNewLoginDetailsComponent,
+    RecoveryClaimFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,30 @@
+.recovery-claim-form {
+  grid-area: main;
+  border-radius: 10px;
+  display: grid;
+  grid-auto-rows: auto;
+  grid-gap: 20px;
+  grid-template-columns: 1fr;
+}
+.recovery-claim-form-item {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 0.5rem;
+  /* overflow: hidden; */
+  padding: 1rem;
+  background-color: #ffffff;
+  grid-column-start: 2;
+}
+.recovery-claim-form-item-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 900;
+  padding: 10px;
+  color: var(--theme1);
+}
+.fault-color-green {
+  color: green;
+}
+.fault-red-green {
+  color: red;
+}
