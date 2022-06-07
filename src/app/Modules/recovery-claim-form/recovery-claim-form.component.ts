@@ -113,49 +113,55 @@ export class RecoveryClaimFormComponent implements OnInit {
   onCreateFormControl() {
     this.claimForm = this._formBuilder.group({
       AccidentDate: ['', Validators.required],
-      AccidentLocation: ['', Validators.required],
-      AccidentDescription: ['', Validators.required],
       ClaimTypeId: ['', Validators.required],
       PoliceReferenceNo: ['', Validators.required],
-      ClaimNumber: ['', Validators.required],
+      AccidentLocation: ['', Validators.required],
+      AccidentDescription: ['', Validators.required],
       SalvageAmount: [''],
       SalvagePortal: [true],
 
-      LicenceNumber: [''],
-      DriverDateOfBirth: [''],
-      LicenceValidUpto: [''],
-      Gender: ['1'],
+
+
+      PolicyNumber: ['', Validators.required],
+      ClaimNumber: ['', Validators.required],
+      InsuranceStartDate: ['', Validators.required],
+      InsuranceEndDate: ['', Validators.required],
+      OurVehicleChassisNumber: ['', Validators.required],
+      VehicleEngineNumber: ['', Validators.required],
+      OurPlateCode: ['', Validators.required],
+      OurPlateNumber: ['', Validators.required],
+      VehicleMakeIdOur: ['', Validators.required],
+      VehicleModelIdOur: ['', Validators.required],
+      VehicleBodyId: ['', Validators.required],
+      RegistrationTypeId: ['', Validators.required],
+      ManufactureYear: ['', Validators.required],
+      ColorId: ['', Validators.required],
+      OurCivilId: ['', Validators.required],
+      InsuranceTypeId: ['', Validators.required],
       VehicleValue: [0, Validators.required],
+
+      OtherVehicleChassisNumber: ['', Validators.required],
+      OtherPlateCode: ['', Validators.required],
+      OtherPlateNumber: ['', Validators.required],
+      VehicleMakeIdOther: ['', Validators.required],
+      VehicleModelIdOther: ['', Validators.required],
+      OtherCivilId: ['', Validators.required],
+      InsuranceId: ['', Validators.required],
+
       RepairCost: [0, Validators.required],
       NoOfDays: [0, Validators.required],
       PerDayCost: [0, Validators.required],
       TotalValue: [0, Validators.required],
 
-      OtherPlateCode: ['', Validators.required],
-      OtherPlateNumber: ['', Validators.required],
-      OtherCivilId: ['', Validators.required],
-      OtherVehicleChassisNumber: ['', Validators.required],
-      InsuranceId: ['', Validators.required],
 
-      PolicyNumber: ['', Validators.required],
-      OurCivilId: ['', Validators.required],
-      InsuranceStartDate: ['', Validators.required],
-      InsuranceEndDate: ['', Validators.required],
-      InsuranceTypeId: ['', Validators.required],
+      LicenceNumber: [''],
+      DriverDateOfBirth: [''],
+      LicenceValidUpto: [''],
+      Gender: ['1'],
 
-      VehicleMakeIdOur: ['', Validators.required],
-      VehicleMakeIdOther: ['', Validators.required],
-      VehicleModelIdOur: ['', Validators.required],
-      VehicleModelIdOther: ['', Validators.required],
 
-      RegistrationTypeId: ['', Validators.required],
-      VehicleBodyId: ['', Validators.required],
-      ManufactureYear: ['', Validators.required],
-      ColorId: ['', Validators.required],
-      OurPlateCode: ['', Validators.required],
-      OurPlateNumber: ['', Validators.required],
-      OurVehicleChassisNumber: ['', Validators.required],
-      VehicleEngineNumber: ['', Validators.required],
+
+
     });
   }
   get f() {
