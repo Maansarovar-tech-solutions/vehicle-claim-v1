@@ -458,7 +458,7 @@
                                                     <option *ngFor="let item of docTypeList" [value]="item.Code">{{item.CodeDescription}}</option>
                                                   </select></td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
                                                 </td>
                                                 <td>
                                                     <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
@@ -511,7 +511,7 @@
                                                 <td>{{document.FileName}}</td>
                                                 <td>{{document.DocDesc}}</td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onViewUploadedDocument(i,'receiver')"><i class="fa fa-eye"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'receiver')"><i class="fa fa-eye"></i></a>
                                                 </td>
                                                 <!-- <td *ngIf="claimType == 'Receivable'">
                                                         <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>

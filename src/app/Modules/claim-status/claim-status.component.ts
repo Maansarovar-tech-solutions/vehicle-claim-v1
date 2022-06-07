@@ -19,7 +19,6 @@ declare var $:any;
 export class ClaimStatusComponent implements OnInit {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
-  public ApiUrl2: any = this.AppConfig.ApiUrl2;
   public claimStatusList: any[] = [];
   public filterclaimStatusList!: Observable<any[]>;
   public claimStatusForm!: FormGroup;
@@ -262,7 +261,7 @@ export class ClaimStatusComponent implements OnInit {
     else{
       rowData = this.ownerDocList[index]
     }
-    let UrlLink = `${this.ApiUrl2}api/trueinspect/uploadimage`;
+    let UrlLink = `${this.ApiUrl1}api/trueinspect/uploadimage`;
     let ReqObj = {
       "ClaimNo":  this.claimDetails?.ClaimReferenceNumber,
       "ListOfPath": [rowData.FilePathName
@@ -288,7 +287,7 @@ export class ClaimStatusComponent implements OnInit {
     else{
       rowData = this.ownerDocList[index]
     }
-    let UrlLink = `${this.ApiUrl2}api/trueinspect/imagereport`;
+    let UrlLink = `${this.ApiUrl1}api/trueinspect/imagereport`;
     let ReqObj = {
       "assessment_id": rowData.Assessmentid,
       "Filename": rowData.Param
