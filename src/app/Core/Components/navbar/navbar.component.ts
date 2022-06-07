@@ -208,7 +208,7 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/Home/policy/new-policy'],{ queryParams: { isPolicyForm: true } });
     }else{
       sessionStorage.setItem('claimTypeId', id);
-      this.router.navigate(['/Home/New-Claim']);
+      this.router.navigate(['/Home/recovery-claim-form']);
     }
   }
 

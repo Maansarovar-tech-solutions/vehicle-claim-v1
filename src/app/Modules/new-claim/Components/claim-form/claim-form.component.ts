@@ -179,7 +179,7 @@ export class ClaimFormComponent implements OnInit {
     if (Object.keys(this.claimEditReq).length !== 0) {
       console.log(this.claimEditReq);
       this.searchValue = this.claimEditReq?.VehicleChassisNumber
-      await this.onClaimEdit(this.claimEditReq)
+      await this.onClaimEdit(this.claimEditReq);
     }
 
     this.f.ClaimTypeId.setValue(this.claimTypeId);
@@ -301,8 +301,92 @@ export class ClaimFormComponent implements OnInit {
       (err) => { }
     );
   }
-  /*Document Section */
-  onUploadDocuments(target:any,fileType:any,type:any){
+
+  onSaveClaimInfo() {
+    let userDetails = this.userDetails?.LoginResponse;
+    let UrlLink = '';
+    if (this.claimEditReq?.AccidentNumber != '' && this.claimEditReq?.AccidentNumber != null) {
+      UrlLink = `${this.ApiUrl1}api/update/claim`;
+    } else {
+      UrlLink = `${this.ApiUrl1}api/create/claim`;
+    }
+    let ReqObj = {
+      "AccidentInformation": {
+        "AccidentDate": this.datePipe.transform(this.f.AccidentDate.value, "dd/MM/yyyy"),
+        "AccidentDescription": this.f.AccidentDescription.value,
+        "AccidentLocation": this.f.AccidentLocation.value,
+        "ClaimNumber": this.f.ClaimNumber.value,
+        "ClaimTypeId": this.f.ClaimTypeId.value,
+        "PolicyReferenceNumber": this.PolicyReferenceNumber,
+        "PoliceReferenceNo": this.f.PoliceReferenceNo.value,
+        "VehicleValue": this.f.VehicleValue.value,
+        "RepairCost": this.f.RepairCost.value,
+        "NoOfDays": this.f.NoOfDays.value,
+        "PerDayCost": this.f.PerDayCost.value,
+        "TotalValue": this.f.TotalValue.value,
+      },
+      "CommonInformation": {
+        "ClaimReferenceNumber": this.ClaimReferenceNumber,
+        "PolicyReferenceNumber": this.PolicyReferenceNumber,
+        "AccidentNumber": this.AccidentNumber,
+        "BranchCode": userDetails?.BranchCode,
+        "CreatedBy": userDetails?.LoginId,
+        "InsuranceId": userDetails?.InsuranceId,
+        "RegionCode": userDetails?.RegionCode,
+        "VehicleChassisNumber": this.VehicleChassisNumber,
+        "VehicleCode": this.VehicleCode
+      },
+      "DriverInformation": {
+        "DriverDateOfBirth": this.datePipe.transform(this.f.DriverDateOfBirth.value, "dd/MM/yyyy"),
+        "Gender": this.f.Gender.value,
+        "LicenceNumber": this.f.LicenceNumber.value,
+        "LicenceValidUpto": this.datePipe.transform(this.f.LicenceValidUpto.value, "dd/MM/yyyy"),
+      },
+      "RecoveryInformation": {
+        "CivilId": this.f.CivilId.value,
+        "PlateCode": this.f.PlateCode.value,
+        "PlateNumber": this.f.PlateNumber.value,
+        "VehicleChassisNumber": this.f.VehicleChassisNumber.value,
+        "InsuranceId": this.f.InsuranceId.value,
+      }
+    }
+    console.log(ReqObj)
+    this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Message == 'Success') {
+          console.log(data)
+          sessionStorage.removeItem("claimEditReq");
+          if (data?.Result?.Response == 'Saved Successfully') {
+            console.log(data?.Result?.Response)
+            this.toaster.open({
+              text: 'Claim Intimated Successfully',
+              caption: 'Submitted',
+              type: 'success',
+            });
+          }
+          if (data?.Result?.Response == 'Updated Succesfully') {
+            console.log(data?.Result?.Response)
+            this.toaster.open({
+              text: 'Claim Updated Successfully',
+              caption: 'Submitted',
+              type: 'success',
+            });
+          }
+          this.moveNext.emit();
+        }
+      },
+      (err) => { }
+    );
+  }
+  hide() {
+    this.modalService.dismissAll();
+  }
+
+
+
+
+   /*Document Section */
+   onUploadDocuments(target:any,fileType:any,type:any){
     let event:any = target.target.files;
     console.log("Event ",event);
     let fileList = event;
@@ -476,85 +560,6 @@ export class ClaimFormComponent implements OnInit {
         type: 'danger',
       });
     }
-  }
-  onSaveClaimInfo() {
-    let userDetails = this.userDetails?.LoginResponse;
-    let UrlLink = '';
-    if (this.claimEditReq?.AccidentNumber != '' && this.claimEditReq?.AccidentNumber != null) {
-      UrlLink = `${this.ApiUrl1}api/update/claim`;
-    } else {
-      UrlLink = `${this.ApiUrl1}api/create/claim`;
-    }
-    let ReqObj = {
-      "AccidentInformation": {
-        "AccidentDate": this.datePipe.transform(this.f.AccidentDate.value, "dd/MM/yyyy"),
-        "AccidentDescription": this.f.AccidentDescription.value,
-        "AccidentLocation": this.f.AccidentLocation.value,
-        "ClaimNumber": this.f.ClaimNumber.value,
-        "ClaimTypeId": this.f.ClaimTypeId.value,
-        "PolicyReferenceNumber": this.PolicyReferenceNumber,
-        "PoliceReferenceNo": this.f.PoliceReferenceNo.value,
-        "VehicleValue": this.f.VehicleValue.value,
-        "RepairCost": this.f.RepairCost.value,
-        "NoOfDays": this.f.NoOfDays.value,
-        "PerDayCost": this.f.PerDayCost.value,
-        "TotalValue": this.f.TotalValue.value,
-      },
-      "CommonInformation": {
-        "ClaimReferenceNumber": this.ClaimReferenceNumber,
-        "PolicyReferenceNumber": this.PolicyReferenceNumber,
-        "AccidentNumber": this.AccidentNumber,
-        "BranchCode": userDetails?.BranchCode,
-        "CreatedBy": userDetails?.LoginId,
-        "InsuranceId": userDetails?.InsuranceId,
-        "RegionCode": userDetails?.RegionCode,
-        "VehicleChassisNumber": this.VehicleChassisNumber,
-        "VehicleCode": this.VehicleCode
-      },
-      "DriverInformation": {
-        "DriverDateOfBirth": this.datePipe.transform(this.f.DriverDateOfBirth.value, "dd/MM/yyyy"),
-        "Gender": this.f.Gender.value,
-        "LicenceNumber": this.f.LicenceNumber.value,
-        "LicenceValidUpto": this.datePipe.transform(this.f.LicenceValidUpto.value, "dd/MM/yyyy"),
-      },
-      "RecoveryInformation": {
-        "CivilId": this.f.CivilId.value,
-        "PlateCode": this.f.PlateCode.value,
-        "PlateNumber": this.f.PlateNumber.value,
-        "VehicleChassisNumber": this.f.VehicleChassisNumber.value,
-        "InsuranceId": this.f.InsuranceId.value,
-      }
-    }
-    console.log(ReqObj)
-    this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
-      (data: any) => {
-        if (data?.Message == 'Success') {
-          console.log(data)
-          sessionStorage.removeItem("claimEditReq");
-          if (data?.Result?.Response == 'Saved Successfully') {
-            console.log(data?.Result?.Response)
-            this.toaster.open({
-              text: 'Claim Intimated Successfully',
-              caption: 'Submitted',
-              type: 'success',
-            });
-          }
-          if (data?.Result?.Response == 'Updated Succesfully') {
-            console.log(data?.Result?.Response)
-            this.toaster.open({
-              text: 'Claim Updated Successfully',
-              caption: 'Submitted',
-              type: 'success',
-            });
-          }
-          this.moveNext.emit();
-        }
-      },
-      (err) => { }
-    );
-  }
-  hide() {
-    this.modalService.dismissAll();
   }
   onDeleteDocument(index:any) {
     Swal.fire({

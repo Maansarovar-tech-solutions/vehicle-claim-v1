@@ -28,3 +28,7 @@
 .fault-red-green {
   color: red;
 }
+.claimdetails .list-group-item{
+display: flex;
+justify-content: space-between;
+}
