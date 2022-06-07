@@ -176,14 +176,22 @@ export class ClaimStatusComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return data.filter((option) => option?.CodeDesc?.toLowerCase().includes(filterValue));
   }
-  onGetOriginalImage(index:any){
+  onGetOriginalImage(index:any,type:any){
+    let rowData:any;
+    if(type == 'receiver'){
+        rowData = this.recoveryDocList[index]
+    }
+    else{
+      rowData = this.ownerDocList[index]
+    }
     let UrlLink = `${this.ApiUrl1}getoriginalimage`;
     let userDetails = this.userDetails?.LoginResponse;
+    console.log("Final RowData",rowData);
     let ReqObj = {
       "ClaimNumber": this.claimDetails?.ClaimReferenceNumber,
-      "DocumentReferenceNumber": this.ownerDocList[index].DocumentReferenceNumber,
-      "DocumentTypeId": this.ownerDocList[index].DocTypeId,
-      "InsuranceId": this.ownerDocList[index]?.InsuranceId
+      "DocumentReferenceNumber": rowData.DocumentReferenceNumber,
+      "DocumentTypeId": rowData.DocumentTypeId,
+      "InsuranceId": rowData?.InsuranceId
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -246,17 +254,25 @@ export class ClaimStatusComponent implements OnInit {
       .catch((err) => { });
     return response;
   }
-  generateApiDetails(index:any){
+  generateApiDetails(index:any,type:any){
+    let rowData:any;
+    if(type == 'receiver'){
+        rowData = this.recoveryDocList[index]
+    }
+    else{
+      rowData = this.ownerDocList[index]
+    }
     let UrlLink = `${this.ApiUrl2}api/trueinspect/uploadimage`;
     let ReqObj = {
       "ClaimNo":  this.claimDetails?.ClaimReferenceNumber,
-      "ListOfPath": [this.ownerDocList[index].FilePathName
+      "ListOfPath": [rowData.FilePathName
       ]
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         if(data.assessment_id){
+            this.recoveryDocList = [];
           this.ownerDocList = [];
           this.onGetUploadedDocuments();
         }
@@ -264,11 +280,18 @@ export class ClaimStatusComponent implements OnInit {
       (err) => { }
     );
   }
-  viewApiDetails(index:any){
+  viewApiDetails(index:any,type:any){
+    let rowData:any;
+    if(type == 'receiver'){
+        rowData = this.recoveryDocList[index]
+    }
+    else{
+      rowData = this.ownerDocList[index]
+    }
     let UrlLink = `${this.ApiUrl2}api/trueinspect/imagereport`;
     let ReqObj = {
-      "assessment_id": this.ownerDocList[index].Assessmentid,
-      "Filename": this.ownerDocList[index].Param
+      "assessment_id": rowData.Assessmentid,
+      "Filename": rowData.Param
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -317,6 +340,7 @@ export class ClaimStatusComponent implements OnInit {
             i+=1;
             if(i==this.uploadDocList.length && j==0){
               this.uploadDocList = [];
+              this.ownerDocList = [];
               this.onGetUploadedDocuments();
               this.toaster.open({
                 text: 'Documents Uploaded Successfully',
@@ -325,7 +349,7 @@ export class ClaimStatusComponent implements OnInit {
               });
             }
             else{
-              this.uploadedDocList = [];
+              this.ownerDocList = [];
               this.onGetUploadedDocuments();
             }
           },
@@ -355,13 +379,20 @@ export class ClaimStatusComponent implements OnInit {
     console.log("Recieved View",this.uploadDocList[index]);
     this.viewFileName = this.uploadDocList[index].filename;
     this.veiwSelectedDocUrl = this.uploadDocList[index].url;
-    this.modalService.open(this.content);
+    this.modalService.open(this.content, { size: 'md', backdrop: 'static' });
   }
-  onViewUploadedDocument(index:any) {
-    console.log("Recieved View",this.ownerDocList[index]);
-    this.viewFileName = this.ownerDocList[index].FileName;
-    this.veiwSelectedDocUrl = this.ownerDocList[index].ImgUrl;
-    this.modalService.open(this.content);
+  onViewUploadedDocument(index:any,type:any) {
+    let rowData:any;
+    if(type == 'receiver'){
+        rowData = this.recoveryDocList[index]
+    }
+    else{
+      rowData = this.ownerDocList[index]
+    }
+    console.log("Recieved View",rowData);
+    this.viewFileName = rowData.FileName;
+    this.veiwSelectedDocUrl = rowData.ImgUrl;
+    this.modalService.open(this.content, { size: 'md', backdrop: 'static' });
   }
    hide() {
     this.modalService.dismissAll();

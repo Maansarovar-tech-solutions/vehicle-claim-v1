@@ -434,16 +434,16 @@
                                                 <td>{{document.FileName}}</td>
                                                 <td>{{document.DocDesc}}</td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i)"><i class="fa fa-eye"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'owner')"><i class="fa fa-eye"></i></a>
                                                 </td>
                                                 <td>
                                                     <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>
                                                 </td>
-                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i)"><i class="fa fa-download"></i></a></td>
+                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'owner')"><i class="fa fa-download"></i></a></td>
                                                 <td>
                                                     <ng-container *ngIf="document.DocDesc=='Accident Images'">
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i)">Get AI</button>
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid!=null" (click)="viewApiDetails(i)">View AI</button>
+                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i,'owner')">Get AI</button>
+                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid!=null" (click)="viewApiDetails(i,'owner')">View AI</button>
                                                     </ng-container>
                                                     <ng-container *ngIf="document.DocDesc!='Accident Images'">
                                                         <p>N/A</p>
@@ -511,16 +511,16 @@
                                                 <td>{{document.FileName}}</td>
                                                 <td>{{document.DocDesc}}</td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onViewUploadedDocument(i)"><i class="fa fa-eye"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onViewUploadedDocument(i,'receiver')"><i class="fa fa-eye"></i></a>
                                                 </td>
                                                 <!-- <td *ngIf="claimType == 'Receivable'">
                                                         <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>
                                                     </td> -->
-                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i)"><i class="fa fa-download"></i></a></td>
+                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'receiver')"><i class="fa fa-download"></i></a></td>
                                                 <td>
                                                     <ng-container *ngIf="document.DocDesc=='Accident Images'">
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i)">Get AI</button>
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid!=null" (click)="viewApiDetails(i)">View AI</button>
+                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i,'receiver')">Get AI</button>
+                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid!=null" (click)="viewApiDetails(i,'receiver')">View AI</button>
                                                     </ng-container>
                                                     <ng-container *ngIf="document.DocDesc!='Accident Images'">
                                                         <p>N/A</p>
