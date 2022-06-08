@@ -570,7 +570,7 @@
 
                     </div>
                     <div class="text-center">
-                      <button class="vision-btn blue-bg-color" (click)="onSavePolicyInfo()">Submit</button>
+                      <button class="vision-btn blue-bg-color" (click)="onSavePolicyInfo()">Next</button>
                     </div>
                   </div>
                 </div>
@@ -624,7 +624,8 @@
                           <th scope="col">View</th>
                           <th scope="col">Delete</th>
                           <th scope="col">Download</th>
-                          <th scope="col">AI Details</th>
+                          <th scope="col">AI Details<br>
+                            <small>*File Size must be Above 400kb</small></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -770,7 +771,8 @@
 </ng-template>
 <ng-template #content1 let-c="close" let-d="dismiss">
   <div class="card-header">
-    <h5>AI Details</h5>
+    <h5>AI Details<br>
+      <small>*File Size must be Above 400kb</small></h5>
   </div>
   <div *ngFor="let document of documentAIDetails" class="p-1">
     <div class="row">

@@ -127,8 +127,9 @@ export class RecoveryClaimFormComponent implements OnInit {
       this.f.PerDayCost.valueChanges.pipe(startWith(0)),
     ]).subscribe(([VehicleValue, RepairCost, NoOfDays, PerDayCost]) => {
       const dataList = [VehicleValue, RepairCost, NoOfDays, PerDayCost];
-      let vehicleAndRepair = dataList[0] + dataList[1];
-      let noDaysAndPerDay = dataList[2] * dataList[3];
+      console.log(dataList)
+      let vehicleAndRepair = Number(dataList[0]) + Number(dataList[1]);
+      let noDaysAndPerDay = Number(dataList[2]) * Number(dataList[3]);
       let totalValue = vehicleAndRepair + noDaysAndPerDay;
       this.f.TotalValue.setValue(totalValue);
     });
@@ -499,6 +500,9 @@ export class RecoveryClaimFormComponent implements OnInit {
           let AccidentInformation = data?.Result?.AccidentInformation;
           let DriverInformation = data?.Result?.DriverInformation;
           let RecoveryInformation = data?.Result?.RecoveryInformation;
+          let CommonInformation = data?.Result?.CommonInformation;
+          this.VehicleCode = CommonInformation?.VehicleCode;
+
           this.f.AccidentDate.setValue(
             this.onDateFormatt(AccidentInformation?.AccidentDate)
           );
@@ -533,6 +537,7 @@ export class RecoveryClaimFormComponent implements OnInit {
             RecoveryInformation?.VehicleChassisNumber
           );
           this.f.InsuranceId.setValue(RecoveryInformation?.InsuranceId);
+          this.f.VehicleValue.setValue(AccidentInformation?.VehicleValue);
           this.f.RepairCost.setValue(AccidentInformation?.RepairCost)
           this.f.NoOfDays.setValue(AccidentInformation?.NoOfDays)
           this.f.PerDayCost.setValue(AccidentInformation?.PerDayCost)
@@ -593,7 +598,6 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.f.ManufactureYear.setValue(VehicleDetails?.ManufactureYear);
           this.f.ColorId.setValue(VehicleDetails?.ColorId);
           this.f.InsuranceTypeId.setValue(PolicyInformation?.InsuranceTypeId);
-          this.f.VehicleValue.setValue(PolicyInformation?.VehicleValue);
 
         }
       })
@@ -655,12 +659,12 @@ export class RecoveryClaimFormComponent implements OnInit {
     let userDetails = this.userDetails?.LoginResponse;
     let UrlLink = `${this.ApiUrl1}api/pushpolicyinfo`;
 
-    // if (
-    //   this.PolicyReferenceNumber != '' &&
-    //   this.PolicyReferenceNumber != undefined
-    // ) {
-    //   UrlLink = `${this.ApiUrl1}api/update/policyinfo`;
-    // }
+    if (
+      this.PolicyReferenceNumber != '' &&
+      this.PolicyReferenceNumber != undefined
+    ) {
+      UrlLink = `${this.ApiUrl1}api/update/policyinfo`;
+    }
 
     let ReqObj = {
       CommonInformation: {
@@ -728,15 +732,15 @@ export class RecoveryClaimFormComponent implements OnInit {
 
   onSaveClaimInfo() {
     let userDetails = this.userDetails?.LoginResponse;
-    let UrlLink = `${this.ApiUrl1}api/create/claim`;
-    // if (
-    //   this.claimEditReq?.AccidentNumber != '' &&
-    //   this.claimEditReq?.AccidentNumber != null
-    // ) {
-    //   UrlLink = `${this.ApiUrl1}api/update/claim`;
-    // } else {
-    //   UrlLink = `${this.ApiUrl1}api/create/claim`;
-    // }
+    let UrlLink = ``;
+    if (
+      this.claimEditReq?.AccidentNumber != '' &&
+      this.claimEditReq?.AccidentNumber != null
+    ) {
+      UrlLink = `${this.ApiUrl1}api/update/claim`;
+    } else {
+      UrlLink = `${this.ApiUrl1}api/create/claim`;
+    }
     let ReqObj = {
       AccidentInformation: {
         AccidentDate: moment(this.f.AccidentDate.value).format('DD/MM/YYYY'),
@@ -893,6 +897,13 @@ export class RecoveryClaimFormComponent implements OnInit {
         if(data.assessment_id){
           this.uploadedDocList = [];
           this.onGetUploadedDocuments(this.ClaimReferenceNumber);
+        }
+        else{
+          this.toaster.open({
+            text: 'File Size is Very Low',
+            caption: 'AI Details Error',
+            type: 'danger',
+          });
         }
       },
       (err) => { }

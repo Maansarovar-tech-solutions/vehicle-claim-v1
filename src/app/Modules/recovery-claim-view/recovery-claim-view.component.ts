@@ -152,12 +152,12 @@ export class RecoveryClaimViewComponent implements OnInit {
         { key: "RecoveryCompanyName", display: "Insured Company" },
         { key: "AccidentDate", display: "Accident Date" },
         { key: "ClaimIntimatedDate", display: "Intimate Date" },
-        {
-          key: "edit", display: "Edit",
-          config: {
-            isTplEdit: true,
-          },
-        },
+        // {
+        //   key: "edit", display: "Edit",
+        //   config: {
+        //     isTplEdit: true,
+        //   },
+        // },
       ];
       this.tableData = data;
 
@@ -177,12 +177,12 @@ export class RecoveryClaimViewComponent implements OnInit {
         { key: "InsuranceCompanyName", display: "Insured Company" },
         { key: "AccidentDate", display: "Accident Date" },
         { key: "ClaimIntimatedDate", display: "Intimate Date" },
-        {
-          key: "edit", display: "Edit",
-          config: {
-            isTplEdit: true,
-          },
-        },
+        // {
+        //   key: "edit", display: "Edit",
+        //   config: {
+        //     isTplEdit: true,
+        //   },
+        // },
 
       ];
       this.tableData = data;
