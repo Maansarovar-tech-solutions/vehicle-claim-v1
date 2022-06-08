@@ -29,12 +29,12 @@ export class NewLoginDetailsComponent implements OnInit {
     this.productList = [
       {
         "Code": "10001",
-        "Description": "FAL",
+        "Description": "TPL",
         "ImageIcon": "data:image/jpg;base64,"
       },
       {
         "Code": "10002",
-        "Description": "MIG",
+        "Description": "Total Loss",
         "ImageIcon": "data:image/jpg;base64,"
       } 
     ];

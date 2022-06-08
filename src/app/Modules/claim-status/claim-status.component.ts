@@ -276,6 +276,13 @@ export class ClaimStatusComponent implements OnInit {
           this.ownerDocList = [];
           this.onGetUploadedDocuments();
         }
+        else{
+          this.toaster.open({
+            text: 'File Size is Very Low',
+            caption: 'AI Details Error',
+            type: 'danger',
+          });
+        }
       },
       (err) => { }
     );
