@@ -166,6 +166,17 @@ const routes: Routes = [
       breadcrumb: 'New Login Details',
     },
   },
+  {
+    path: 'ExistingLoginDetails',
+    loadChildren: () =>
+      import(
+        '../admin/loginCreation/existing-login-details/existing-login-details.module'
+      ).then((n) => n.ExistingLoginDetailsModule),
+    data: {
+      title: 'Existing Login Details',
+      breadcrumb: 'Existing Login Details',
+    },
+  },
 ];
 
 @NgModule({

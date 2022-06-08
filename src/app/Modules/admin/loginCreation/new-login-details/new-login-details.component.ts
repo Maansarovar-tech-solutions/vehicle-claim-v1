@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import * as Mydatas from '../../../../app-config.json';
+import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
 
 @Component({
   selector: 'app-new-login-details',
@@ -7,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewLoginDetailsComponent implements OnInit {
 
+  public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1: any = this.AppConfig.ApiUrl1;
   editSection:boolean = false;
   changePassword:boolean = false;
   userName:any="";emailId:any;mobileNo:any;
@@ -25,7 +30,14 @@ export class NewLoginDetailsComponent implements OnInit {
   productName: any;loginId:any="";password:any="";
   rePassword:any="";oldPassword:any="";newPassword:any="";
   reNewPassword:any="";
-  constructor() {
+  constructor(private router:Router,
+    private addVehicleService: AddVehicleService,) {
+    let loginDetails = JSON.parse(sessionStorage.getItem('editLoginId') || '{}');
+    if(loginDetails?.LoginId){
+      this.loginId = loginDetails?.LoginId;
+      //this.companyId  = loginDetails?.
+      this.getEditLoginDetails();
+    }
     this.productList = [
       {
         "Code": "10001",
@@ -326,6 +338,23 @@ export class NewLoginDetailsComponent implements OnInit {
   }
   showUserList(){
     return !(this.makerList.length!=0 || this.checkerList.length!=0 || this.approverList.length!=0 || this.adminList.length!=0)
+  }
+  back(){
+    sessionStorage.removeItem('editLoginId');
+    this.router.navigate(['Home/ExistingLoginDetails'])
+  }
+  getEditLoginDetails(){
+    let ReqObj = {
+      "LoginId": this.loginId
+    }
+    let UrlLink = `${this.ApiUrl1}authentication/getdetails`;
+    this.addVehicleService.onPostMethodSync(UrlLink,ReqObj).subscribe(
+      (data: any) => {
+          console.log("Login Edit Details",data);
+
+      },  
+      (err) => { }
+    );
   }
 }
 
