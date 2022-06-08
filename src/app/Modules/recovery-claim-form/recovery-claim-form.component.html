@@ -481,15 +481,19 @@
                       </div>
 
                       <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+
                         <mat-form-field class="mat-form-width" appearance="outline">
                           <mat-label>Insurance Company</mat-label>
-                          <input type="text" placeholder="Insurance Company" matInput formControlName="InsuranceId"
-                            [matAutocomplete]="insurancecomp">
-                          <mat-autocomplete autoActiveFirstOption #insurancecomp="matAutocomplete"
-                            [displayWith]="onDisplayInsurComp">
-                            <mat-option *ngFor="let option of filterinsurCompanyLis | async" [value]="option.Code">
-                              {{option.CodeDescription}}
-                            </mat-option>
+                          <input type="text"
+                                 matInput
+                                 formControlName="InsuranceId"
+                                 [matAutocomplete]="autoGroup">
+                            <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="onDisplayInsurComp">
+                              <mat-optgroup *ngFor="let group of filterinsurCompanyLis | async" [label]="group.letter">
+                                <mat-option *ngFor="let name of group.names" [value]="name.Code">
+                                  {{name.CodeDescription}}
+                                </mat-option>
+                            </mat-optgroup>
                           </mat-autocomplete>
                           <mat-error *ngIf="(f.InsuranceId.errors) || (!f.InsuranceId.valid && f.InsuranceId.touched)">
                             <span *ngIf="f.InsuranceId.errors?.required" class="error-text">This

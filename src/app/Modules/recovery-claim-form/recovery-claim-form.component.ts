@@ -11,6 +11,12 @@ import Swal from 'sweetalert2';
 import * as Mydatas from '../../app-config.json';
 import { NewClaimService } from '../new-claim/new-claim.service';
 
+export const _filter = (opt: any[], value: any): any[] => {
+  const filterValue = value.toLowerCase();
+
+  return opt.filter(item => item.CodeDescription.toLowerCase().includes(filterValue));
+};
+
 @Component({
   selector: 'app-recovery-claim-form',
   templateUrl: './recovery-claim-form.component.html',
@@ -37,7 +43,7 @@ export class RecoveryClaimFormComponent implements OnInit {
 
   public claimTypeList: any[] = [];
   public filterclaimTypeList!: Observable<any[]>;
-  public insurCompanyList: any[] = [];
+  public insurCompanyList: any;
   public filterinsurCompanyLis!: Observable<any[]>;
   public claimEditReq: any;
   public AccidentNumber: any = '';
@@ -188,6 +194,9 @@ export class RecoveryClaimFormComponent implements OnInit {
 
   async onInitialFetchData() {
     this.claimTypeList = (await this.onGetClaimTypeList()) || [];
+    if(this.claimTypeId == '11'){
+      this.claimTypeList = this.claimTypeList.filter((ele:any)=>ele.Code =='11' || ele.Code =='12')
+    }
     this.filterclaimTypeList = this.f.ClaimTypeId.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value, this.claimTypeList))
@@ -204,17 +213,31 @@ export class RecoveryClaimFormComponent implements OnInit {
       map((value) => this._filter(value, this.plateCodeList))
     );
 
-    this.insurCompanyList = (await this.onGetInsuranceCompList()) || [];
-    console.log(this.insurCompanyList);
+    this.insurCompanyList = (await this.onGetInsuranceCompList());
+    console.log('insurance-company',this.insurCompanyList);
+    let companyGroup = [
+      {
+        letter: 'Participants',
+        names: this.insurCompanyList.Participants,
+      },
+      {
+        letter: 'Non Participants',
+        names: this.insurCompanyList.NonParticipants,
+      },
+
+    ];
+    this.insurCompanyList = companyGroup;
+
     this.filterinsurCompanyLis = this.f.InsuranceId.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value, this.insurCompanyList))
+      map(value => this._filterGroup(value || '')),
     );
+
 
     this.f.ClaimTypeId.setValue(this.claimTypeId);
     const ctrl = this.claimForm.get('ClaimTypeId')!;
     if (this.claimTypeId == '11') {
-      ctrl.disable();
+      // ctrl.disable();
     }
 
     this.insuranceTypeList = (await this.onGetInsuranceTypList()) || [];
@@ -250,15 +273,14 @@ export class RecoveryClaimFormComponent implements OnInit {
 
     this.onGetYears();
     if (Object.keys(this.EditReq).length != 0) {
-      //
       this.onGetClaimDetails(this.EditReq?.VehicleChassisNumber);
     }
 
     if (Object.keys(this.claimEditReq).length !== 0) {
       console.log(this.claimEditReq);
       this.searchValue = this.claimEditReq?.VehicleChassisNumber;
-      //await this.onPolicyEdit(this.claimEditReq);
-      //await this.onClaimEdit(this.claimEditReq);
+      await this.onPolicyEdit(this.claimEditReq);
+      await this.onClaimEdit(this.claimEditReq);
     }
   }
 
@@ -274,9 +296,9 @@ export class RecoveryClaimFormComponent implements OnInit {
   }
 
   async onGetInsuranceCompList() {
-    let UrlLink = `${this.ApiUrl1}basicauth/insurancecompanies`;
+    let UrlLink = `${this.ApiUrl1}api/groupof/insurancecompanies`;
     let response = (
-      await this.newClaimService.onGetMethodAsyncBasicToken(UrlLink)
+      await this.newClaimService.onGetMethodAsync(UrlLink)
     )
       .toPromise()
       .then((res: any) => {
@@ -300,8 +322,9 @@ export class RecoveryClaimFormComponent implements OnInit {
   };
   onDisplayInsurComp = (code: any) => {
     if (!code) return '';
-    let index = this.insurCompanyList.findIndex((obj: any) => obj.Code == code);
-    return this.insurCompanyList[index].CodeDescription;
+   let  insurCompanyList = [...this.insurCompanyList[0].names,...this.insurCompanyList[1].names]
+    let index = insurCompanyList.findIndex((obj: any) => obj.Code == code);
+    return insurCompanyList[index].CodeDescription;
   };
 
   async onGetInsuranceTypList() {
@@ -470,7 +493,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       ClaimReferenceNumber: claim?.ClaimReferenceNumber,
     };
     (await this.newClaimService.onPostMethodAsync(UrlLink, ReqObj)).subscribe(
-      (data: any) => {
+      async (data: any) => {
         console.log(data);
         if (data?.Message == 'Success') {
           let AccidentInformation = data?.Result?.AccidentInformation;
@@ -479,13 +502,14 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.f.AccidentDate.setValue(
             this.onDateFormatt(AccidentInformation?.AccidentDate)
           );
+          this.f.ClaimTypeId.setValue(AccidentInformation?.ClaimTypeId);
+          this.f.PoliceReferenceNo.setValue(AccidentInformation?.PoliceReferenceNo);
           this.f.AccidentLocation.setValue(
             AccidentInformation?.AccidentLocation
           );
           this.f.AccidentDescription.setValue(
             AccidentInformation?.AccidentDescription
           );
-          this.f.ClaimTypeId.setValue(AccidentInformation?.ClaimTypeId);
           this.f.ClaimNumber.setValue(AccidentInformation?.ClaimNumber);
 
           this.f.LicenceNumber.setValue(DriverInformation?.LicenceNumber);
@@ -495,14 +519,24 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.AccidentNumber = AccidentInformation?.AccidentNumber;
           this.ClaimReferenceNumber = claim?.ClaimReferenceNumber;
           this.PolicyReferenceNumber = claim?.PolicyReferenceNumber;
-
-          this.f.OurCivilId.setValue(RecoveryInformation?.CivilId);
-          this.f.OurPlateCode.setValue(RecoveryInformation?.PlateCode);
-          this.f.OurPlateNumber.setValue(RecoveryInformation?.PlateNumber);
-          this.f.OurVehicleChassisNumber.setValue(
+          this.f.VehicleMakeIdOther.setValue(RecoveryInformation?.VehMakeId);
+          this.modelList = await this.onGetVehicleModelList(
+            RecoveryInformation?.VehMakeId
+          );
+          if (this.modelList.length > 0) {
+            this.f.VehicleModelIdOther.setValue(RecoveryInformation?.VehModelId);
+          }
+          this.f.OtherCivilId.setValue(RecoveryInformation?.CivilId);
+          this.f.OtherPlateCode.setValue(RecoveryInformation?.PlateCode);
+          this.f.OtherPlateNumber.setValue(RecoveryInformation?.PlateNumber);
+          this.f.OtherVehicleChassisNumber.setValue(
             RecoveryInformation?.VehicleChassisNumber
           );
           this.f.InsuranceId.setValue(RecoveryInformation?.InsuranceId);
+          this.f.RepairCost.setValue(AccidentInformation?.RepairCost)
+          this.f.NoOfDays.setValue(AccidentInformation?.NoOfDays)
+          this.f.PerDayCost.setValue(AccidentInformation?.PerDayCost)
+          // this.f.TotalValue.setValue(AccidentInformation?.TotalValue)
         }
       },
       (err) => {}
@@ -531,35 +565,36 @@ export class RecoveryClaimFormComponent implements OnInit {
           let PolicyInformation = res?.Result?.PolicyInformation;
           let VehicleDetails = res?.Result?.VehicleDetails;
           this.f.PolicyNumber.setValue(PolicyInformation?.PolicyNumber);
-          this.f.CivilId.setValue(PolicyInformation?.CivilId);
+          this.f.OurCivilId.setValue(PolicyInformation?.CivilId);
+          console.log(PolicyInformation.InsuranceStartDate);
           this.f.InsuranceStartDate.setValue(
             this.onDateFormatt(PolicyInformation?.InsuranceStartDate)
           );
           this.f.InsuranceEndDate.setValue(
             this.onDateFormatt(PolicyInformation?.InsuranceEndDate)
           );
-
-          this.f.InsuranceTypeId.setValue(PolicyInformation?.InsuranceTypeId);
-          this.f.VehicleMakeId.setValue(VehicleDetails?.VehicleMakeId);
-          this.modelList = await this.onGetVehicleModelList(
-            VehicleDetails?.VehicleMakeId
-          );
-          if (this.modelList.length > 0) {
-            this.f.VehicleModelId.setValue(VehicleDetails?.VehicleModelId);
-            this.onChangeVehicleModel(VehicleDetails?.VehicleModelId);
-          }
-          this.f.RegistrationTypeId.setValue(VehicleDetails.RegistrationTypeId);
-          this.f.ManufactureYear.setValue(VehicleDetails?.ManufactureYear);
-          this.f.ColorId.setValue(VehicleDetails?.ColorId);
-          this.f.PlateCode.setValue(VehicleDetails?.PlateCode);
-          this.f.PlateNumber.setValue(VehicleDetails?.PlateNumber);
-
-          this.f.VehicleChassisNumber.setValue(
+          this.f.OurVehicleChassisNumber.setValue(
             VehicleDetails?.VehicleChassisNumber
           );
           this.f.VehicleEngineNumber.setValue(
             VehicleDetails?.VehicleEngineNumber
           );
+          this.f.OurPlateCode.setValue(VehicleDetails?.PlateCode);
+          this.f.OurPlateNumber.setValue(VehicleDetails?.PlateNumber);
+          this.f.VehicleMakeIdOur.setValue(VehicleDetails?.VehicleMakeId);
+          this.modelList = await this.onGetVehicleModelList(
+            VehicleDetails?.VehicleMakeId
+          );
+          if (this.modelList.length > 0) {
+            this.f.VehicleModelIdOur.setValue(VehicleDetails?.VehicleModelId);
+            this.onChangeVehicleModel(VehicleDetails?.VehicleModelId);
+          }
+          this.f.RegistrationTypeId.setValue(VehicleDetails.RegistrationTypeId);
+          this.f.ManufactureYear.setValue(VehicleDetails?.ManufactureYear);
+          this.f.ColorId.setValue(VehicleDetails?.ColorId);
+          this.f.InsuranceTypeId.setValue(PolicyInformation?.InsuranceTypeId);
+          this.f.VehicleValue.setValue(PolicyInformation?.VehicleValue);
+
         }
       })
       .catch((err) => {});
@@ -620,12 +655,12 @@ export class RecoveryClaimFormComponent implements OnInit {
     let userDetails = this.userDetails?.LoginResponse;
     let UrlLink = `${this.ApiUrl1}api/pushpolicyinfo`;
 
-    if (
-      this.PolicyReferenceNumber != '' &&
-      this.PolicyReferenceNumber != undefined
-    ) {
-      UrlLink = `${this.ApiUrl1}api/update/policyinfo`;
-    }
+    // if (
+    //   this.PolicyReferenceNumber != '' &&
+    //   this.PolicyReferenceNumber != undefined
+    // ) {
+    //   UrlLink = `${this.ApiUrl1}api/update/policyinfo`;
+    // }
 
     let ReqObj = {
       CommonInformation: {
@@ -693,15 +728,15 @@ export class RecoveryClaimFormComponent implements OnInit {
 
   onSaveClaimInfo() {
     let userDetails = this.userDetails?.LoginResponse;
-    let UrlLink = '';
-    if (
-      this.claimEditReq?.AccidentNumber != '' &&
-      this.claimEditReq?.AccidentNumber != null
-    ) {
-      UrlLink = `${this.ApiUrl1}api/update/claim`;
-    } else {
-      UrlLink = `${this.ApiUrl1}api/create/claim`;
-    }
+    let UrlLink = `${this.ApiUrl1}api/create/claim`;
+    // if (
+    //   this.claimEditReq?.AccidentNumber != '' &&
+    //   this.claimEditReq?.AccidentNumber != null
+    // ) {
+    //   UrlLink = `${this.ApiUrl1}api/update/claim`;
+    // } else {
+    //   UrlLink = `${this.ApiUrl1}api/create/claim`;
+    // }
     let ReqObj = {
       AccidentInformation: {
         AccidentDate: moment(this.f.AccidentDate.value).format('DD/MM/YYYY'),
@@ -776,7 +811,8 @@ export class RecoveryClaimFormComponent implements OnInit {
               type: 'success',
             });
           }
-          this.showMenu = false;
+          this.myStepper.next();
+
         }
       },
       (err) => {}
@@ -784,6 +820,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   }
 
   onDateFormatt(data: any) {
+    console.log(data)
     var formattDate = data;
     var date: any = moment(formattDate, 'DD-MM-YYYY');
     return new Date(date.format('YYYY-MM-DD'));
@@ -797,6 +834,19 @@ export class RecoveryClaimFormComponent implements OnInit {
       option?.CodeDescription?.toLowerCase().includes(filterValue)
     );
   }
+
+  private _filterGroup(value: any): any[] {
+    if (value) {
+      return this.insurCompanyList
+        .map((group:any) => ({letter: group.letter, names: _filter(group.names, value)}))
+        .filter((group:any) => group.names.length > 0);
+    }
+
+    return this.insurCompanyList;
+  }
+
+
+
   /*Document Section */
   onUploadDocuments(target:any,fileType:any,type:any){
     let event:any = target.target.files;
@@ -941,7 +991,6 @@ export class RecoveryClaimFormComponent implements OnInit {
             (data: any) => {
               console.log(data);
               let res:any = data;
-              this.myStepper.next();
               if(res?.ErrorMessage.length!=0){
                 j+=1;
               }

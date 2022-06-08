@@ -180,7 +180,7 @@ export class ExistingClaimComponent implements OnInit {
 
   onEditClaim(event:any){
     sessionStorage.setItem('claimEditReq',JSON.stringify(event));
-    this.router.navigate(['Home/New-Claim'],{queryParams:event});
+    this.router.navigate(['Home/recovery-claim-form'],{queryParams:event});
   }
 
   private _filter(value: any,data:any):any[] {
