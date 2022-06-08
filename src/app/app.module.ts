@@ -41,6 +41,7 @@ import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-logi
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { RecoveryClaimFormComponent } from './Modules/recovery-claim-form/recovery-claim-form.component';
+import { ExistingLoginDetailsComponent } from './Modules/admin/loginCreation/existing-login-details/existing-login-details.component';
 
 @NgModule({
   declarations: [

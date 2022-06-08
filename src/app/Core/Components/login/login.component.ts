@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.onCreateFormControl();
-    this.onGetInsuranceTypList();
+    //this.onGetInsuranceTypList();
 
 
   }
