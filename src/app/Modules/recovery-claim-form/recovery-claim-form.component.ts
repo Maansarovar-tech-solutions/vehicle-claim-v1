@@ -250,7 +250,7 @@ export class RecoveryClaimFormComponent implements OnInit {
 
     this.onGetYears();
     if (Object.keys(this.EditReq).length != 0) {
-      // 
+      //
       this.onGetClaimDetails(this.EditReq?.VehicleChassisNumber);
     }
 
@@ -777,7 +777,6 @@ export class RecoveryClaimFormComponent implements OnInit {
             });
           }
           this.showMenu = false;
-          this.myStepper.next();
         }
       },
       (err) => {}
@@ -1033,4 +1032,8 @@ export class RecoveryClaimFormComponent implements OnInit {
       (err) => { }
     );
   }
+
+  okay(){
+    this.router.navigate(['Home/Receivable']);
+   }
 }

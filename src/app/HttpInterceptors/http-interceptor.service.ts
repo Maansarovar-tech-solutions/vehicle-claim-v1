@@ -14,10 +14,13 @@ import { catchError, finalize, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ErrorService } from '../Errors/error.service';
 import { MatDialog } from '@angular/material/dialog';
+import * as Mydatas from '../app-config.json';
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
   service_count = 0;
+  public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1: any = this.AppConfig.ApiUrl1;
   constructor(
     public router: Router,
     private errorService: ErrorService,
@@ -38,7 +41,7 @@ export class HttpInterceptorService implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           if(event.body?.IsError){
               let ErrorMessage:any =event.body?.ErrorMessage;
-              if(event.url != "http://192.168.1.18:8081/api/chassissearch"){
+              if(event.url != `${this.ApiUrl1}api/chassissearch`){
               this.openDialog(ErrorMessage)
               }
 
