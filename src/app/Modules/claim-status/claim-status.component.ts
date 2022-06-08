@@ -406,12 +406,19 @@ export class ClaimStatusComponent implements OnInit {
   }
   onFormSubmit(){
     let userDetails = this.userDetails?.LoginResponse;
+    let docIdList:any = [];
+    if(this.ownerDocList.length!=0){
+      for(let document of this.ownerDocList){
+        docIdList.push(document.DocumentTypeId);
+      }
+    }
     let UrlLink = `${this.ApiUrl1}api/update/status`;
     let ReqObj = {
       "ClaimReferenceNumber": this.claimDetails?.ClaimReferenceNumber,
       "UpdatedBy": userDetails?.LoginId,
       "InsuranceId": userDetails?.InsuranceId,
       "StatusCode": this.f.claimStatus.value,
+      "DocRefId":docIdList,
       "Remarks":this.f.claimStatusRemarks.value,
       "AcceptedReserveAmount":this.f.acceAmount.value,
       "ReserveAmount":this.f.reqAmount.value

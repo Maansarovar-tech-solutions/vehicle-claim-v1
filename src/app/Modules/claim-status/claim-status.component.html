@@ -399,16 +399,16 @@
                         <div class="row">
                             <div class="col-md-4 col-lg-4 offset-8">
                                 <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
-                                    <div class="imag-card my-3" (click)="doc.click()">
-                                        <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
-                                        <div>
-                                            <div class="center mb-2">
-                                                <b class="text-dark">
+                                <div class="imag-card my-3" (click)="doc.click()">
+                                    <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
+                                    <div>
+                                        <div class="center mb-2">
+                                            <b class="text-dark">
                                                Add Documents
                                           </b>
-                                            </div>
                                         </div>
                                     </div>
+                                </div>
                                 <!-- </ng-container> -->
                             </div>
                         </div>
@@ -540,13 +540,10 @@
                                 </ng-container>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
             <div class="recovery-claim-information mt-3">
-
                 <div class="recovery-claim-information-item">
                     <div class="recovery-claim-information-item-title">
                         {{policyInformation?.InsuranceCompanyName}}
