@@ -319,7 +319,7 @@
                 </div>
             </div>
             <div class="text-center mt-3">
-                <button class="btn btn-danger mr-1">Back</button>&nbsp;
+                <button class="btn btn-danger mr-1" (click)="back()">Back</button>&nbsp;
                 <button class="btn btn-warning mr-1" (click)="changePassword=!changePassword;editSection=!editSection">Change Password</button>&nbsp;
                 <button class="btn btn-success ml-2">Submit</button>
             </div>
@@ -337,8 +337,6 @@
                                     <input matInput name="oldPassword" [(ngModel)]="oldPassword" placeholder="Old Password" value="" />
                                 </mat-form-field>
                             </div>
-
-
                         </div>
                         <div class="row text-center">
                             <div class="col-md-4 col-lg-4 offset-4">

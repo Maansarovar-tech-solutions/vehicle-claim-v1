@@ -885,7 +885,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     this.modalService.open(this.content);
   }
   generateApiDetails(index:any){
-    let UrlLink = `${this.ApiUrl1}api/trueinspect/uploadimage`;
+    let UrlLink = `${this.ApiUrl1}api/uploadimage`;
     let ReqObj = {
       "ClaimNo":  this.ClaimReferenceNumber,
       "ListOfPath": [this.uploadedDocList[index].FilePathName
@@ -910,7 +910,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     );
   }
   viewApiDetails(index:any){
-    let UrlLink = `${this.ApiUrl2}api/trueinspect/imagereport`;
+    let UrlLink = `${this.ApiUrl2}api/imagereport`;
     let ReqObj = {
       "assessment_id": this.uploadedDocList[index].Assessmentid,
       "Filename": this.uploadedDocList[index].Param

@@ -262,7 +262,7 @@ export class ClaimStatusComponent implements OnInit {
     else{
       rowData = this.ownerDocList[index]
     }
-    let UrlLink = `${this.ApiUrl1}api/trueinspect/uploadimage`;
+    let UrlLink = `${this.ApiUrl1}api/uploadimage`;
     let ReqObj = {
       "ClaimNo":  this.claimDetails?.ClaimReferenceNumber,
       "ListOfPath": [rowData.FilePathName
@@ -295,7 +295,7 @@ export class ClaimStatusComponent implements OnInit {
     else{
       rowData = this.ownerDocList[index]
     }
-    let UrlLink = `${this.ApiUrl1}api/trueinspect/imagereport`;
+    let UrlLink = `${this.ApiUrl1}api/imagereport`;
     let ReqObj = {
       "assessment_id": rowData.Assessmentid,
       "Filename": rowData.Param

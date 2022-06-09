@@ -5,7 +5,7 @@
 @import url("./assets/AnimationCss/hover.css");
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons&display=block");
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@ng-select/ng-select/themes/material.theme.css";
 :root {
     --theme1: #0547f3;
     --theme2: #9f2138;
@@ -56,8 +56,9 @@ a:hover {
 
 .mat-horizontal-stepper-header {
     pointer-events: none !important;
-    height:50px !important
+    height: 50px !important
 }
+
 .page-content {
     padding: 10px;
 }
@@ -254,6 +255,7 @@ mat-form-field {
     flex-grow: 1;
 }
 
+
 /* .form-control {
     height: 45px;
 } */
@@ -385,9 +387,10 @@ tr:nth-child(even) {
     height: 34px;
     width: 34px;
 }
-.telegram-icon{
-  height: 24px;
-  width: 24px;
+
+.telegram-icon {
+    height: 24px;
+    width: 24px;
 }
 
 .mail-icon path {
@@ -730,8 +733,6 @@ select {
     padding: 12px 0;
 }
 
-
-
 .text-right {
     text-align: right;
 }
@@ -774,13 +775,12 @@ select {
     color: #ffffff !important;
 }
 
-
-
 .mr-5 {
     margin-right: 5px;
 }
+
 ol {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .search-sec {
@@ -992,8 +992,6 @@ tr.mat-footer-row {
     background: #fec400;
 }
 
-
-
 .nave-style .navbar-nav .nav-link.active::after {
     content: '';
     display: block;
@@ -1013,8 +1011,6 @@ tr.mat-footer-row {
     border: solid 1px #eaeaea;
     color: #707070;
 }
-
-
 
 .mat-form-field-label-wrapper {
     /* display: none;*/

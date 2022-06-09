@@ -32,6 +32,10 @@ export class ExistingLoginDetailsComponent implements OnInit {
   public SearchExsitTable: any;
   public SearchExsitTable1: any;
   makeMasterList:any[]=[];
+  insurCompanyList: any[]=[];
+  insuranceTypeList: any;
+  insuranceValue: any;
+  filterinsurCompanyLis: any;
   constructor(
     private addVehicleService: AddVehicleService,
     private excelService:ExcelSaveService,
@@ -81,11 +85,25 @@ export class ExistingLoginDetailsComponent implements OnInit {
     // ]
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.dataSource = new MatTableDataSource(this.makeMasterList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.getExistingLoginList();
+    this.onInitialFetchData();
+    let insList = (await this.onGetInsuranceCompList());
+    this.insurCompanyList = [];
+    if(insList?.NonParticipants){
+      this.insurCompanyList = this.insurCompanyList.concat(insList?.NonParticipants);
+    }
+    if(insList?.Participants){
+      this.insurCompanyList = this.insurCompanyList.concat(insList?.Participants);
+    }
+    
+    console.log("Company List",this.insurCompanyList)
+    //this.getExistingLoginList();
+  }
+  onInitialFetchData(){
+    
   }
   applyFilter(event: Event) {
     console.log("eValue",event)
@@ -97,9 +115,24 @@ export class ExistingLoginDetailsComponent implements OnInit {
     }
 
   }
+  async onGetInsuranceCompList() {
+    let UrlLink = `${this.ApiUrl1}api/groupof/insurancecompanies`;
+    let response = (
+      await this.addVehicleService.onGetMethodAsync(UrlLink)
+    )
+      .toPromise()
+      .then((res: any) => {
+        return res?.Result;
+      })
+      .catch((err) => {});
+    return response;
+  }
   getExistingLoginList(){
-    let UrlLink = `${this.ApiUrl1}loginCreation/getList`;
-    this.addVehicleService.onGetMethodSync(UrlLink).subscribe(
+    let ReqObj = {
+      "CompanyId":this.insuranceValue
+    }
+    let UrlLink = `${this.ApiUrl1}authentication/getlist`;
+    this.addVehicleService.onPostMethodSync(UrlLink,ReqObj).subscribe(
       (data: any) => {
           console.log("Body Master List",data);
             this.makeMasterList = data;
