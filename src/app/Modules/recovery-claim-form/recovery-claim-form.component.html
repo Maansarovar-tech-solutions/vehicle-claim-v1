@@ -5,7 +5,7 @@
       <ng-template matStepLabel>Claim Intimation</ng-template>
       <form [formGroup]="claimForm">
 
-        <div class="vision-card" style="padding: 1rem 17rem;">
+        <div class="vision-card" style="padding: 1rem 7rem;">
           <div>
             <div class="vision-card-body">
               <div class="recovery-claim-form">
@@ -378,6 +378,25 @@
                           </mat-error>
                         </mat-form-field>
                       </div>
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="py-3">
+                            <mat-slide-toggle formControlName="RecovTotalLossYn">Total Loss: <span class="text-primary">{{f.RecovTotalLossYn.value==true?'Yes':'No'}}</span></mat-slide-toggle>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="f.RecovTotalLossYn.value">
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Salvage Cost</mat-label>
+                          <input type="number" matInput placeholder="Vehicle Value" formControlName="SalvageCost">
+                          <mat-error *ngIf="(f.SalvageCost.errors) || (!f.SalvageCost.valid && f.SalvageCost.touched)">
+                            <span *ngIf="f.SalvageCost.errors?.required" class="error-text">This
+                              field
+                              is
+                              required</span>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </ng-container>
                     </div>
                   </div>
                 </div>
