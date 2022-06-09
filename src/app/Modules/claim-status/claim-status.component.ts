@@ -53,6 +53,7 @@ export class ClaimStatusComponent implements OnInit {
   ownerDocList: any[]=[];
   recoveryDocList: any[]=[];
   events1: any[]=[];
+  totalTrackList: any[]=[];
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
@@ -522,17 +523,21 @@ export class ClaimStatusComponent implements OnInit {
   getCurrentStatusList(event:any){
     let UrlLink = `${this.ApiUrl1}api/track/claim`;
     let ReqObj = {
-      "ClaimReferenceNumber": event?.ClaimReferenceNumber
+      "ClaimReferenceNumber": event?.ClaimReferenceNumber,
+      "TotalTrackingYn":"Y"
      }
      this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data)
          let res = data.Result;
-         if(res.OwnCompanyTrack){
+         if(res?.OwnCompanyTrack){
            this.setOwnerTrackList(res.OwnCompanyTrack);
          }
-         if(res.RecoveryCompanyTrack){
+         if(res?.RecoveryCompanyTrack){
           this.setRecoveryTrackList(res.RecoveryCompanyTrack);
+         }
+         if(res?.TotalCompaniesTrack){
+          this.totalTrackList = res?.TotalCompaniesTrack;
          }
       },
       (err) => { }

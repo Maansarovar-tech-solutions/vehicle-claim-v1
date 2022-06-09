@@ -128,6 +128,7 @@ export class ExistingLoginDetailsComponent implements OnInit {
     return response;
   }
   getExistingLoginList(){
+    sessionStorage.setItem('loginCompanyId',this.insuranceValue);
     let ReqObj = {
       "CompanyId":this.insuranceValue
     }
@@ -160,5 +161,8 @@ export class ExistingLoginDetailsComponent implements OnInit {
     sessionStorage.setItem('editLoginId',JSON.stringify(event));
     this.router.navigate(['Home/NewLoginDetails'])
  }
- 
+ addNewUser(){
+  sessionStorage.removeItem('editLoginId');
+  this.router.navigate(['Home/NewLoginDetails'])
+ }
 }

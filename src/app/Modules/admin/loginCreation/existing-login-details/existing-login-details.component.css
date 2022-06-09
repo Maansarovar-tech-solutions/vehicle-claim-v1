@@ -1,0 +1,32 @@
+.login-form-grid {
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.login-form-grid-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.login-form-grid-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 15px;
+    color: var(--theme2);
+}
+
+.login-information-item {
+    grid-column: span 3;
+}
+
+.login-form-grid-item-body {
+    padding: 10px;
+}

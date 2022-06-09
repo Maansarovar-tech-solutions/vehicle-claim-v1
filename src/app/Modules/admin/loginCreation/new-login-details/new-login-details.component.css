@@ -76,10 +76,14 @@
     justify-content: space-between;
     align-items: center;
     font-weight: 900;
-    padding: 10px;
-    color: var(--theme1);
+    padding: 15px;
+    color: var(--theme2);
 }
 
 .login-information-item {
     grid-column: span 3;
+}
+
+.login-form-grid-item-body {
+    padding: 10px;
 }

@@ -1,20 +1,32 @@
 <div class="page-content">
     <div class="vision-card">
         <div class="vision-card-body">
-            <div class="row">
-                <div class="col-md-3 col-lg-3">
-                    <ng-select [appendTo]="'body'" placeholder="Insurance Company" class="m-0 p-0" (change)="getExistingLoginList()" [(ngModel)]="insuranceValue" name="insuranceValue">
-                        <ng-option *ngFor="let type of insurCompanyList" [value]="type.Code">{{type.CodeDescription}}</ng-option>
-                    </ng-select>
+            <div class="login-form-grid">
+                <div class="login-form-grid-item login-information-item">
+                    <div class="login-form-grid-item-title">
+                        <h5><b>Existing Users</b></h5>
+                        <div *ngIf="insuranceValue">
+                            <button class="btn btn-warning" (click)="addNewUser()">Create New User</button>
+                        </div>
+                    </div>
+                    <div class="login-form-grid-item-body p-1">
+                        <div class="row mb-5">
+                            <div class="col-md-3 col-lg-3 offset-1 mb-2">
+                                <ng-select [appendTo]="'body'" placeholder="Insurance Company" class="m-0 p-0" (change)="getExistingLoginList()" [(ngModel)]="insuranceValue" name="insuranceValue">
+                                    <ng-option *ngFor="let type of insurCompanyList" [value]="type.Code">{{type.CodeDescription}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="makeMasterList.length!=0">
+                            <app-masters-grid [cols]="columnHeader" [data]="makeMasterList" (onEdit)="onEditLogin($event)">
+                            </app-masters-grid>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
-            <ng-container *ngIf="makeMasterList">
-                <app-masters-grid [cols]="columnHeader" [data]="makeMasterList" (onEdit)="onEditLogin($event)">
-                </app-masters-grid>
-            </ng-container>
         </div>
     </div>
-    <div class="text-center my-4">
+    <!-- <div class="text-center my-4">
         <button class="vision-btn blue-bg-color" (click)="exportAsXLSX()"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Export Body Type Details</button>
-    </div>
+    </div> -->
 </div>

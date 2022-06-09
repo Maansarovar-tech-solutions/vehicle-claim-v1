@@ -5,9 +5,9 @@
             <div class="login-form-grid">
                 <div class="login-form-grid-item login-information-item">
                     <div class="login-form-grid-item-title">
-                        <h4>Personal Information</h4>
+                        <h5><b>Personal Information</b></h5>
                     </div>
-                    <div class="login-form-grid-iteam-body">
+                    <div class="login-form-grid-item-body">
                         <div class="row p-2">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="pb-1">
@@ -51,10 +51,10 @@
                 </div>
                 <div class="login-form-grid-item login-information-item">
                     <div class="login-form-grid-item-title">
-                        <h4>UserType Information</h4>
+                        <h5><b>UserType Information</b></h5>
                         <hr class="m-0 p-0">
                     </div>
-                    <div class="login-form-grid-iteam-body">
+                    <div class="login-form-grid-item-body">
                         <div class="row" style="margin-left: 20px !important;">
                             <ng-container *ngFor="let product of productList">
                                 <div class="col-md-3 col-lg-3 customHover p-2" (click)="filterRowList(product,'direct')" [class.active]="product.Code==productValue">
@@ -66,14 +66,14 @@
                             <div class="login-form-grid-item-title mt-1" *ngIf="productName">
                                 <div class="card-title-text ">Add UserType</div>
                             </div>
-                            <div class="login-form-grid-iteam-body" *ngIf="productName">
+                            <div class="login-form-grid-item-body" *ngIf="productName">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                                         <mat-form-field appearance="legacy">
                                             <mat-label>UserType</mat-label>
                                             <mat-select [(ngModel)]="addUserType" disableOptionCentering (selectionChange)="onChangeNewValue('UserType',$event)">
                                                 <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
-                                                    {{ type.Description }}
+                                                    {{ type.CodeDescription }}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -106,14 +106,14 @@
                         </div>
                         <div class="login-form-grid-item" [hidden]="showUserList()">
                             <div class="login-form-grid-item-title">
-                                <span>UserType Information</span>
+                                UserType Information
                                 <div>
                                     <span>Product - <b>{{productName}}</b></span>
                                 </div>
 
                                 <hr class="m-0 p-0">
                             </div>
-                            <div class="login-form-grid-iteam-body">
+                            <div class="login-form-grid-item-body">
                                 <ng-container *ngIf="makerList.length!=0">
                                     <div class="login-form-grid-item-title mt-2">
                                         <div class="card-title-text ">Maker Information</div>
@@ -126,7 +126,7 @@
                                                         <mat-label>UserType</mat-label>
                                                         <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
                                                             <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
-                                                                {{ type.Description }}
+                                                                {{ type.CodeDescription }}
                                                             </mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
@@ -165,7 +165,7 @@
                                                         <mat-label>UserType</mat-label>
                                                         <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
                                                             <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
-                                                                {{ type.Description }}
+                                                                {{ type.CodeDescription }}
                                                             </mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
@@ -206,7 +206,7 @@
                                                         <mat-label>UserType</mat-label>
                                                         <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
                                                             <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
-                                                                {{ type.Description }}
+                                                                {{ type.CodeDescription }}
                                                             </mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
@@ -253,7 +253,7 @@
                                                         <mat-label>UserType</mat-label>
                                                         <mat-select [(ngModel)]="item.UserType" disableOptionCentering (selectionChange)="onChangeValue('UserType',$event,item)">
                                                             <mat-option panelClass="myPanelClass" *ngFor="let type of userTypeList" [value]="type.Code">
-                                                                {{ type.Description }}
+                                                                {{ type.CodeDescription }}
                                                             </mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
@@ -293,11 +293,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="login-form-grid-item login-information-item">
+                <div class="login-form-grid-item login-information-item" *ngIf="!editSection">
                     <div class="login-form-grid-item-title">
-                        <h4>Login Information</h4>
+                        <h5><b>Login Information</b></h5>
                     </div>
-                    <div class="login-form-grid-iteam-body">
+                    <div class="login-form-grid-item-body">
                         <div class="row">
                             <div class="col-md-4 col-lg-4" style="margin-left: 20px !important;">
                                 <mat-form-field class="full-width">
@@ -328,9 +328,9 @@
             <div class="login-form-grid">
                 <div class="login-form-grid-item login-information-item">
                     <div class="login-form-grid-item-title">
-                        <h4>Change Password</h4>
+                        <h5><b>Change Password</b></h5>
                     </div>
-                    <div class="login-form-grid-iteam-body">
+                    <div class="login-form-grid-item-body">
                         <div class="row text-center">
                             <div class="col-md-4 col-lg-4 offset-4">
                                 <mat-form-field class="full-width p-0">

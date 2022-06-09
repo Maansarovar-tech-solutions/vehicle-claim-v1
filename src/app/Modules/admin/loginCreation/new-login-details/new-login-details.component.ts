@@ -30,18 +30,25 @@ export class NewLoginDetailsComponent implements OnInit {
   productName: any;loginId:any="";password:any="";
   rePassword:any="";oldPassword:any="";newPassword:any="";
   reNewPassword:any="";
+  companyId: any;
+  pwdCount: any;
+  createdBy: any;
+  passDate: any;
+  entryDate: any;
   constructor(private router:Router,
     private addVehicleService: AddVehicleService,) {
     let loginDetails = JSON.parse(sessionStorage.getItem('editLoginId') || '{}');
+    this.companyId  = sessionStorage.getItem('loginCompanyId');
     if(loginDetails?.LoginId){
       this.loginId = loginDetails?.LoginId;
-      //this.companyId  = loginDetails?.
+      this.editSection = true;
       this.getEditLoginDetails();
     }
+    
     this.productList = [
       {
         "Code": "10001",
-        "Description": "TPL",
+        "Description": "Recovery Claim",
         "ImageIcon": "data:image/jpg;base64,"
       },
       {
@@ -85,7 +92,8 @@ export class NewLoginDetailsComponent implements OnInit {
         "Code": "South",
         "Description": "South"
       }  
-    ]
+    ];
+    this.getUserTypeList();
     this.depreciationList = [];
     this.adminList = [];
     this.makerList = [];
@@ -94,6 +102,14 @@ export class NewLoginDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+  getUserTypeList(){
+    let UrlLink = `${this.ApiUrl1}dropdown/claimusertypemaster`;
+       this.addVehicleService.onGetMethodSync(UrlLink).subscribe(
+        (data: any) => {
+          console.log("UserType List",data);
+          this.userTypeList = data.Result;
+      })
   }
   checkProductSection(rowData:any){
     if(this.productBasedList.length!=0){
@@ -137,26 +153,55 @@ export class NewLoginDetailsComponent implements OnInit {
             }
             i+=1;
             if(i==this.productBasedList.length){
-              // if(type =='direct') this.getProductDetails(rowData);
-              // else this.onFormSubmit();
-              this.productValue = rowData.Code;
-              this.productName = rowData.Description;
+               if(type =='direct') this.getProductDetails(rowData);
+               else this.onFormSubmit();
             }
           }
         }
         else{
           this.depreciationList = [];
-          //this.getProductDetails(rowData);
-          this.productValue = rowData.Code;
-          this.productName = rowData.Description;
+          this.getProductDetails(rowData);
         }
         
     }
     else{
       console.log("Selected Values are",rowData);
       this.depreciationList = [];
-      //this.getProductDetails(rowData);
+      this.getProductDetails(rowData);
     }
+  }
+  async onFormSubmit(){
+    console.log("Final List",this.productBasedList);
+    let editYN ="";
+    if(this.editSection) editYN = "Y";
+    else editYN = "N";
+    let ReqObj = {
+      "LoginId": this.loginId,
+      "CreatedBy":this.createdBy,
+      "UserName": this.userName,
+      "UserMail": this.emailId,
+      "MobileNumber": this.mobileNo,
+      "Status": this.statusValue,
+      "Remarks": this.remarks,
+      "ProductBasedDetails": this.productBasedList,
+      "Password": this.password,
+      "RePassword": this.rePassword,
+      "IsEditYN": editYN,
+      "Passdate":this.passDate,
+      "PwdCount":this.pwdCount,
+      "EntryDate":this.entryDate
+    }
+    let UrlLink = `/loginCreation/save`;
+    (await this.addVehicleService.onPostMethodSync(UrlLink,ReqObj)).toPromise().then(res=>{
+          let data:any = res;
+          console.log("On Final Submit",data);
+          if(data.ErrorList.length == 0){
+            // this.toastr.showSuccess("Login Details Inserted/Updated Successfully", "Login Creation");
+            // this.router.navigate(['/admin/existingLoginDetails'])
+          }
+    }).catch((err) => {
+      console.log("Error",err)
+  });;
   }
   onChangeNewValue(type:any,event:any){
     if(type=='UserType'){
@@ -322,6 +367,48 @@ export class NewLoginDetailsComponent implements OnInit {
       rowData.SumInsuredEnd = event.target.value;
     }
   }
+  getProductDetails(rowData:any){
+    this.productValue = rowData.Code;
+    this.productName = rowData.Description;
+    this.addRegionCode = "";this.addUserType="";this.addSumInsuredEnd = "";this.addSumInsuredStart = "";
+    console.log("Change Product",this.productBasedList,rowData);
+    if(this.productBasedList.length!=0){
+      let i=0,j=0;
+      for(let product of this.productBasedList){
+        if(product.ProductCode == this.productValue){
+          i+=1;
+          let userDetails = product.UserTypeBasedDetails;
+          if(userDetails.length!=0){
+              this.depreciationList = userDetails;
+              console.log("Final Dep",this.depreciationList,this.productBasedList)
+              this.splitExistingDetails(userDetails);
+          }
+          else{
+            this.makerList = [];
+            this.adminList = [];
+            this.approverList = [];
+            this.checkerList = [];
+          }
+        }
+        j+=1;
+          if(j==this.productBasedList.length){
+            console.log("Not Found Index",i,this.productBasedList);
+            if(i==0){
+              this.makerList = [];
+              this.adminList = [];
+              this.approverList = [];
+              this.checkerList = [];
+            }
+          }
+      }
+    }
+    else{
+            this.makerList = [];
+            this.adminList = [];
+            this.approverList = [];
+            this.checkerList = [];
+    }
+  }
   deleteRow(type:any,index:any){
     if(type == 'maker'){
       this.makerList.splice(index,1);
@@ -336,6 +423,14 @@ export class NewLoginDetailsComponent implements OnInit {
       this.approverList.splice(index,1);
     }
   }
+  splitExistingDetails(userDetails:any[]) {
+    if(userDetails.length!=0){
+      this.approverList =  userDetails.filter(entry=>entry.UserType == 'approver');
+      this.makerList =  userDetails.filter(entry=>entry.UserType == 'maker');
+      this.checkerList =  userDetails.filter(entry=>entry.UserType == 'checker');
+      this.adminList =  userDetails.filter(entry=>entry.UserType == 'admin');
+    }
+  }
   showUserList(){
     return !(this.makerList.length!=0 || this.checkerList.length!=0 || this.approverList.length!=0 || this.adminList.length!=0)
   }
@@ -345,13 +440,23 @@ export class NewLoginDetailsComponent implements OnInit {
   }
   getEditLoginDetails(){
     let ReqObj = {
-      "LoginId": this.loginId
+      "LoginId": this.loginId,
+      "CompanyId": this.companyId
     }
     let UrlLink = `${this.ApiUrl1}authentication/getdetails`;
     this.addVehicleService.onPostMethodSync(UrlLink,ReqObj).subscribe(
       (data: any) => {
           console.log("Login Edit Details",data);
-
+          this.userName = data.UserName;
+          this.emailId = data.UserMail;
+          this.mobileNo = data.MobileNumber;
+          this.statusValue = data.Status;
+          this.remarks = data.Remarks;
+          this.password = data.Password;
+          this.pwdCount = data.PwdCount;
+          if(data.ClimTypeBasedDetails){
+            this.productBasedList = data.ClimTypeBasedDetails;
+          }
       },  
       (err) => { }
     );
