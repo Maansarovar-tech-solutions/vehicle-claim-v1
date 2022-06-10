@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem("Userdetails", JSON.stringify(data));
             let userType = data?.LoginResponse?.UserType;
 
-             sessionStorage.setItem('claimType','Receivable')
+            sessionStorage.setItem('claimType','Receivable')
 
             this.router.navigate(['/Home/Receivable']);
 

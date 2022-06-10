@@ -19,8 +19,9 @@
 
     <mat-toolbar-row class="toolbar-row-2">
         <div class="logos">
-            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="./assets/images/gulf-insu.png" class="img-fluid">
             <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="./assets/images/qic-insu.png" class="img-fluid">
+            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'TC'" src="./assets/images/beema.png" class="img-fluid">
+            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="./assets/images/islamic.png" class="img-fluid">
         </div>
         <span class="example-spacer"></span>
         <div class="">

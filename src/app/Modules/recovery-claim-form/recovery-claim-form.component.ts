@@ -164,7 +164,8 @@ export class RecoveryClaimFormComponent implements OnInit {
       OurCivilId: ['', Validators.required],
       InsuranceTypeId: ['', Validators.required],
       VehicleValue: [0, Validators.required],
-
+      RecovTotalLossYn:[false],
+      SalvageCost:[''],
       OtherVehicleChassisNumber: ['', Validators.required],
       OtherPlateCode: ['', Validators.required],
       OtherPlateNumber: ['', Validators.required],
@@ -698,6 +699,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           VehicleChassisNumber: this.f.OurVehicleChassisNumber.value,
           VehicleEngineNumber: this.f.VehicleEngineNumber.value,
           VehicleCode: this.VehicleCode,
+
         },
       ],
     };
@@ -755,6 +757,8 @@ export class RecoveryClaimFormComponent implements OnInit {
         NoOfDays: this.f.NoOfDays.value,
         PerDayCost: this.f.PerDayCost.value,
         TotalValue: this.f.TotalValue.value,
+        RecovTotalLossYn:this.f.RecovTotalLossYn.value?'Y':'N',
+        SalvageCost:this.f.SalvageCost.value,
       },
       CommonInformation: {
         ClaimReferenceNumber: this.ClaimReferenceNumber,
@@ -780,8 +784,8 @@ export class RecoveryClaimFormComponent implements OnInit {
 
       RecoveryInformation: {
         VehMakeId: this.f.VehicleMakeIdOther.value,
-        VehMakeDesc: this.f.VehicleMakeIdOther.value,
-        VehModelId: this.f.VehicleModelIdOther.value,
+        VehMakeDesc:this.onGetCodeDesc(this.makeList,this.f.VehicleMakeIdOther.value),
+        VehModelId:this.onGetCodeDesc(this.modelList,this.f.VehicleModelIdOther.value),
         VehModelDesc: this.f.VehicleModelIdOther.value,
         CivilId: this.f.OtherCivilId.value,
         PlateCode: this.f.OtherPlateCode.value,
@@ -821,6 +825,15 @@ export class RecoveryClaimFormComponent implements OnInit {
       },
       (err) => {}
     );
+  }
+
+  onGetCodeDesc(data:any[],code:any){
+     let index = data.findIndex((ele:any)=>ele.Code == code);
+     if(index == -1){
+       return code
+     }else{
+      return data[index].CodeDescription;
+     }
   }
 
   onDateFormatt(data: any) {
