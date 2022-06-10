@@ -79,22 +79,12 @@
                                         </mat-form-field>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                        <mat-form-field appearance="legacy">
-                                            <mat-label>Region</mat-label>
-                                            <mat-select [(ngModel)]="addRegionCode" disableOptionCentering (selectionChange)="onChangeNewValue('RegionCode',$event)">
-                                                <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
-                                                    {{ type.Description }}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                        <mat-form-field class="full-width" [hidden]="(addUserType=='maker' || addUserType=='admin')">
+                                        <mat-form-field class="full-width">
                                             <input matInput name="SumInsuredStart" [(ngModel)]="addSumInsuredStart" (change)="onChangeNewValue('SumInsuredStart',$event)" placeholder="Sum Insured Start Limit" />
                                         </mat-form-field>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                        <mat-form-field class="full-width" [hidden]="(addUserType=='maker' || addUserType=='admin')">
+                                        <mat-form-field class="full-width">
                                             <input matInput name="SumInsuredEnd" [(ngModel)]="addSumInsuredEnd" (change)="onChangeNewValue('SumInsuredEnd',$event)" placeholder="Sum Insured End Limit" />
                                         </mat-form-field>
                                     </div>
@@ -114,12 +104,12 @@
                                 <hr class="m-0 p-0">
                             </div>
                             <div class="login-form-grid-item-body">
-                                <ng-container *ngIf="makerList.length!=0">
+                                <ng-container *ngIf="managerList.length!=0">
                                     <div class="login-form-grid-item-title mt-2">
-                                        <div class="card-title-text ">Maker Information</div>
+                                        <div class="card-title-text ">manager Information</div>
                                     </div>
                                     <div class="mt-1 ml-1">
-                                        <div class="" *ngFor="let item of makerList; let i = index">
+                                        <div class="" *ngFor="let item of managerList; let i = index">
                                             <div class="row">
                                                 <div class="col-md-3 col-lg-3" style="margin-left: 20px !important;">
                                                     <mat-form-field appearance="legacy">
@@ -131,19 +121,19 @@
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="col-md-3 col-lg-3">
-                                                    <mat-form-field appearance="legacy">
-                                                        <mat-label>Region</mat-label>
-                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
-                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
-                                                                {{ type.Description }}
-                                                            </mat-option>
-                                                        </mat-select>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width">
+                                                        <input matInput name="SumInsuredStart" [(ngModel)]="item.SumInsuredStart" (change)="onChangeValue('SumInsuredStart',$event,item)" placeholder="Sum Insured Start Limit" />
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width">
+                                                        <input matInput name="SumInsuredEnd" [(ngModel)]="item.SumInsuredEnd" (change)="onChangeValue('SumInsuredEnd',$event,item)" placeholder="Sum Insured End Limit" />
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-1 col-lg-1 mt-3" *ngIf="((i+1) != depreciationList.length)">
                                                     <mat-icon style="cursor: pointer; color: #222a45;
-                                                    vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('maker',i)" matTooltip="Delete">delete_forever</mat-icon>
+                                                    vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('manager',i)" matTooltip="Delete">delete_forever</mat-icon>
                                                 </div>
                                                 <div class="col-md-1 col-lg-1 mt-3" *ngIf="((i+1) === depreciationList.length)">
                                                     <mat-icon style="cursor: pointer; color: #222a45; 
@@ -170,14 +160,14 @@
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="col-md-3 col-lg-3">
-                                                    <mat-form-field appearance="legacy">
-                                                        <mat-label>Region</mat-label>
-                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
-                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
-                                                                {{ type.Description }}
-                                                            </mat-option>
-                                                        </mat-select>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width">
+                                                        <input matInput name="SumInsuredStart" [(ngModel)]="item.SumInsuredStart" (change)="onChangeValue('SumInsuredStart',$event,item)" placeholder="Sum Insured Start Limit" />
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <mat-form-field class="full-width">
+                                                        <input matInput name="SumInsuredEnd" [(ngModel)]="item.SumInsuredEnd" (change)="onChangeValue('SumInsuredEnd',$event,item)" placeholder="Sum Insured End Limit" />
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3 col-lg-3">
@@ -194,12 +184,12 @@
                                         </div>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="checkerList.length!=0">
+                                <ng-container *ngIf="officerList.length!=0">
                                     <div class="login-form-grid-item-title mt-2">
-                                        <div class="card-title-text ">Checker Information</div>
+                                        <div class="card-title-text ">Officer Information</div>
                                     </div>
                                     <div class="mt-1 ml-1">
-                                        <div class="" *ngFor="let item of checkerList; let i = index">
+                                        <div class="" *ngFor="let item of officerList; let i = index">
                                             <div class="row">
                                                 <div class="col-md-3 col-lg-3" style="margin-left: 20px !important;">
                                                     <mat-form-field appearance="legacy">
@@ -211,30 +201,20 @@
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="col-md-3 col-lg-3">
-                                                    <mat-form-field appearance="legacy">
-                                                        <mat-label>Region</mat-label>
-                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
-                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
-                                                                {{ type.Description }}
-                                                            </mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
                                                 <div class="col-md-2 col-lg-2">
-                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                    <mat-form-field class="full-width">
                                                         <input matInput name="SumInsuredStart" [(ngModel)]="item.SumInsuredStart" (change)="onChangeValue('SumInsuredStart',$event,item)" placeholder="Sum Insured Start Limit" />
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-2 col-lg-2">
-                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                    <mat-form-field class="full-width">
                                                         <input matInput name="SumInsuredEnd" [(ngModel)]="item.SumInsuredEnd" (change)="onChangeValue('SumInsuredEnd',$event,item)" placeholder="Sum Insured End Limit" />
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-1 col-lg-1">
                                                     <div class="pr-1 mt-3" *ngIf="((i+1) != depreciationList.length)">
                                                         <mat-icon style="cursor: pointer; color: #222a45;
-                                            vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('checker',i)" matTooltip="Delete">delete_forever</mat-icon>
+                                            vertical-align: middle" [style.fontSize]="'20px'" (click)="deleteRow('officer',i)" matTooltip="Delete">delete_forever</mat-icon>
                                                     </div>
                                                 </div>
                                             </div>
@@ -259,22 +239,12 @@
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3 col-lg-3">
-                                                    <mat-form-field appearance="legacy">
-                                                        <mat-label>Region</mat-label>
-                                                        <mat-select [(ngModel)]="item.RegionCode" disableOptionCentering (selectionChange)="onChangeValue('RegionCode',$event,item)">
-                                                            <mat-option panelClass="myPanelClass" *ngFor="let type of regionList" [value]="type.Code">
-                                                                {{ type.Description }}
-                                                            </mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-md-2 col-lg-2">
-                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                    <mat-form-field class="full-width">
                                                         <input matInput name="SumInsuredStart" [(ngModel)]="item.SumInsuredStart" (change)="onChangeValue('SumInsuredStart',$event,item)" placeholder="Sum Insured Start Limit" />
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="col-md-2 col-lg-2">
-                                                    <mat-form-field class="full-width" [hidden]="item.UserType=='maker'">
+                                                <div class="col-md-3 col-lg-3">
+                                                    <mat-form-field class="full-width">
                                                         <input matInput name="SumInsuredEnd" [(ngModel)]="item.SumInsuredEnd" (change)="onChangeValue('SumInsuredEnd',$event,item)" placeholder="Sum Insured End Limit" />
                                                     </mat-form-field>
 
@@ -321,7 +291,7 @@
             <div class="text-center mt-3">
                 <button class="btn btn-danger mr-1" (click)="back()">Back</button>&nbsp;
                 <button class="btn btn-warning mr-1" (click)="changePassword=!changePassword;editSection=!editSection">Change Password</button>&nbsp;
-                <button class="btn btn-success ml-2">Submit</button>
+                <button class="btn btn-success ml-2" (click)="filterRowList(productValue,'submit')">Submit</button>
             </div>
         </div>
         <div class="vision-card-body" *ngIf="changePassword">

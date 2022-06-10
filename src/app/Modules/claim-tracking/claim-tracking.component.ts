@@ -13,6 +13,7 @@ export class ClaimTrackingComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public trackingDetails:any;
   public trackingConversation:any;
+  totalTrackList: any[]=[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,10 +41,12 @@ export class ClaimTrackingComponent implements OnInit {
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
-        if (data?.Message == "Success") {
           console.log(data)
             this.trackingConversation = data?.Result;
-        }
+            let res = data?.Result;
+            if(res?.TotalCompaniesTrack){
+              this.totalTrackList = res?.TotalCompaniesTrack;
+             }
       },
       (err) => { }
     );

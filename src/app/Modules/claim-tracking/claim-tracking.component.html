@@ -35,23 +35,47 @@
                 </div>
                 <div class="vision-grid-item">
                     <div class="vision-grid-item-title bg-white">
-                        <div class="company-a">
-                            <div class="user-company-logo bg-white">
+                        <div class="company-a d-flex justify-content-start">
+                            <!-- <div class="user-company-logo bg-white">
                                 <img src="./assets/images/gulf-insu.png" alt="Avatar Logo" style="width:150px;">
-                            </div>
+                            </div> -->
                             <!-- <div class="user-name">{{trackingConversation?.}}</div> -->
-                            <div>{{trackingConversation?.CommonDetails?.InsuranceCompanyName}}</div>
+                            <div class="flag-green flex-item">
+
+                            </div>&nbsp;
+                            <div class="text-success flex-item">{{trackingConversation?.CommonDetails?.InsuranceCompanyName}}</div>
+
                         </div>
-                        <div class="company-b">
-                            <div class="user-company-logo bg-white">
+                        <div class="company-b d-flex justify-content-start">
+                            <!-- <div class="user-company-logo bg-white">
                                 <img src="./assets/images/qic-insu.png" alt="Avatar Logo" style="width:150px;">
-                            </div>
+                            </div> -->
                             <!-- <div class="user-name">Qatar-1</div> -->
-                            <div>{{trackingConversation?.CommonDetails?.RecoveryCompanyName}}</div>
+                            <div class="flag-red flex-item">
+
+                            </div>&nbsp;
+                            <div class="text-danger flex-item">{{trackingConversation?.CommonDetails?.RecoveryCompanyName}}</div>
+
                         </div>
                     </div>
                     <div class="vision-grid-item-body">
-                        <div class="row">
+                        <div class="row" *ngIf="totalTrackList.length!=0">
+                            <div class="col-md-10 col-lg-10 offset-1">
+                                <p-timeline [value]="totalTrackList">
+                                    <ng-template pTemplate="content" let-event>
+                                        <small class="p-text-secondary">&#123;&#123;event.EntryDate&#125;&#125;</small>
+                                    </ng-template>
+                                    <ng-template pTemplate="opposite" let-event>
+                                        &#123;&#123;event.StatusDesc&#125;&#125; (&nbsp;
+                                        <span class="text-success" *ngIf="event.Fault=='Not At Fault'"><b>{{event.InsuranceId}}</b></span>
+                                        <span class="text-danger" *ngIf="event.Fault=='At Fault'"><b>{{event.InsuranceId}}</b></span> &nbsp;)
+                                        <br>
+                                        <small class="p-text-secondary">&#123;&#123;event.Remarks&#125;&#125;</small>
+                                    </ng-template>
+                                </p-timeline>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
                             <div class="col-6 col-md-6 text-center">
                                 <ng-container *ngIf="trackingConversation?.OwnCompanyTrack.length!=0">
                                     <p-timeline [value]="trackingConversation?.OwnCompanyTrack">
@@ -65,23 +89,7 @@
                                         </ng-template>
                                     </p-timeline>
                                 </ng-container>
-                                <!-- <ng-container *ngFor="let item of trackingConversation?.OwnCompanyTrack">
-                                    <div class="d-flex justify-content-start hvr-bubble-left active">
-                                        <div class="p-2 chat-box">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">
-                                                    Claim Current Status:{{item?.StatusDesc}}
-                                                </li>
-                                                <li class="list-group-item">
-                                                    Remarks: {{item?.Remarks}}
-                                                </li>
-                                                <li class="list-group-item">
-                                                    Date: {{item?.EntryDate}}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </ng-container> -->
+
                             </div>
                             <div class="col-6 col-md-6 text-center">
                                 <ng-container *ngIf="trackingConversation?.RecoveryCompanyTrack.length!=0">
@@ -95,26 +103,8 @@
                                         </ng-template>
                                     </p-timeline>
                                 </ng-container>
-
-                                <!-- <ng-container *ngFor="let item of trackingConversation?.RecoveryCompanyTrack">
-                                    <div class="d-flex justify-content-start hvr-bubble-left active mt-4">
-                                        <div class="p-2 chat-box">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">
-                                                    Claim Current Status:{{item?.StatusDesc}}
-                                                </li>
-                                                <li class="list-group-item">
-                                                    Remarks: {{item?.Remarks}}
-                                                </li>
-                                                <li class="list-group-item">
-                                                    Date: {{item?.EntryDate}}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </ng-container> -->
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <!-- <div class="d-flex justify-content-end hvr-bubble-right active">

@@ -116,3 +116,55 @@
 .hvr-bubble-right .chat-box {
     background-color: powderblue;
 }
+
+.flag-green {
+    width: 35px;
+    height: 30px;
+    box-sizing: content-box;
+    padding-top: 10px;
+    position: relative;
+    background: green;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.flag-green:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid #fff;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+
+.flag-red {
+    width: 35px;
+    height: 30px;
+    box-sizing: content-box;
+    padding-top: 10px;
+    position: relative;
+    background: red;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.flag-red:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid #fff;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
