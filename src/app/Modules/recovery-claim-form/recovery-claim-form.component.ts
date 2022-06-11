@@ -442,12 +442,14 @@ export class RecoveryClaimFormComponent implements OnInit {
   onDisplayVehicleModel = (code: any) => {
     if (!code) return '';
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
-    return this.modelList[index].ModelDescription;
+    if(index) return this.modelList[index].ModelDescription;
+    else return '';
   };
   onDisplayVehicleModelother = (code: any) => {
     if (!code) return '';
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
-    return this.modelList[index].ModelDescription;
+    if(index) return this.modelList[index].ModelDescription;
+    else return '';
   };
   onDisplayRegistrationType = (code: any) => {
     if (!code) return '';
@@ -541,7 +543,11 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.f.VehicleValue.setValue(AccidentInformation?.VehicleValue);
           this.f.RepairCost.setValue(AccidentInformation?.RepairCost)
           this.f.NoOfDays.setValue(AccidentInformation?.NoOfDays)
-          this.f.PerDayCost.setValue(AccidentInformation?.PerDayCost)
+          this.f.PerDayCost.setValue(AccidentInformation?.PerDayCost);
+          if(AccidentInformation.RecovTotalLossYn=='Y')
+          this.f.RecovTotalLossYn.setValue(true);
+          else this.f.RecovTotalLossYn.setValue(false);
+          this.f.SalvageCost.setValue(AccidentInformation.SalvageCost)
           // this.f.TotalValue.setValue(AccidentInformation?.TotalValue)
         }
       },

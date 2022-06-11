@@ -1,5 +1,5 @@
 import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/Auth/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { filter, map } from 'rxjs/operators';
@@ -7,6 +7,8 @@ import { SharedService } from 'src/app/Shared/Services/shared.service';
 import * as Mydatas from '../../../app-config.json';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
 import { VehicleSearchComponent } from 'src/app/Modules/vehicle-search/vehicle-search.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -38,13 +40,16 @@ export class NavbarComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public recoveryType: any = '';
   public step: any = '1'
-
+  @ViewChild('content1') content1 : any;
+  imageUrl: any;
+  uploadDocList: any[]=[];
   constructor(
     private router: Router,
     private authService: AuthService,
     private sharedService: SharedService,
     private activatedRoute: ActivatedRoute,
     private addVehicleService: AddVehicleService,
+    private modalService:NgbModal,
     public dialog: MatDialog
   ) {
     this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
@@ -162,10 +167,73 @@ export class NavbarComponent implements OnInit {
     else this.showIframe = false;
   }
   getUserCreation(){
+    this.showIframe = false;
     this.router.navigate(['Home/ExistingLoginDetails']);
   }
   addClaim() {
     this.router.navigate(['Home/New-Claim/Claim-Form']);
+  }
+  uploadExcelModal(){
+    this.uploadDocList = [];
+    this.modalService.open(this.content1, { size: 'xl', backdrop: 'static' });
+  }
+  hide() {
+    this.modalService.dismissAll();
+  }
+  onUploadDocuments(target:any,fileType:any,type:any){
+    let event:any = target.target.files;
+    console.log("Event ",event);
+    let fileList = event;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
+
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+          this.uploadDocList.push({ 'url': this.imageUrl,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+
+        }
+
+    }
+    console.log("Final File List",this.uploadDocList)
+  }
+  onDeleteDocument(index:any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+          this.uploadDocList.splice(index,1);
+      }
+    })
+  }
+  onSampleDownload(){
+    let UrlLink = `${this.ApiUrl1}getsampleexcel`;
+    let ReqObj = {
+      "ExcelDownloadReq": "ClaimUploadExcel"
+    }
+    return this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
+      console.log("Excel Data", data);
+      const link = document.createElement('a');
+            link.setAttribute('target', '_blank');
+            link.setAttribute('href', data?.Result?.imgUrl);
+            link.setAttribute('download', 'SampleDocument');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+    }, (err) => { })
+
   }
   resetSearchData() {
     this.searchBy = ''; this.searchValue = null;

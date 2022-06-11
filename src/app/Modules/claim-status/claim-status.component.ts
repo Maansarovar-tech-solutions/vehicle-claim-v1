@@ -53,7 +53,11 @@ export class ClaimStatusComponent implements OnInit {
   ownerDocList: any[]=[];
   recoveryDocList: any[]=[];
   events1: any[]=[];
-  totalTrackList: any[]=[];
+  totalTrackList: any[]=[];recoveryPolicyNo:any="";
+  recoveryClaimNo:any="";approvedVehicleValue:any="";
+  approvedSalvageValue:any="";approvedRepairCost:any="";
+  approvedReplacementCost:any="";approvedTotalClaimCost:any="";
+  faultCompany: boolean = false;
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
@@ -124,7 +128,7 @@ export class ClaimStatusComponent implements OnInit {
   get f() { return this.claimStatusForm.controls; };
 
   async onFetchInitialData(){
-  this.claimStatusList = await this.onGetInsuranceStatusList()||[];
+  
 
   // let index = this.claimStatusList.findIndex((ele:any)=>ele.StatusCode == this.f.claimStatus.value);
   // console.log(index)
@@ -246,9 +250,13 @@ export class ClaimStatusComponent implements OnInit {
     this.statusName=val;
   }
 
-  async onGetInsuranceStatusList() {
-    let UrlLink = `${this.ApiUrl1}api/dropdown/claimstatus/${this.recoveryType}`
-    let response = (await this.addVehicleService.onGetMethodAsync(UrlLink)).toPromise()
+  async onGetInsuranceStatusList(statusValue:any) {
+    let UrlLink = `${this.ApiUrl1}api/dropdown/claimstatus/restricted`;
+    let ReqObj = {
+      "ClaimType": this.recoveryType,
+      "StatusCode": statusValue
+    }
+    let response = (await this.addVehicleService.onPostMethodSync(UrlLink,ReqObj)).toPromise()
       .then((res: any) => {
         return res?.Result;
       })
@@ -422,7 +430,14 @@ export class ClaimStatusComponent implements OnInit {
       "DocRefId":docIdList,
       "Remarks":this.f.claimStatusRemarks.value,
       "AcceptedReserveAmount":this.f.acceAmount.value,
-      "ReserveAmount":this.f.reqAmount.value
+      "ReserveAmount":this.f.reqAmount.value,
+      "RecovRepairCost":this.approvedRepairCost,
+      "RecovTotalValue":this.approvedTotalClaimCost,
+      "RecovReplacementAmt": this.approvedReplacementCost,
+      "RecovClaimNo":this.recoveryClaimNo,
+      "RecovPolicyNo":this.recoveryPolicyNo,
+      "RecovVehicleValue": this.approvedVehicleValue,
+      "RecovSalvageCost": this.approvedSalvageValue
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -483,7 +498,7 @@ export class ClaimStatusComponent implements OnInit {
     this.router.navigate(['/Home/policy/new-policy'],{ queryParams: { isPolicyForm: true } });
   }
 
-  onGetClaimDetails(event:any) {
+  async onGetClaimDetails(event:any) {
     let userDetails = this.userDetails?.LoginResponse;
     let UrlLink = `${this.ApiUrl1}api/view/claim`;
     let ReqObj = {
@@ -491,7 +506,7 @@ export class ClaimStatusComponent implements OnInit {
 
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
-      (data: any) => {
+      async (data: any) => {
         console.log(data)
         if(data?.Message == 'Success'){
           this.claimInformation=data?.Result;
@@ -501,6 +516,21 @@ export class ClaimStatusComponent implements OnInit {
           this.policyInformation=this.claimInformation?.PolicyInformation;
           this.recoveryInformation=this.claimInformation?.RecoveryInformation;
           this.vehicleInformation=this.claimInformation?.VehicleInformation;
+          this.recoveryClaimNo = this.recoveryInformation?.RecovClaimNo;
+          this.recoveryPolicyNo = this.recoveryInformation?.RecovPolicyNo;
+          this.approvedRepairCost = this.recoveryInformation?.RecovRepairCost;
+          this.approvedReplacementCost = this.recoveryInformation?.RecovReplamentAmt;
+          this.approvedTotalClaimCost = this.recoveryInformation?.RecovTotalValue;
+          this.approvedSalvageValue = this.recoveryInformation?.RecovSalvageCost;
+          this.approvedVehicleValue = this.recoveryInformation?.RecovVehicleValue;
+          if(this.recoveryInformation?.InsuranceId){
+            if(this.recoveryInformation?.InsuranceId == userDetails?.InsuranceId){
+              this.faultCompany = true;
+            }
+            else{
+              this.faultCompany = false;
+            }
+          }
           this.f.reqAmount.setValue(this.commonInformation.ReserveAmount);
           this.f.acceAmount.setValue(this.commonInformation.AcceptedReserveAmount);
           this.onGetPolicyInf(this.recoveryInformation?.VehicleChassisNumber)
@@ -513,8 +543,8 @@ export class ClaimStatusComponent implements OnInit {
 
           }
 
-
-          this.getCurrentStatusList(event);
+          this.claimStatusList = await this.onGetInsuranceStatusList(this.commonInformation.Status)||[];
+          //this.getCurrentStatusList(event);
         }
       },
       (err) => { }
@@ -578,6 +608,21 @@ export class ClaimStatusComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return  `with: ${reason}`;
+    }
+  }
+  onChangeClaimValue(){
+    this.approvedTotalClaimCost = 0;
+    if(this.approvedVehicleValue!="" && this.approvedVehicleValue!= null && this.approvedVehicleValue!= undefined && this.accidentInformation?.recovTotalLossYn == 'Y'){
+      this.approvedTotalClaimCost = this.approvedTotalClaimCost + Number(this.approvedVehicleValue);
+    }
+    if(this.approvedSalvageValue!="" && this.approvedSalvageValue!= null && this.approvedSalvageValue!= undefined && this.accidentInformation?.recovTotalLossYn == 'Y'){
+      this.approvedTotalClaimCost = this.approvedTotalClaimCost + Number(this.approvedSalvageValue);
+    }
+    if(this.approvedRepairCost!="" && this.approvedRepairCost!= null && this.approvedRepairCost!= undefined){
+      this.approvedTotalClaimCost = this.approvedTotalClaimCost + Number(this.approvedRepairCost);
+    }
+    if(this.approvedReplacementCost!="" && this.approvedReplacementCost!= null && this.approvedReplacementCost!= undefined){
+      this.approvedTotalClaimCost = this.approvedTotalClaimCost + Number(this.approvedReplacementCost);
     }
   }
 }

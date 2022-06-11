@@ -76,7 +76,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="onNavigation('Payable');">Claim
-                Payable</a>
+                              Payable</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" [class.active]="isCurrentRoute('Claim')" (click)="onNavigation('Claims');">Claim</a>
@@ -102,17 +102,13 @@
                                 <li><a class="dropdown-item" (click)="redirectBodyType()">Body Type Master</a></li>
                                 <li><a class="dropdown-item" (click)="redirectColour()">Colour Master</a></li>
                                 <li><a class="dropdown-item" (click)="redirectIns()">Insurance Company Master</a></li>
+                                <li><a class="dropdown-item" (click)="getUserCreation()">UserCreation</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="getApiDetails();">
                 API Doc
               </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="getUserCreation()">
-                              UserCreation
-                            </a>
                         </li>
 
                     </ul>
@@ -226,6 +222,8 @@
             <div class="">
                 <div class="well text-right">
                     <div *ngIf="pageName == 'Receivable'">
+                        <button type="button" class="report-btn" (click)="uploadExcelModal()"><img
+                        src="./assets/images/uploadIcon.png" class="report-icon" /> <span class="report-text">Claim Upload</span></button>
                         <button type="button" (click)="onStartNewClaim(11)" class="report-btn"><img
                 src="./assets/images/recovery.png" class="report-icon" /> <span class="report-text">Add
                 Recovery Claim</span></button>
@@ -273,3 +271,70 @@
         </div>
     </mat-drawer-content>
 </mat-drawer-container>
+<ng-template #content1 let-c="close" let-d="dismiss">
+    <div class="card-header">
+        <div class="d-flex bd-highlight">
+            <div class="p-2 w-100 bd-highlight">
+                <h5>Claim Upload</h5>
+            </div>
+            <div class="p-2 flex-shrink-1 bd-highlight">
+                <button type="button" class="example-spacer btn-close" (click)="hide()"></button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="text-end">
+            <button type="button" class="report-btn mx-1" (click)="onSampleDownload()"><img
+          src="./assets/images/download.png" class="report-icon" /> <span
+          class="report-text">Sample Document Download</span>
+          </button>
+        </div>
+        <div class="row" *ngIf="uploadDocList.length==0">
+            <div class="col-md-4 col-lg-4 offset-4">
+                <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
+                <div class="imag-card my-3" (click)="doc.click()">
+                    <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+                    <div>
+                        <div class="center mb-2">
+                            <b class="text-dark">
+                            Add Documents
+                        </b>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- </ng-container> -->
+            </div>
+        </div>
+        <ng-container *ngIf="uploadDocList.length!=0">
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">FileName</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let document of uploadDocList;let i=index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{document.filename}}</td>
+                        <td>
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </ng-container>
+        <div class="text-center">
+            <button type="button" class="report-btn"><img
+            src="./assets/images/uploadIcon.png" class="report-icon" /> <span class="report-text">Upload</span></button>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="text-end p-0">
+            <button class="btn btn-danger mb-1 mr-1" (click)="hide()">Close</button>&nbsp;
+        </div>
+    </div>
+</ng-template>
