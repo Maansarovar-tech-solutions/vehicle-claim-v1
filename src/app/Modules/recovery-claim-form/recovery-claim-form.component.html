@@ -81,7 +81,18 @@
                                                     </mat-error>
                                                 </mat-form-field>
                                             </div>
-
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Claim Number</mat-label>
+                                                    <input matInput placeholder="Claim Number" formControlName="ClaimNumber" required>
+                                                    <mat-error *ngIf="(f.ClaimNumber.errors) || (!f.ClaimNumber.valid && f.ClaimNumber.touched)">
+                                                        <span *ngIf="f.ClaimNumber.errors?.required" class="error-text">This
+                                                          field
+                                                          is
+                                                          required</span>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
 
 
                                             <ng-container *ngIf="f.ClaimTypeId.value == '12'">
@@ -122,12 +133,10 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                 <mat-form-field appearance="outline">
-                                                    <mat-label>Claim Number</mat-label>
-                                                    <input matInput placeholder="Claim Number" formControlName="ClaimNumber" required>
-                                                    <mat-error *ngIf="(f.ClaimNumber.errors) || (!f.ClaimNumber.valid && f.ClaimNumber.touched)">
-                                                        <span *ngIf="f.ClaimNumber.errors?.required" class="error-text">This
-                              field
-                              is
+                                                    <mat-label>Chassis Number</mat-label>
+                                                    <input matInput placeholder="Chassis Number" formControlName="OurVehicleChassisNumber" required>
+                                                    <mat-error *ngIf="(f.OurVehicleChassisNumber.errors) || (!f.OurVehicleChassisNumber.valid && f.OurVehicleChassisNumber.touched)">
+                                                        <span *ngIf="f.OurVehicleChassisNumber.errors?.required" class="error-text">This field is
                               required</span>
                                                     </mat-error>
                                                 </mat-form-field>
@@ -158,17 +167,8 @@
                                                     </mat-error>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                                <mat-form-field appearance="outline">
-                                                    <mat-label>Chassis Number</mat-label>
-                                                    <input matInput placeholder="Chassis Number" formControlName="OurVehicleChassisNumber" required>
-                                                    <mat-error *ngIf="(f.OurVehicleChassisNumber.errors) || (!f.OurVehicleChassisNumber.valid && f.OurVehicleChassisNumber.touched)">
-                                                        <span *ngIf="f.OurVehicleChassisNumber.errors?.required" class="error-text">This field is
-                              required</span>
-                                                    </mat-error>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+                                            <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Engine Number</mat-label>
                                                     <input matInput placeholder="Engine Number" formControlName="VehicleEngineNumber" required>
@@ -178,8 +178,8 @@
                               required</span>
                                                     </mat-error>
                                                 </mat-form-field>
-                                            </div>
-                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                            </div> -->
+                                            <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                 <mat-form-field class="mat-form-width" appearance="outline">
                                                     <mat-label>Plate Char</mat-label>
                                                     <input type="text" placeholder="Select Char" matInput formControlName="OurPlateCode" [matAutocomplete]="platecode" required>
@@ -196,7 +196,7 @@
                               required</span>
                                                     </mat-error>
                                                 </mat-form-field>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Plate Number</mat-label>
@@ -254,7 +254,7 @@
                                                 </mat-form-field>
 
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                            <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                 <mat-form-field class="mat-form-width" appearance="outline">
                                                     <mat-label>Registration Type</mat-label>
                                                     <input type="text" placeholder="Select Type" matInput formControlName="RegistrationTypeId" [matAutocomplete]="registration">
@@ -269,7 +269,7 @@
                               required</span>
                                                     </mat-error>
                                                 </mat-form-field>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                 <mat-form-field class="mat-form-width" appearance="outline">
@@ -373,6 +373,25 @@
                                     <div class="recovery-claim-form-item-body">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+
+                                                <mat-form-field class="mat-form-width" appearance="outline">
+                                                    <mat-label>Insurance Company</mat-label>
+                                                    <input type="text" matInput formControlName="InsuranceId" [matAutocomplete]="autoGroup" required>
+                                                    <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="onDisplayInsurComp">
+                                                        <mat-optgroup *ngFor="let group of filterinsurCompanyLis | async" [label]="group.letter">
+                                                            <mat-option *ngFor="let name of group.names" [value]="name.Code">
+                                                                {{name.CodeDescription}}
+                                                            </mat-option>
+                                                        </mat-optgroup>
+                                                    </mat-autocomplete>
+                                                    <mat-error *ngIf="(f.InsuranceId.errors) || (!f.InsuranceId.valid && f.InsuranceId.touched)">
+                                                        <span *ngIf="f.InsuranceId.errors?.required" class="error-text">This
+                          field
+                          is required</span>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Chassis Number</mat-label>
                                                     <input matInput placeholder="Chassis Number" formControlName="OtherVehicleChassisNumber" required>
@@ -382,7 +401,7 @@
                                                     </mat-error>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <mat-form-field class="mat-form-width" appearance="outline">
                                                     <mat-label>Plate Char</mat-label>
                                                     <input type="text" placeholder="Select Char" matInput formControlName="OtherPlateCode" [matAutocomplete]="platechar">
@@ -397,7 +416,7 @@
                               required</span>
                                                     </mat-error>
                                                 </mat-form-field>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Plate Number</mat-label>
@@ -453,25 +472,7 @@
                                                 </mat-form-field>
                                             </div>
 
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
 
-                                                <mat-form-field class="mat-form-width" appearance="outline">
-                                                    <mat-label>Insurance Company</mat-label>
-                                                    <input type="text" matInput formControlName="InsuranceId" [matAutocomplete]="autoGroup">
-                                                    <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="onDisplayInsurComp">
-                                                        <mat-optgroup *ngFor="let group of filterinsurCompanyLis | async" [label]="group.letter">
-                                                            <mat-option *ngFor="let name of group.names" [value]="name.Code">
-                                                                {{name.CodeDescription}}
-                                                            </mat-option>
-                                                        </mat-optgroup>
-                                                    </mat-autocomplete>
-                                                    <mat-error *ngIf="(f.InsuranceId.errors) || (!f.InsuranceId.valid && f.InsuranceId.touched)">
-                                                        <span *ngIf="f.InsuranceId.errors?.required" class="error-text">This
-                              field
-                              is required</span>
-                                                    </mat-error>
-                                                </mat-form-field>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

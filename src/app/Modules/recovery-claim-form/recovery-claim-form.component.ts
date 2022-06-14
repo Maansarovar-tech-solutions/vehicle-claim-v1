@@ -697,7 +697,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           VehicleMakeId: this.f.VehicleMakeIdOur.value,
           VehicleModelId: this.f.VehicleModelIdOur.value,
           VehicleBodyId: this.vehicleBodyId,
-          RegistrationTypeId: this.f.RegistrationTypeId.value,
+          RegistrationTypeId: "1",
           ManufactureYear: this.f.ManufactureYear.value,
           ColorId: this.f.ColorId.value,
           PlateCode: this.f.OurPlateCode.value,
@@ -821,7 +821,6 @@ export class RecoveryClaimFormComponent implements OnInit {
         this.SubmitClaimDetails(UrlLink,ReqObj);
       }
     })
-    this.SubmitClaimDetails(UrlLink,ReqObj);
   }
   SubmitClaimDetails(UrlLink:any,ReqObj:any){
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
