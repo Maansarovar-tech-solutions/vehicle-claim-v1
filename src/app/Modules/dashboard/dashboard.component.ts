@@ -121,7 +121,8 @@ export class DashboardComponent implements OnInit {
       'statusType':this.recoveryType
     }
     console.log(status)
-    this.router.navigate([`/Home/${this.recoveryType}/recovery-claim-grid`], { queryParams: status });
+    sessionStorage.setItem("selectStatusDetails",JSON.stringify(status))
+    this.router.navigate([`/Home/${this.recoveryType}/recovery-claim-grid`]);
   }
 
   onGetInsuranceCompyList() {

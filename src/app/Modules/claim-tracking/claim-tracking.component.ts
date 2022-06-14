@@ -23,13 +23,15 @@ export class ClaimTrackingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(
-      params => {
-        this.trackingDetails=params;
-        console.log(params);
-        this.onGeTrackingDetail(params)
-      }
-    )
+    this.trackingDetails = JSON.parse(sessionStorage.getItem("selectedClaimDetails") || '{}');
+    this.onGeTrackingDetail(this.trackingDetails)
+
+    // this.activatedRoute.queryParams.subscribe(
+    //   params => {
+    //     this.trackingDetails=params;
+    //     console.log(params);
+    //   }
+    // )
   }
 
   onGeTrackingDetail(params:any) {

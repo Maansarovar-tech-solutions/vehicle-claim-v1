@@ -97,14 +97,9 @@ export class ClaimStatusComponent implements OnInit {
       }
     ];
 
-    this.activatedRoute.queryParams.subscribe(
-      (params: any) => {
-        console.log(params)
-        this.claimDetails=params;
-        console.log("Received Details",this.claimDetails);
-        this.onGetClaimDetails(params)
-      }
-    );
+    this.claimDetails = JSON.parse(sessionStorage.getItem("selectedClaimDetails") || '{}');
+    console.log("Received Details",this.claimDetails);
+    this.onGetClaimDetails(this.claimDetails)
     this.claimType = sessionStorage.getItem('claimType');
 
   }
@@ -128,7 +123,7 @@ export class ClaimStatusComponent implements OnInit {
   get f() { return this.claimStatusForm.controls; };
 
   async onFetchInitialData(){
-  
+
 
   // let index = this.claimStatusList.findIndex((ele:any)=>ele.StatusCode == this.f.claimStatus.value);
   // console.log(index)
@@ -458,7 +453,7 @@ export class ClaimStatusComponent implements OnInit {
   onUploadDocuments(target:any,fileType:any,type:any){
     console.log("Event ",target);
     let event:any = target.target.files;
-    
+
     let fileList = event;
     for (let index = 0; index < fileList.length; index++) {
       const element = fileList[index];

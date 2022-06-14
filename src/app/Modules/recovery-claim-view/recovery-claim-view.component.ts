@@ -39,12 +39,14 @@ export class RecoveryClaimViewComponent implements OnInit {
     this.recoveryType = sessionStorage.getItem("claimType");
 
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
-    this.activatedRoute.queryParams.subscribe(
-      params => {
-        console.log(params);
-        this.choosedList = params;
-      }
-    )
+    this.choosedList = JSON.parse(sessionStorage.getItem("selectStatusDetails") || '{}');
+
+    // this.activatedRoute.queryParams.subscribe(
+    //   params => {
+    //     console.log(params);
+    //     this.choosedList = params;
+    //   }
+    // )
   }
   ngOnInit(): void {
     this.onGetCompanyListCount();
@@ -193,7 +195,8 @@ export class RecoveryClaimViewComponent implements OnInit {
     }
   }
   onTrack(event: any) {
-    this.router.navigate([`Home/${this.recoveryType}/recovery-claim-grid/Claim-Tracking`], { queryParams: event });
+    sessionStorage.setItem('selectedClaimDetails',JSON.stringify(event));
+    this.router.navigate([`Home/${this.recoveryType}/recovery-claim-grid/Claim-Tracking`]);
 
   }
 
@@ -205,6 +208,7 @@ export class RecoveryClaimViewComponent implements OnInit {
 
   onProcced(event: any) {
     console.log(event)
-    this.router.navigate([`Home/${this.recoveryType}/recovery-claim-grid/Claim-Details`],{queryParams:event});
+    sessionStorage.setItem('selectedClaimDetails',JSON.stringify(event));
+    this.router.navigate([`Home/${this.recoveryType}/recovery-claim-grid/Claim-Details`]);
   }
 }
