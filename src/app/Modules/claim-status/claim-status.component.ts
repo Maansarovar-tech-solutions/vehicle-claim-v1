@@ -456,8 +456,9 @@ export class ClaimStatusComponent implements OnInit {
     );
   }
   onUploadDocuments(target:any,fileType:any,type:any){
+    console.log("Event ",target);
     let event:any = target.target.files;
-    console.log("Event ",event);
+    
     let fileList = event;
     for (let index = 0; index < fileList.length; index++) {
       const element = fileList[index];
@@ -477,7 +478,24 @@ export class ClaimStatusComponent implements OnInit {
     }
     console.log("Final File List",this.uploadDocList)
   }
+  onDragDocument(target:any,fileType:any,type:any){
+    let fileList = target;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
 
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+          this.uploadDocList.push({ 'url': this.imageUrl,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+
+        }
+      }
+  }
   onGetPolicyInf(VehicleChassisNumber:any){
     let UrlLink = `${this.ApiUrl1}api/chassissearch`;
     let ReqObj = {

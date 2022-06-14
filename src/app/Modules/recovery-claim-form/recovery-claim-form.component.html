@@ -646,7 +646,7 @@
 
                                 </div>
                             </div>
-                            <div class="imag-card my-3" appDragDrop (fileDropped)="onUploadDocuments($event,null,'direct')" (click)="doc.click()">
+                            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
                                 <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
                                 <div>
                                     <div class="center">

@@ -220,11 +220,13 @@
                                     <div class="col-md-6">
                                         Replacement Car<br>
                                         <small>
-                                            {{accidentInformation?.NoOfDays}}&nbsp;Days / {{accidentInformation?.PerDayCost}}&nbsp;per Day
+                                            {{accidentInformation?.NoOfDays}}&nbsp;Days /
+                                            {{accidentInformation?.PerDayCost}}&nbsp;per Day
                                         </small>
 
                                     </div>
-                                    <div class="col-md-3 text-end">{{accidentInformation?.NoOfDays * accidentInformation?.PerDayCost}}
+                                    <div class="col-md-3 text-end">
+                                        {{accidentInformation?.NoOfDays * accidentInformation?.PerDayCost}}
                                     </div>
                                     <div class="col-md-3 text-end">
                                         <ng-container *ngIf="!faultCompany">
@@ -263,8 +265,8 @@
                     <div class="recovery-claim-information-item-title">
                         <span>Status Update</span>
                         <span>
-              <!-- <telegram-icon></telegram-icon> -->
-            </span>
+                            <!-- <telegram-icon></telegram-icon> -->
+                        </span>
                     </div>
                     <div class="recovery-claim-information-item-body">
                         <form [formGroup]="claimStatusForm">
@@ -278,14 +280,14 @@
                                                     <select class="vision-form-control" formControlName="claimStatus">
                                                         <option value="">Select</option>
                                                         <ng-container *ngFor="let item of claimStatusList">
-                                                        <option value="{{item.StatusCode}}"
-                                                            *ngIf="
+                                                            <option value="{{item.StatusCode}}"
+                                                                *ngIf="
                                                             ( (item?.StatusCode == 'PED' && commonInformation?.Status != 'ATP') ||
                                                              (item?.StatusCode=='CRES' && commonInformation?.Status != 'ATP') ||
                                                             item?.StatusCode == 'DNT' ||
                                                             (item?.StatusCode == 'CNT' && commonInformation?.Status != 'ATP')) ||
                                                              (recoveryType == 'Payable' && commonInformation?.Status != 'DNT' )">
-                                                            {{item.StatusDesc}}</option>
+                                                                {{item.StatusDesc}}</option>
                                                         </ng-container>
                                                     </select>
                                                 </div>
@@ -313,20 +315,20 @@
                     <div class="recovery-claim-information-item-title">
                         <span>Document Information</span>
                         <span>
-              <!-- <telegram-icon></telegram-icon> -->
-            </span>
+                            <!-- <telegram-icon></telegram-icon> -->
+                        </span>
                     </div>
                     <div class="view-claim-information-item-body">
                         <div class="row">
                             <div class="col-md-4 col-lg-4 offset-8">
                                 <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
-                                <div class="imag-card my-3" (click)="doc.click()">
-                                    <input style="display: none;" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc>
+                                <input style="display: none;" [multiple]="true" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc multiple>
+                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
                                     <div>
                                         <div class="center mb-2">
                                             <b class="text-dark">
-                        Add Documents
-                      </b>
+                                                Add Documents
+                                            </b>
                                         </div>
                                     </div>
                                 </div>
@@ -362,12 +364,14 @@
                                                 <td>{{document.FileName}}</td>
                                                 <td>{{document.DocDesc}}</td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'owner')"><i class="fa fa-eye"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'owner')"><i
+                                                            class="fa fa-eye"></i></a>
                                                 </td>
                                                 <td>
                                                     <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>
                                                 </td>
-                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'owner')"><i class="fa fa-download"></i></a>
+                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'owner')"><i
+                                                            class="fa fa-download"></i></a>
                                                 </td>
                                                 <td>
                                                     <ng-container *ngIf="document.DocDesc=='Accident Images'">
@@ -383,12 +387,14 @@
                                                 <th scope="row">{{i+1}}</th>
                                                 <td>{{document.filename}}</td>
                                                 <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
-                            <option value="">Select</option>
-                            <option *ngFor="let item of docTypeList" [value]="item.Code">{{item.CodeDescription}}
-                            </option>
-                          </select></td>
+                                                        <option value="">Select</option>
+                                                        <option *ngFor="let item of docTypeList" [value]="item.Code">
+                                                            {{item.CodeDescription}}
+                                                        </option>
+                                                    </select></td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i
+                                                            class="fa fa-eye"></i></a>
                                                 </td>
                                                 <td>
                                                     <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
@@ -401,9 +407,9 @@
 
                                     <div class="text-center mb-2" *ngIf="uploadDocList.length!=0">
                                         <button type="button" class="report-btn mx-1" (click)="saveDocuments()"><img
-                        src="./assets/images/uploadIcon.png" class="report-icon" /> <span
-                        class="report-text">Upload</span>
-                    </button>
+                                                src="./assets/images/uploadIcon.png" class="report-icon" /> <span
+                                                class="report-text">Upload</span>
+                                        </button>
                                     </div>
                                 </ng-container>
                             </div>
@@ -443,13 +449,14 @@
                                                 <td>{{document.FileName}}</td>
                                                 <td>{{document.DocDesc}}</td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'receiver')"><i class="fa fa-eye"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'receiver')"><i
+                                                            class="fa fa-eye"></i></a>
                                                 </td>
                                                 <!-- <td *ngIf="claimType == 'Receivable'">
                                                         <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>
                                                     </td> -->
                                                 <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'receiver')"><i
-                              class="fa fa-download"></i></a></td>
+                                                            class="fa fa-download"></i></a></td>
                                                 <td>
                                                     <ng-container *ngIf="document.DocDesc=='Accident Images'">
                                                         <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i,'receiver')">Get AI</button>
@@ -592,7 +599,7 @@
                 <div class="d-flex justify-content-center">
                     <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.RawImage)"><i class="far fa-eye mx-1"></i></a> -->
                     <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.RawImage)"><i
-              class="fas fa-download mx-1"></i></a>
+                            class="fas fa-download mx-1"></i></a>
                 </div>
             </div>
             <div class="col-md-4">
@@ -600,7 +607,7 @@
                 <div class="d-flex justify-content-center">
                     <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.PartsImage)"><i class="far fa-eye mx-1"></i></a> -->
                     <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.PartsImage)"><i
-              class="fas fa-download mx-1"></i></a>
+                            class="fas fa-download mx-1"></i></a>
                 </div>
             </div>
             <div class="col-md-4">
@@ -608,7 +615,7 @@
                 <div class="d-flex justify-content-center">
                     <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.DamageImage)"><i class="far fa-eye mx-1"></i></a> -->
                     <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.DamageImage)"><i
-              class="fas fa-download mx-1"></i></a>
+                            class="fas fa-download mx-1"></i></a>
                 </div>
             </div>
         </div>
