@@ -301,7 +301,7 @@
                                             </div>
                                             <div class="col-md-3 col-lg-3">
                                                 <div class="vision-form-control-box">
-                                                    <label class="vision-form-label">Previous Remarks</label><br> {{commonInformation.PreviousRemarks}}
+                                                    <label class="vision-form-label">Previous Remarks</label><br> {{commonInformation?.PreviousRemarks}}
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -431,7 +431,7 @@
                                         <p>No Document Available</p>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="recoveryDocList.length!=0">
+                                <ng-container *ngIf="recoveryDocList.length!=0 || uploadDocList.length !=0">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
