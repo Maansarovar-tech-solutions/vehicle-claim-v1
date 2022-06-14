@@ -318,16 +318,16 @@
                             <!-- <telegram-icon></telegram-icon> -->
                         </span>
                     </div>
-                    <div class="view-claim-information-item-body">
+                    <div class="view-claim-information-item-body ">
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 offset-8">
+                            <div class="col-md-6 col-lg-6 offset-3">
                                 <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
                                 <input style="display: none;" [multiple]="true" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc multiple>
                                 <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
                                     <div>
                                         <div class="center mb-2">
                                             <b class="text-dark">
-                                                Add Documents
+                                                <i class="far fa-images"></i> Drag or Click
                                             </b>
                                         </div>
                                     </div>
@@ -337,12 +337,12 @@
                         </div>
                         <div class="view-claim-information-item document-info ownerDoc" *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
                             <div class="view-claim-information-item-title">
-                                <span>Documents Submitted</span>
+                                <span class="text-success">{{policyInformation?.InsuranceCompanyName}}</span>
                                 <div class="flag-green">
 
                                 </div>
                             </div>
-                            <div class="view-claim-information-item-body">
+                            <div class="view-claim-information-item-body p-3">
                                 <ng-container *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
                                     <table class="table table-bordered">
                                         <thead>
@@ -383,29 +383,32 @@
                                                     </ng-container>
                                                 </td>
                                             </tr>
-                                            <tr *ngFor="let document of uploadDocList;let i=index">
-                                                <th scope="row">{{i+1}}</th>
-                                                <td>{{document.filename}}</td>
-                                                <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
-                                                        <option value="">Select</option>
-                                                        <option *ngFor="let item of docTypeList" [value]="item.Code">
-                                                            {{item.CodeDescription}}
-                                                        </option>
-                                                    </select></td>
-                                                <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i
-                                                            class="fa fa-eye"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                                <td> N/A </td>
-                                                <td> N/A </td>
-                                            </tr>
+                                            <ng-container *ngIf="userDetails?.LoginResponse?.InsuranceCompanyName == policyInformation?.InsuranceCompanyName">
+                                                <tr *ngFor="let document of uploadDocList;let i=index">
+                                                    <th scope="row">{{i+1}}</th>
+                                                    <td>{{document.filename}}</td>
+                                                    <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
+                                                            <option value="">Select</option>
+                                                            <option *ngFor="let item of docTypeList" [value]="item.Code">
+                                                                {{item.CodeDescription}}
+                                                            </option>
+                                                        </select></td>
+                                                    <td>
+                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i
+                                                                class="fa fa-eye"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                    <td> N/A </td>
+                                                    <td> N/A </td>
+                                                </tr>
+                                            </ng-container>
+
                                         </tbody>
                                     </table>
 
-                                    <div class="text-center mb-2" *ngIf="uploadDocList.length!=0">
+                                    <div class="text-center mb-2" *ngIf="uploadDocList.length!=0 && (userDetails?.LoginResponse?.InsuranceCompanyName == policyInformation?.InsuranceCompanyName)">
                                         <button type="button" class="report-btn mx-1" (click)="saveDocuments()"><img
                                                 src="./assets/images/uploadIcon.png" class="report-icon" /> <span
                                                 class="report-text">Upload</span>
@@ -415,14 +418,14 @@
                             </div>
                         </div>
 
-                        <div class="view-claim-information-item document-info recoveryDoc mt-2">
+                        <div class="view-claim-information-item document-info mt-2 recoveryDoc">
                             <div class="view-claim-information-item-title">
-                                <span>Documents Received</span>
+                                <span class="text-danger">{{recoveryInformation?.InsuranceCompanyName}}</span>
                                 <div class="flag-red">
 
                                 </div>
                             </div>
-                            <div class="view-claim-information-item-body">
+                            <div class="view-claim-information-item-body p-3">
                                 <ng-container *ngIf="recoveryDocList.length==0">
                                     <div class="text-center">
                                         <p>No Document Available</p>
@@ -467,8 +470,36 @@
                                                     </ng-container>
                                                 </td>
                                             </tr>
+                                            <ng-container *ngIf="userDetails?.LoginResponse?.InsuranceCompanyName == recoveryInformation?.InsuranceCompanyName">
+                                                <tr *ngFor="let document of uploadDocList;let i=index">
+                                                    <th scope="row">{{i+1}}</th>
+                                                    <td>{{document.filename}}</td>
+                                                    <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
+                                                            <option value="">Select</option>
+                                                            <option *ngFor="let item of docTypeList" [value]="item.Code">
+                                                                {{item.CodeDescription}}
+                                                            </option>
+                                                        </select></td>
+                                                    <td>
+                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i
+                                                                class="fa fa-eye"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                    <td> N/A </td>
+                                                    <td> N/A </td>
+                                                </tr>
+                                            </ng-container>
+
                                         </tbody>
                                     </table>
+                                    <div class="text-center mb-2" *ngIf="uploadDocList.length!=0 && (userDetails?.LoginResponse?.InsuranceCompanyName == recoveryInformation?.InsuranceCompanyName)">
+                                        <button type="button" class="report-btn mx-1" (click)="saveDocuments()"><img
+                                                src="./assets/images/uploadIcon.png" class="report-icon" /> <span
+                                                class="report-text">Upload</span>
+                                        </button>
+                                    </div>
                                 </ng-container>
                             </div>
                         </div>

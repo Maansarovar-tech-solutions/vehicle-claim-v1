@@ -13,7 +13,7 @@
 }
 
 .imag-card {
-    height: 30px !important;
+    height: 100px !important;
 }
 
 .view-claim-information-item {
@@ -317,9 +317,11 @@
     border-radius: 0.155rem;
 }
 
-.claim-amount .list-group-item{
-display: block !important;
+.claim-amount .list-group-item {
+    display: block !important;
 }
+
+
 /* .middle-line{
   position: absolute;
   height: 100vh;

@@ -1102,8 +1102,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     }
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
-        this.uploadedDocList = data.Result.OwnCompanyDocuments;
-        this.uploadedDocList = this.uploadedDocList.concat(data.Result.RecoveryCompanyDocuments);
+        this.uploadedDocList = data.Result.TotalClaimDocuments;
         this.getDocumentTypeList();
       },
       (err) => { }

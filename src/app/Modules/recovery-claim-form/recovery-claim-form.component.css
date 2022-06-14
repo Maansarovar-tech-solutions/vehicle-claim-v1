@@ -1,49 +1,56 @@
 .recovery-claim-form {
-  grid-area: main;
-  border-radius: 10px;
-  display: grid;
-  grid-auto-rows: auto;
-  grid-gap: 20px;
-  grid-template-columns: 1fr;
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr;
 }
+
 .recovery-claim-form-item {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  border-radius: 0.5rem;
-  /* overflow: hidden; */
-  padding: 1rem;
-  background-color: #ffffff;
-  grid-column-start: 2;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 0.5rem;
+    /* overflow: hidden; */
+    padding: 1rem;
+    background-color: #ffffff;
+    grid-column-start: 2;
 }
+
 .recovery-claim-form-item-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 900;
-  padding: 10px;
-  color: var(--theme1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 10px;
+    color: var(--theme1);
 }
+
 .fault-color-green {
-  color: green;
+    color: green;
 }
+
 .fault-red-green {
-  color: red;
-}
-.claimdetails .list-group-item{
-display: flex;
-justify-content: space-between;
+    color: red;
 }
 
-
-.animation-ctn{
-  text-align:center;
-  margin-top:5em;
+.claimdetails .list-group-item {
+    display: flex;
+    justify-content: space-between;
 }
 
-	@-webkit-keyframes checkmark {
+.imag-card {
+    height: 100px !important;
+}
+
+.animation-ctn {
+    text-align: center;
+    margin-top: 5em;
+}
+
+@-webkit-keyframes checkmark {
     0% {
         stroke-dashoffset: 100px
     }
-
     100% {
         stroke-dashoffset: 200px
     }
@@ -53,7 +60,6 @@ justify-content: space-between;
     0% {
         stroke-dashoffset: 100px
     }
-
     100% {
         stroke-dashoffset: 200px
     }
@@ -63,7 +69,6 @@ justify-content: space-between;
     0% {
         stroke-dashoffset: 100px
     }
-
     100% {
         stroke-dashoffset: 0px
     }
@@ -72,12 +77,9 @@ justify-content: space-between;
 @-webkit-keyframes checkmark-circle {
     0% {
         stroke-dashoffset: 480px
-
     }
-
     100% {
         stroke-dashoffset: 960px;
-
     }
 }
 
@@ -85,7 +87,6 @@ justify-content: space-between;
     0% {
         stroke-dashoffset: 240px
     }
-
     100% {
         stroke-dashoffset: 480px
     }
@@ -95,7 +96,6 @@ justify-content: space-between;
     0% {
         stroke-dashoffset: 480px
     }
-
     100% {
         stroke-dashoffset: 960px
     }
@@ -103,22 +103,26 @@ justify-content: space-between;
 
 @keyframes colored-circle {
     0% {
-        opacity:0
+        opacity: 0
     }
-
     100% {
-        opacity:100
+        opacity: 100
     }
 }
 
+
 /* other styles */
+
+
 /* .svg svg {
     display: none
 }
  */
+
 .inlinesvg .svg svg {
     display: inline
 }
+
 
 /* .svg img {
     display: none
@@ -133,6 +137,7 @@ justify-content: space-between;
     -webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
     animation: checkmark-circle 0.6s ease-in-out backwards;
 }
+
 .icon--order-success svg circle#colored {
     -webkit-animation: colored-circle 0.6s ease-in-out 0.7s backwards;
     animation: colored-circle 0.6s ease-in-out 0.7s backwards;

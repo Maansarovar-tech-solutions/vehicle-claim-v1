@@ -225,13 +225,16 @@ export class NavbarComponent implements OnInit {
     }
     return this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
       console.log("Excel Data", data);
-      const link = document.createElement('a');
-            link.setAttribute('target', '_blank');
-            link.setAttribute('href', data?.Result?.imgUrl);
-            link.setAttribute('download', 'SampleDocument');
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+      var a = document.createElement("a");
+      a.href = data.Result.ImgUrl;
+      a.download = data.Result.fileName;
+      // const link = document.createElement('a');
+      //       link.setAttribute('target', '_blank');
+      //       link.setAttribute('href', data?.Result?.imgUrl);
+      //       link.setAttribute('download', 'SampleDocument');
+      //       document.body.appendChild(link);
+      //       link.click();
+      //       link.remove();
     }, (err) => { })
 
   }

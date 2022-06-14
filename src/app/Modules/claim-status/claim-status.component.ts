@@ -139,14 +139,14 @@ export class ClaimStatusComponent implements OnInit {
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
-        if(this.claimType == 'Receivable'){
-          this.ownerDocList = data.Result.OwnCompanyDocuments;
-          this.recoveryDocList = data.Result.RecoveryCompanyDocuments;
-        }
-        else{
-          this.ownerDocList = data.Result.RecoveryCompanyDocuments;
-          this.recoveryDocList = data.Result.OwnCompanyDocuments;
-        }
+          if(data.Result){
+                let List = data.Result.TotalClaimDocuments;
+                console.log("Insurance Id",userDetails?.InsuranceId);
+                this.ownerDocList = List.filter((entry: any)=>entry.Fault == 'Not At Fault');
+                console.log("Final Doc List",this.ownerDocList);
+                this.recoveryDocList = List.filter((entry: any)=>entry.Fault != 'Not At Fault');
+                console.log("Final Doc List",this.recoveryDocList);
+          }
 
         //this.uploadedDocList = this.uploadedDocList.concat(data.Result.RecoveryCompanyDocuments);
         this.getDocumentTypeList();
