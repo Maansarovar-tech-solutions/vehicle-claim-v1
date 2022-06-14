@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as Mydatas from '../../app-config.json';
+import * as Mydatas from '../../../assets/app-config.json';
 import { Router } from '@angular/router';
 import { VehicleSearchService } from './vehicle-search.service';
 import { DatePipe } from '@angular/common';

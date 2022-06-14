@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Toaster } from 'ngx-toast-notifications';
 import { AddVehicleService } from '../add-vehicle/add-vehicle.service';
-import * as Mydatas from '../../app-config.json';
+import * as Mydatas from '../../../assets/app-config.json';
 
 @Component({
   selector: 'app-recovery-claim-view',

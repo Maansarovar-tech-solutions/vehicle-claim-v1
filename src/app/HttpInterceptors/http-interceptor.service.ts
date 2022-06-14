@@ -14,7 +14,7 @@ import { catchError, finalize, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ErrorService } from '../Errors/error.service';
 import { MatDialog } from '@angular/material/dialog';
-import * as Mydatas from '../app-config.json';
+import * as Mydatas from '../../assets/app-config.json';
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {

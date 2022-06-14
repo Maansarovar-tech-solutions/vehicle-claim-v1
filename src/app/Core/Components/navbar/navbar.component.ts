@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/Auth/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { filter, map } from 'rxjs/operators';
 import { SharedService } from 'src/app/Shared/Services/shared.service';
-import * as Mydatas from '../../../app-config.json';
+import * as Mydatas from '../../../../assets/app-config.json';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
 import { VehicleSearchComponent } from 'src/app/Modules/vehicle-search/vehicle-search.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

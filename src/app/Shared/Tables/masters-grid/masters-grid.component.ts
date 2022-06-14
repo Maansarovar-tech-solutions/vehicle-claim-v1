@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
-import * as Mydatas from '../../../app-config.json';
+import * as Mydatas from '../../../../assets/app-config.json';
 
 @Component({
   selector: 'app-masters-grid',

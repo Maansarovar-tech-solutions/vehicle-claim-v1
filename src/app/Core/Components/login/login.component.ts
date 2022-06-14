@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/Auth/auth.service';
-import * as Mydatas from '../../../app-config.json';
+import * as Mydatas from '../../../../assets/app-config.json';
 import { LoginService } from './login.service';
 
 @Component({

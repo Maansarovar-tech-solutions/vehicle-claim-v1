@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExcelSaveService } from 'src/app/Shared/Services/excel-save.service';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 @Component({
   selector: 'app-color-master',
   templateUrl: './color-master.component.html',

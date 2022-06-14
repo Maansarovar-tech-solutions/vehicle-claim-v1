@@ -8,7 +8,7 @@ import { Toaster } from 'ngx-toast-notifications';
 import { combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import * as Mydatas from '../../app-config.json';
+import * as Mydatas from '../../../assets/app-config.json';
 import { NewClaimService } from '../new-claim/new-claim.service';
 
 export const _filter = (opt: any[], value: any): any[] => {

@@ -3,7 +3,7 @@ import { ExcelSaveService } from 'src/app/Shared/Services/excel-save.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';

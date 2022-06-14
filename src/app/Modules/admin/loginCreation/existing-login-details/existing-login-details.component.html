@@ -10,13 +10,18 @@
                         </div>
                     </div>
                     <div class="login-form-grid-item-body p-1">
-                        <div class="row mb-5">
+                        <!-- <div class="row mb-5">
                             <div class="col-md-3 col-lg-3 offset-1 mb-2">
                                 <ng-select [appendTo]="'body'" placeholder="Insurance Company" class="m-0 p-0" (change)="getExistingLoginList()" [(ngModel)]="insuranceValue" name="insuranceValue">
                                     <ng-option *ngFor="let type of insurCompanyList" [value]="type.Code">{{type.CodeDescription}}</ng-option>
                                 </ng-select>
                             </div>
-                        </div>
+                        </div> -->
+                        <ng-container *ngIf="makeMasterList.length==0">
+                            <div class="text-center">
+                                <p>No User Available</p>
+                            </div>
+                        </ng-container>
                         <ng-container *ngIf="makeMasterList.length!=0">
                             <app-masters-grid [cols]="columnHeader" [data]="makeMasterList" (onEdit)="onEditLogin($event)">
                             </app-masters-grid>

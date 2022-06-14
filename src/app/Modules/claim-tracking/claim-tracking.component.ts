@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddVehicleService } from '../add-vehicle/add-vehicle.service';
-import * as Mydatas from '../../app-config.json';
+import * as Mydatas from '../../../assets/app-config.json';
 
 @Component({
   selector: 'app-claim-tracking',

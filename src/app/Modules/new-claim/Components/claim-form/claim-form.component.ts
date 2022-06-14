@@ -8,7 +8,7 @@ import { Toaster } from 'ngx-toast-notifications';
 import { Observable, merge, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 

@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { Toaster } from 'ngx-toast-notifications';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 import { NewClaimService } from '../../new-claim.service';
 
 @Component({

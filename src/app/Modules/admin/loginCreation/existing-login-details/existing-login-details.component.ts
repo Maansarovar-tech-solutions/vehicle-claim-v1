@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
 import { MatPaginator } from '@angular/material/paginator';
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 import { MatSort } from '@angular/material/sort';
 import { ExcelSaveService } from 'src/app/Shared/Services/excel-save.service';
 import { Router } from '@angular/router';
@@ -36,11 +36,15 @@ export class ExistingLoginDetailsComponent implements OnInit {
   insuranceTypeList: any;
   insuranceValue: any;
   filterinsurCompanyLis: any;
+  userDetails: any;
   constructor(
     private addVehicleService: AddVehicleService,
     private excelService:ExcelSaveService,
     private router:Router
   ) { 
+    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
+    console.log("Received UserDetails",this.userDetails)
+    this.insuranceValue = this.userDetails?.LoginResponse?.InsuranceId;
     // this.makeMasterList = [
     //     {
     //       "BodyName":"4 WHEEL DRIVE/SUV",
@@ -90,16 +94,15 @@ export class ExistingLoginDetailsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.onInitialFetchData();
-    let insList = (await this.onGetInsuranceCompList());
-    this.insurCompanyList = [];
-    if(insList?.NonParticipants){
-      this.insurCompanyList = this.insurCompanyList.concat(insList?.NonParticipants);
-    }
-    if(insList?.Participants){
-      this.insurCompanyList = this.insurCompanyList.concat(insList?.Participants);
-    }
-    
-    console.log("Company List",this.insurCompanyList)
+    //  let insList = (await this.onGetInsuranceCompList());
+    // this.insurCompanyList = [];
+    // if(insList?.NonParticipants){
+    //   this.insurCompanyList = this.insurCompanyList.concat(insList?.NonParticipants);
+    // }
+    // if(insList?.Participants){
+    //   this.insurCompanyList = this.insurCompanyList.concat(insList?.Participants);
+    // }
+    this.getExistingLoginList();
     //this.getExistingLoginList();
   }
   onInitialFetchData(){
@@ -115,18 +118,18 @@ export class ExistingLoginDetailsComponent implements OnInit {
     }
 
   }
-  async onGetInsuranceCompList() {
-    let UrlLink = `${this.ApiUrl1}api/groupof/insurancecompanies`;
-    let response = (
-      await this.addVehicleService.onGetMethodAsync(UrlLink)
-    )
-      .toPromise()
-      .then((res: any) => {
-        return res?.Result;
-      })
-      .catch((err) => {});
-    return response;
-  }
+  // async onGetInsuranceCompList() {
+  //   let UrlLink = `${this.ApiUrl1}api/groupof/insurancecompanies`;
+  //   let response = (
+  //     await this.addVehicleService.onGetMethodAsync(UrlLink)
+  //   )
+  //     .toPromise()
+  //     .then((res: any) => {
+  //       return res?.Result;
+  //     })
+  //     .catch((err) => {});
+  //   return response;
+  // }
   getExistingLoginList(){
     sessionStorage.setItem('loginCompanyId',this.insuranceValue);
     let ReqObj = {

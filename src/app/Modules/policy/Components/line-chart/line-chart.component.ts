@@ -9,7 +9,7 @@ import {
   ApexStroke,
   ApexGrid
 } from "ng-apexcharts";
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 import { PolicyService } from '../../policy.service';
 export type ChartOptions = {
   series: ApexAxisChartSeries;

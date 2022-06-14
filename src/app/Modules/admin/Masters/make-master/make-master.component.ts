@@ -4,7 +4,7 @@ import { ExcelSaveService } from 'src/app/Shared/Services/excel-save.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 export interface UserData {
   BodyId: null,
   BranchCode: String,

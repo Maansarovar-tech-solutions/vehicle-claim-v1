@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, retry, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/Auth/auth.service';
-import * as Mydatas from '../../../app-config.json';
+import * as Mydatas from '../../../../assets/app-config.json';
 
 @Injectable({
   providedIn: 'root',

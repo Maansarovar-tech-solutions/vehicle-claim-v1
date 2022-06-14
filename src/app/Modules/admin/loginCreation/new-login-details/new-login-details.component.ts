@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as Mydatas from '../../../../app-config.json';
+import * as Mydatas from '../../../../../assets/app-config.json';
 import { AddVehicleService } from 'src/app/Modules/add-vehicle/add-vehicle.service';
 import { Toaster } from 'ngx-toast-notifications';
 
@@ -36,8 +36,10 @@ export class NewLoginDetailsComponent implements OnInit {
   createdBy: any;
   passDate: any;
   entryDate: any;
+  userDetails: any;
   constructor(private router:Router,
     private addVehicleService: AddVehicleService,private toaster: Toaster,) {
+      this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     let loginDetails = JSON.parse(sessionStorage.getItem('editLoginId') || '{}');
     this.companyId  = sessionStorage.getItem('loginCompanyId');
     if(loginDetails?.LoginId){
@@ -45,7 +47,9 @@ export class NewLoginDetailsComponent implements OnInit {
       this.editSection = true;
       this.getEditLoginDetails();
     }
-    
+    else{
+      this.createdBy = this.userDetails?.LoginResponse?.LoginId;
+    }
     this.productList = [
       {
         "Code": "TPL",
@@ -97,7 +101,8 @@ export class NewLoginDetailsComponent implements OnInit {
   checkProductSection(rowData:any){
     if(this.productBasedList.length!=0){
       let Exist = this.productBasedList.some((ele:any)=>ele.claimType == rowData.Code);
-      if(!Exist){
+      if(Exist){
+        
         return true;
       }
       else{
@@ -155,6 +160,8 @@ export class NewLoginDetailsComponent implements OnInit {
   }
   async onFormSubmit(){
     console.log("Final List",this.productBasedList);
+    let claimList =this.productBasedList.filter(
+      (              claim: { UserTypeBasedDetails: string | any[]; }) => claim.UserTypeBasedDetails.length!=0);
     let editYN ="";
     if(this.editSection) editYN = "Y";
     else editYN = "N";
@@ -166,7 +173,8 @@ export class NewLoginDetailsComponent implements OnInit {
       "MobileNumber": this.mobileNo,
       "Status": this.statusValue,
       "Remarks": this.remarks,
-      "ClaimTypeBasedDetails": this.productBasedList,
+      "ClaimTypeBasedDetails": claimList,
+      "CompanyId":this.companyId,
       "Password": this.password,
       "RePassword": this.rePassword,
       "IsEditYN": editYN,
@@ -212,9 +220,10 @@ export class NewLoginDetailsComponent implements OnInit {
   }
   onProductChange(rowData:any,event:any){
     if(event){
+      console.log("Checked Event");
       let Exist = this.productBasedList.some(entry=>entry.claimType == rowData.Code);
       if(!Exist){
-        console.log("Not Exist Data");
+        
           let entry = {
             "claimType":rowData.Code,
             "UserTypeBasedDetails":[]
@@ -232,6 +241,7 @@ export class NewLoginDetailsComponent implements OnInit {
       }
     }
     else{
+      console.log("Not Checked Event");
       let Exist = this.productBasedList.some(entry=>entry.claimType == rowData.Code);
       if(Exist){
         let index = this.productBasedList.findIndex(entry=>entry.claimType == rowData.Code);
@@ -465,7 +475,9 @@ export class NewLoginDetailsComponent implements OnInit {
           this.passDate = data.Passdate;
           this.entryDate = data.EntryDate;
           if(data.ClaimTypeBasedDetails){
-            this.productBasedList = data.ClaimTypeBasedDetails;
+            let claimList = data.ClaimTypeBasedDetails.filter(
+              (              claim: { UserTypeBasedDetails: string | any[]; }) => claim.UserTypeBasedDetails.length!=0);
+            this.productBasedList = claimList;
             if(this.productList){
               this.getProductDetails(this.productList[0]);
             }
@@ -473,6 +485,38 @@ export class NewLoginDetailsComponent implements OnInit {
       },  
       (err) => { }
     );
+  }
+  async onChangePassword(){
+    if(this.newPassword == this.reNewPassword){
+      let ReqObj = {
+      "UserId" : this.loginId,
+      "NewPassword" : this.newPassword,
+      "OldPassword" : this.oldPassword
+      }
+    let UrlLink = `${this.ApiUrl1}authentication/changepassword`;
+    (await this.addVehicleService.onPostMethodSync(UrlLink,ReqObj)).toPromise().then(res=>{
+          let data:any = res;
+          this.toaster.open({
+            text: 'Password Updated Successfully',
+            caption: 'Change Password',
+            type: 'success',
+          });
+            //this.toastr.showSuccess("Password Updated Successfully", "Password");
+            this.changePassword = false;this.newPassword = "";this.reNewPassword = "";this.oldPassword = "";
+          
+        }).catch((err) => {
+          console.log("Error",err);
+      });;
+    }
+    else{
+      this.toaster.open({
+        text: 'New Passwords Does Not Match',
+        caption: 'New Password Error',
+        type: 'danger',
+      });
+      //this.toastr.showError('New Passwords Does Not Match', 'New Password Error');
+    }
+    
   }
 }
 

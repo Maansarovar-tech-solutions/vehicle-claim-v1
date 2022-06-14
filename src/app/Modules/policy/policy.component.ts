@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PolicyService } from './policy.service';
-import * as Mydatas from '../../app-config.json';
+import * as Mydatas from '../../../assets/app-config.json';
 
 @Component({
   selector: 'app-policy',

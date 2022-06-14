@@ -290,7 +290,7 @@
             </div>
             <div class="text-center mt-3">
                 <button class="btn btn-danger mr-1" (click)="back()">Back</button>&nbsp;
-                <button class="btn btn-warning mr-1" (click)="changePassword=!changePassword;editSection=!editSection">Change Password</button>&nbsp;
+                <button class="btn btn-warning mr-1" *ngIf="editSection" (click)="changePassword=!changePassword;oldPassword='';newPassword='';reNewPassword='';">Change Password</button>&nbsp;
                 <button class="btn btn-success ml-2" (click)="filterRowList(productValue,'submit')">Submit</button>
             </div>
         </div>
@@ -326,8 +326,8 @@
                 </div>
             </div>
             <div class="text-center mt-3">
-                <button class="btn btn-danger mr-1" (click)="changePassword=!changePassword;editSection=!editSection">Back</button>&nbsp;
-                <button class="btn btn-success ml-2" (click)="changePassword=!changePassword;editSection=!editSection">Update</button>
+                <button class="btn btn-danger mr-1" (click)="changePassword=!changePassword">Back</button>&nbsp;
+                <button class="btn btn-success ml-2" (click)="onChangePassword()">Update</button>
             </div>
         </div>
     </div>
