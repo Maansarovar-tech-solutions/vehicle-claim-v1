@@ -109,7 +109,11 @@ export class DashboardComponent implements OnInit {
 
   }
 
-
+  compareFn(c1: any, c2: any): boolean {
+    return c1 && c2
+      ? c1.sortBy === c2.sortBy && c1.sortOrder === c2.sortOrder
+      : c1 === c2;
+  }
 
   onStatusView(view: any) {
     let status = {
@@ -140,7 +144,12 @@ export class DashboardComponent implements OnInit {
     "ACP" : "./assets/images/temporary.png",
     "CREQ" : "./assets/images/clarification-requested.png",
     "SETL" : "./assets/images/settlement.png",
-    "CRES" : "./assets/images/clarified.png"
+    "CRES" : "./assets/images/clarified.png",
+    "ATP":"./assets/images/accept.png",
+    "DFT":"./assets/images/drafts.png",
+    "DNT":"./assets/images/debit-note.png",
+    "CNT":"./assets/images/credit-note.png",
+
   }
   onGetTplClaimRecoveryList() {
     let UrlLink = `${this.ApiUrl1}api/dashboard/recovery/statuscount`;

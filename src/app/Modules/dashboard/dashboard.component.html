@@ -56,7 +56,7 @@
                     <div class="vision-grid-item-title">
                         <div>Total {{statusName}}</div>
                         <div>
-                          <select [(ngModel)]="selectedDays" class="form-select form-select-sm" (change)="onGetTotalClaimsGraph()">
+                          <select [(ngModel)]="selectedDays"   [compareWith]="compareFn" class="form-select form-select-sm" (change)="onGetTotalClaimsGraph()">
                              <ng-container *ngFor="let item of daysDropdown">
                               <option [ngValue]="item">{{item.startDay}}-{{item.endDay}}</option>
                              </ng-container>
