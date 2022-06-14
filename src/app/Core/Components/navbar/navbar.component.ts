@@ -225,13 +225,14 @@ export class NavbarComponent implements OnInit {
     }
     return this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
       console.log("Excel Data", data);
-      const link = document.createElement('a');
-            link.setAttribute('target', '_blank');
-            link.setAttribute('href', data?.Result?.imgUrl);
-            link.setAttribute('download', 'SampleDocument');
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+      downloadBase64File(data,'SampleDocument')
+      // const link = document.createElement('a');
+      //       link.setAttribute('target', '_blank');
+      //       link.setAttribute('href', data?.Result?.imgUrl);
+      //       link.setAttribute('download', 'SampleDocument');
+      //       document.body.appendChild(link);
+      //       link.click();
+      //       link.remove();
     }, (err) => { })
 
   }
@@ -345,4 +346,13 @@ export class NavbarComponent implements OnInit {
 
   }
 
+}
+
+function downloadBase64File(base64Data: any, fileName: string) {
+  console.log(base64Data)
+  const linkSource = `${base64Data?.Result?.ImgUrl}`;
+  const downloadLink = document.createElement("a");
+  downloadLink.href = linkSource;
+  downloadLink.download = `${fileName}`;
+  downloadLink.click();
 }
