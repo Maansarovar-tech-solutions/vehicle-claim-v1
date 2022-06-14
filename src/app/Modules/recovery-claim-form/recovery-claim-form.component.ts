@@ -713,20 +713,20 @@ export class RecoveryClaimFormComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data?.Message == 'Success') {
-          if (data?.Result?.Response == 'Saved Successfully') {
-            this.toaster.open({
-              text: 'Policy Created Successfully',
-              caption: 'Submitted',
-              type: 'success',
-            });
-          }
-          if (data?.Result?.Response == 'Updated Successfully') {
-            this.toaster.open({
-              text: 'Policy Updated Successfully',
-              caption: 'Submitted',
-              type: 'success',
-            });
-          }
+          // if (data?.Result?.Response == 'Saved Successfully') {
+          //   this.toaster.open({
+          //     text: 'Policy Created Successfully',
+          //     caption: 'Submitted',
+          //     type: 'success',
+          //   });
+          // }
+          // if (data?.Result?.Response == 'Updated Successfully') {
+          //   this.toaster.open({
+          //     text: 'Policy Updated Successfully',
+          //     caption: 'Submitted',
+          //     type: 'success',
+          //   });
+          // }
           let obj = {
             VehicleChassisNumber: data?.Result?.VehicleChassisNumber,
             PolicyNumber: this.f.PolicyNumber.value,
@@ -831,22 +831,22 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.ClaimReferenceNumber = this.claimResponse?.ClaimReferenceNumber;
           this.onGetUploadedDocuments(this.ClaimReferenceNumber);
           sessionStorage.removeItem('claimEditReq');
-          if (data?.Result?.Response == 'Saved Successfully') {
-            console.log(data?.Result?.Response);
-            this.toaster.open({
-              text: 'Claim Intimated Successfully',
-              caption: 'Submitted',
-              type: 'success',
-            });
-          }
-          if (data?.Result?.Response == 'Updated Succesfully') {
-            console.log(data?.Result?.Response);
-            this.toaster.open({
-              text: 'Claim Updated Successfully',
-              caption: 'Submitted',
-              type: 'success',
-            });
-          }
+          // if (data?.Result?.Response == 'Saved Successfully') {
+          //   console.log(data?.Result?.Response);
+          //   this.toaster.open({
+          //     text: 'Claim Intimated Successfully',
+          //     caption: 'Submitted',
+          //     type: 'success',
+          //   });
+          // }
+          // if (data?.Result?.Response == 'Updated Succesfully') {
+          //   console.log(data?.Result?.Response);
+          //   this.toaster.open({
+          //     text: 'Claim Updated Successfully',
+          //     caption: 'Submitted',
+          //     type: 'success',
+          //   });
+          // }
           this.myStepper.next();
 
         }

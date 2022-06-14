@@ -37,7 +37,7 @@
           <ng-container *ngIf="col.config.isEdit">
             <a class="action-btn list-group-item-primary mx-1" (click)="onProcced.emit(element)">Proceed</a>
             <a class="action-btn list-group-item-primary mx-1" (click)="onTrack.emit(element)">Track</a>
-            <a class="action-btn list-group-item-primary mx-1" (click)="onTplEdit.emit(element)">Edit</a>
+            <a class="action-btn list-group-item-primary mx-1" *ngIf="element?.Status=='DFT'" (click)="onTplEdit.emit(element)">Edit</a>
           </ng-container>
           <ng-container *ngIf="col.config.isTplEdit">
             <a class="action-btn list-group-item-primary mx-1" (click)="onTplEdit.emit(element)">Edit</a>
