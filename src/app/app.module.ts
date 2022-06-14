@@ -42,10 +42,12 @@ import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { RecoveryClaimFormComponent } from './Modules/recovery-claim-form/recovery-claim-form.component';
 import { ExistingLoginDetailsComponent } from './Modules/admin/loginCreation/existing-login-details/existing-login-details.component';
+import { DragDropDirective } from './Shared/Directives/drag-drop.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DragDropDirective,
     LoginLayoutComponent,
     HomeLayoutComponent,
     NavbarComponent,
