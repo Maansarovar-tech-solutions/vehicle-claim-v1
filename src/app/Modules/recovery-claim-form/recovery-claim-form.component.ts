@@ -776,6 +776,7 @@ export class RecoveryClaimFormComponent implements OnInit {
         RegionCode: userDetails?.RegionCode,
         VehicleChassisNumber: this.VehicleChassisNumber,
         VehicleCode: this.VehicleCode,
+        OpenStatusYn:""
       },
       DriverInformation: {
         DriverDateOfBirth: moment(this.f.DriverDateOfBirth.value).format(
@@ -801,6 +802,28 @@ export class RecoveryClaimFormComponent implements OnInit {
       },
     };
     console.log(ReqObj);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You Want to Move Claim to Open Status?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+         ReqObj.CommonInformation.OpenStatusYn='Y';
+         this.SubmitClaimDetails(UrlLink,ReqObj);
+      }
+      else{
+        ReqObj.CommonInformation.OpenStatusYn='N';
+        this.SubmitClaimDetails(UrlLink,ReqObj);
+      }
+    })
+    this.SubmitClaimDetails(UrlLink,ReqObj);
+  }
+  SubmitClaimDetails(UrlLink:any,ReqObj:any){
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         if (data?.Message == 'Success') {
@@ -832,7 +855,6 @@ export class RecoveryClaimFormComponent implements OnInit {
       (err) => {}
     );
   }
-
   onGetCodeDesc(data:any[],code:any){
      let index = data.findIndex((ele:any)=>ele.Code == code);
      if(index == -1){
