@@ -763,7 +763,7 @@ export class RecoveryClaimFormComponent implements OnInit {
         NoOfDays: this.f.NoOfDays.value,
         PerDayCost: this.f.PerDayCost.value,
         TotalValue: this.f.TotalValue.value,
-        RecovTotalLossYn:this.f.RecovTotalLossYn.value?'Y':'N',
+        RecovTotalLossYn:this.f.RecovTotalLossYn.value == true?'Y':'N',
         SalvageCost:this.f.SalvageCost.value,
       },
       CommonInformation: {
