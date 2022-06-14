@@ -228,13 +228,7 @@ export class NavbarComponent implements OnInit {
       var a = document.createElement("a");
       a.href = data.Result.ImgUrl;
       a.download = data.Result.fileName;
-      // const link = document.createElement('a');
-      //       link.setAttribute('target', '_blank');
-      //       link.setAttribute('href', data?.Result?.imgUrl);
-      //       link.setAttribute('download', 'SampleDocument');
-      //       document.body.appendChild(link);
-      //       link.click();
-      //       link.remove();
+      downloadBase64File(data,'SampleDocument')
     }, (err) => { })
 
   }
@@ -348,4 +342,13 @@ export class NavbarComponent implements OnInit {
 
   }
 
+}
+
+function downloadBase64File(base64Data: any, fileName: string) {
+  console.log(base64Data)
+  const linkSource = `${base64Data?.Result?.ImgUrl}`;
+  const downloadLink = document.createElement("a");
+  downloadLink.href = linkSource;
+  downloadLink.download = `${fileName}`;
+  downloadLink.click();
 }
