@@ -13,11 +13,12 @@ import { ClaimRoutingModule } from './claim-routing.module';
 import { PieChartComponent } from './Components/pie-chart/pie-chart.component';
 import { BarChartComponent } from './Components/bar-chart/bar-chart.component';
 
+
 @NgModule({
   declarations: [
+    BarChartComponent,
     ClaimComponent,
     PieChartComponent,
-    BarChartComponent
 
     ],
   imports: [
