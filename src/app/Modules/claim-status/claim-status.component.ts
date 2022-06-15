@@ -205,7 +205,7 @@ export class ClaimStatusComponent implements OnInit {
       (err) => { }
     );
   }
-  onDeleteUploadedDoc(index:any){
+  onDeleteUploadedDoc(index:any,type:any){
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -219,11 +219,18 @@ export class ClaimStatusComponent implements OnInit {
       if (result.isConfirmed) {
         let UrlLink = `${this.ApiUrl1}deletedoc`;
         let userDetails = this.userDetails?.LoginResponse;
+        let rowData:any;
+        if(type == 'receiver'){
+            rowData = this.recoveryDocList[index]
+        }
+        else{
+          rowData = this.ownerDocList[index]
+        }
         let ReqObj = {
           "ClaimNumber": this.claimDetails?.ClaimReferenceNumber,
-          "DocumentReferenceNumber": this.ownerDocList[index].DocumentReferenceNumber,
-          "DocumentTypeId": this.ownerDocList[index].DocumentTypeId,
-          "InsuranceId": this.ownerDocList[index]?.InsuranceId
+          "DocumentReferenceNumber": rowData.DocumentReferenceNumber,
+          "DocumentTypeId": rowData.DocumentTypeId,
+          "InsuranceId": rowData?.InsuranceId
         }
         this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
           (data: any) => {
@@ -411,8 +418,10 @@ export class ClaimStatusComponent implements OnInit {
   onFormSubmit(){
     let userDetails = this.userDetails?.LoginResponse;
     let docIdList:any = [];
-    if(this.ownerDocList.length!=0){
-      for(let document of this.ownerDocList){
+    if(this.ownerDocList.length!=0 || this.recoveryDocList.length!=0){
+      let List = [];
+      List = this.ownerDocList.concat(this.recoveryDocList);
+      for(let document of List){
         docIdList.push(document.DocumentTypeId);
       }
     }
