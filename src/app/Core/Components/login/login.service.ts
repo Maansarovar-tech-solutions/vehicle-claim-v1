@@ -9,11 +9,13 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, retry, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/Auth/auth.service';
 import * as Mydatas from '../../../../assets/app-config.json';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
+    public CryKey:any='MaaN';
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public Token:any;
@@ -22,16 +24,28 @@ export class LoginService {
     private authService:AuthService
     ) { }
 
-  getToken() {
-    this.authService.isloggedToken.subscribe((event: any) => {
-      if (event != undefined && event != '' && event != null) {
-        this.Token = event;
-      } else {
-        this.Token = sessionStorage.getItem('UserToken');
+    getToken() {
+      this.authService.isloggedToken.subscribe((event: any) => {
+        if (event != undefined && event != '' && event != null) {
+          this.Token = event;
+        } else {
+          this.Token = this.decryptData(sessionStorage.getItem("UserToken"));
+        }
+      });
+      return this.Token;
+    }
+
+    decryptData(data: any) {
+      try {
+        const bytes = CryptoJS.AES.decrypt(data, this.CryKey);
+        if (bytes.toString()) {
+          return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        }
+        return data;
+      } catch (e) {
+        console.log(e);
       }
-    });
-    return this.Token;
-  }
+    }
 
 
 
