@@ -1,3 +1,4 @@
+import { AppComponent } from './../../app.component';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Mydatas from '../../../assets/app-config.json';
@@ -54,11 +55,12 @@ export class ExistingClaimComponent implements OnInit {
     private addVehicleService: AddVehicleService,
     private router:Router,
     private datePipe: DatePipe,
+    public app:AppComponent
 
   ) {
     this.endDate = this.datePipe.transform(new Date(),"dd/MM/yyyy");
 
-    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
+    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
     this.claimType = sessionStorage.getItem("claimType") || '';
     console.log(this.ApiUrl1)
   }

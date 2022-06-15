@@ -1,3 +1,4 @@
+import { DashboardService } from './Modules/dashboard/dashboard.service';
 import { ExistingClaimComponent } from './Modules/existing-claim/existing-claim.component';
 import { ClaimStatusComponent } from './Modules/claim-status/claim-status.component';
 import { TablesModule } from './Shared/Tables/tables.module';

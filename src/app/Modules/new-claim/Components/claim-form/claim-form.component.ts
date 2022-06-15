@@ -1,3 +1,4 @@
+import { AppComponent } from './../../../../app.component';
 import { NewClaimService } from './../../new-claim.service';
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild } from '@angular/core';
@@ -57,10 +58,11 @@ export class ClaimFormComponent implements OnInit {
     private toaster: Toaster,
     private modalService:NgbModal,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public app:AppComponent
 
   ) {
-    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
+    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
     this.claimEditReq = JSON.parse(sessionStorage.getItem("claimEditReq") || '{}');
     console.log("VehicleDetails", this.VehicleDetails);
   }

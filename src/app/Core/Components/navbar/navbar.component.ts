@@ -1,3 +1,4 @@
+import { AppComponent } from './../../../app.component';
 import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/Auth/auth.service';
@@ -50,9 +51,11 @@ export class NavbarComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private addVehicleService: AddVehicleService,
     private modalService:NgbModal,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public app:AppComponent
   ) {
-    this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
+    this.LoginDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    console.log(this.LoginDetails);
     this.recoveryType = sessionStorage.getItem("claimType");
 
     this.router
