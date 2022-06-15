@@ -1,3 +1,4 @@
+import { AppComponent } from './../../app.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -66,8 +67,9 @@ export class ClaimStatusComponent implements OnInit {
     private modalService:NgbModal,
     private newClaimService:NewClaimService,
     private toaster: Toaster,
+    public app:AppComponent
   ) {
-    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
+    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
     this.recoveryType=sessionStorage.getItem("claimType");
     this.events1 = [
       {

@@ -1,3 +1,4 @@
+import { AppComponent } from './../../../../app.component';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -68,11 +69,12 @@ export class VehicleFormComponent implements OnInit {
     private datePipe: DatePipe,
     private toaster: Toaster,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public app:AppComponent
 
   ) {
     this.minDate = new Date();
-    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
+    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
     this.claimType = sessionStorage.getItem("claimType") || '';
     this.claimTypeId = sessionStorage.getItem("claimTypeId") || '';
 

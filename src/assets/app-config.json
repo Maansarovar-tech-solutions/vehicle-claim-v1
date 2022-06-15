@@ -1,3 +1,4 @@
 {
-    "ApiUrl1": "http://102.69.166.162:8080/VehRegistryApi/"
+    "ApiUrl1": "http://192.168.1.9:8081/",
+    "CryKey":"MaaN"
 }

@@ -1,3 +1,4 @@
+import { AppComponent } from './../../app.component';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as Mydatas from '../../../assets/app-config.json';
@@ -36,8 +37,9 @@ export class VehicleSearchComponent implements OnInit {
     private vehicleSearchService: VehicleSearchService,
     private router:Router,
     private datePipe: DatePipe,
+    public app:AppComponent
   ) {
-    this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
+    this.LoginDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
     console.log("Login Details",this.LoginDetails);
     let searchData = JSON.parse(sessionStorage.getItem("searchList") || '{}');
     this.claimType = null;
@@ -142,10 +144,10 @@ export class VehicleSearchComponent implements OnInit {
             },
             {
               key: "InsuranceStartDate", display: "Start Date",
-  
+
             },
             { key: "InsuranceEndDate", display: "End Date" },
-  
+
             {
               key: "ClaimCount", display: "Claim Count",
               config: {
@@ -181,7 +183,7 @@ export class VehicleSearchComponent implements OnInit {
             },
             {
               key: "StatusDesc", display: "Claim Status",
-  
+
             },
             {
               key: "actions", display: "View",
@@ -201,7 +203,7 @@ export class VehicleSearchComponent implements OnInit {
         //   }
 
         // }
-        
+
 
       },
       (err) => { }
