@@ -44,6 +44,8 @@ import { CardModule } from 'primeng/card';
 import { RecoveryClaimFormComponent } from './Modules/recovery-claim-form/recovery-claim-form.component';
 import { ExistingLoginDetailsComponent } from './Modules/admin/loginCreation/existing-login-details/existing-login-details.component';
 import { DragDropFileUploadDirective } from './Shared/Directives/drag-drop.directive';
+import { ClaimComponent } from './Modules/claim/claim.component';
+import { PieChartComponent } from './Modules/claim/Components/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,7 @@ import { DragDropFileUploadDirective } from './Shared/Directives/drag-drop.direc
     ClaimStatusComponent,
     ExistingClaimComponent,
     AddNewLoginDetailsComponent,
-    RecoveryClaimFormComponent
+    RecoveryClaimFormComponent,
   ],
   imports: [
     BrowserModule,
