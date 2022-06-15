@@ -48,6 +48,15 @@ const routes: Routes = [
     },
   },
   {
+    path: 'Claim',
+    loadChildren: () =>
+    import('./../claim/claim.module').then((n) => n.ClaimModule),
+    data: {
+      title: 'Claim',
+      breadcrumb: 'Claim',
+    },
+  },
+  {
     path: 'Existing-Claim',
     component: ExistingClaimComponent,
     data: {

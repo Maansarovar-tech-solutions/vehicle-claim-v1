@@ -249,7 +249,7 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/Home/policy']);
     }
     else if (val == 'Claims') {
-      this.router.navigate(['/Home/Existing-Claim']);
+      this.router.navigate(['/Home/Claim']);
     }
     else if (val == 6) {
       this.router.navigate(['/Home/receivable-AccountStatement']);
