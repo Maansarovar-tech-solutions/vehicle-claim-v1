@@ -1,6 +1,6 @@
 <div class="page-content">
     <div class="vision-card">
-        <div class="vision-card-body mb-4 customborder">
+        <div class="vision-card-body mb-4 customborder-1">
             <div class="view-claim-information">
                 <div class="view-claim-information-item document-info">
                     <div class="recovery-claim-information-item-title">
@@ -299,7 +299,7 @@
                                               </textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 col-lg-3">
+                                            <div class="col-md-3 col-lg-3" *ngIf="commonInformation?.PreviousRemarks">
                                                 <div class="vision-form-control-box">
                                                     <label class="vision-form-label">Previous Remarks</label><br> {{commonInformation?.PreviousRemarks}}
                                                 </div>
@@ -344,7 +344,7 @@
                             </div>
                             <div class="view-claim-information-item-body p-3">
                                 <ng-container *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
-                                    <table class="table table-bordered">
+                                    <table class="table table-border-1ed">
                                         <thead>
                                             <tr>
                                                 <th scope="col">S.No</th>
@@ -432,7 +432,7 @@
                                     </div>
                                 </ng-container>
                                 <ng-container *ngIf="recoveryDocList.length!=0 || uploadDocList.length !=0">
-                                    <table class="table table-bordered">
+                                    <table class="table table-border-1ed">
                                         <thead>
                                             <tr>
                                                 <th scope="col">S.No</th>
@@ -652,7 +652,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-10 offset-1" *ngIf="document.Report.length!=0">
-                <table border="1" class="table table-hover table-striped responsive">
+                <table border-1="1" class="table table-hover table-striped responsive">
                     <thead class="table-info">
                         <tr>
                             <th style="padding:15px;" class="customRow"><b>Part</b></th>
@@ -689,5 +689,68 @@
     </div>
     <div class="text-end p-0">
         <button class="btn btn-danger mb-1" (click)="hide()">Close</button>
+    </div>
+</ng-template>
+<ng-template #content2 let-c="close" let-d="dismiss">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="modal-title" id="exampleModalLabel">Are You Sure Want to Proceed?</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6 col-lg-6">
+                    <label><b>Policy No</b></label>~&nbsp; {{recoveryPolicyNo}}
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <label><b>Claim No</b></label>~&nbsp;{{recoveryClaimNo}}
+                </div>
+            </div>
+            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'Y'">
+                <div class="col-md-3 col-lg-3 offset-5 text-right">
+                    <label><b>Vehicle Value</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3 offset-1 text-right">
+                    {{approvedVehicleValue}}
+                </div>
+            </div>
+            <div class="row  border-1 ">
+                <div class="col-md-3 col-lg-3 offset-5 text-right">
+                    <label><b>Salvage Amount</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3 offset-1 text-right">
+                    {{approvedSalvageValue}}
+                </div>
+            </div>
+            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'N'">
+                <div class="col-md-3 col-lg-3 offset-5 text-right">
+                    <label><b>Repair Cost</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3 offset-1 text-right">
+                    {{approvedRepairCost}}
+                </div>
+            </div>
+            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'N'">
+                <div class="col-md-3 col-lg-3 offset-5 text-right">
+                    <label><b>Replacement Car</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3 offset-1 text-right">
+                    {{approvedRepairCost}}
+                </div>
+            </div>
+            <div class="row  border-1 ">
+                <div class="col-md-3 col-lg-3 offset-5 text-right">
+                    <label><b>Total Claim Amount</b></label>
+                </div>
+                <div class="col-md-3 col-lg-3 offset-1 text-right">
+                    {{approvedTotalClaimCost}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="text-end">
+                <button class="btn btn-danger" (click)="hide()">Cancel</button>&nbsp;
+                <button class="btn btn-info" (click)="onAltSubmit()">Confirm</button>
+            </div>
+        </div>
     </div>
 </ng-template>

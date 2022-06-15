@@ -59,8 +59,8 @@ const routes: Routes = [
     path: 'receivable-AccountStatement',
     component: AccountStatementComponent,
     data: {
-      title: 'Receivable Account Statement',
-      breadcrumb: 'Receivable Account Statement',
+      title: 'Statement Of Account',
+      breadcrumb: 'Statement Of Account',
     },
   },
   {
