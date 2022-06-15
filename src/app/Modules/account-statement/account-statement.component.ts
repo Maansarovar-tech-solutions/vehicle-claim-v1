@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-account-statement',
@@ -14,9 +13,7 @@ export class AccountStatementComponent implements OnInit {
   claimType: any;
   userDetails: any;
   companyType: any;
-  constructor(private router:Router,
-    public app:AppComponent
-    ) {
+  constructor(private router:Router) {
         let currentUrl = this.router.url;
         console.log("Url Received",currentUrl);
         if(currentUrl){
@@ -32,11 +29,11 @@ export class AccountStatementComponent implements OnInit {
             console.log("Final ClaimType ",this.claimType)
           }
         }
-
+        
    }
 
   ngOnInit(): void {
-    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
         if(this.userDetails && this.claimType == 'Receivable'){
             let insValue = this.userDetails.LoginResponse.InsuranceId;
             if(insValue == 'OMAN') this.companyType = '1';

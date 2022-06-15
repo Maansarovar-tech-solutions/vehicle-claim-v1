@@ -1,4 +1,3 @@
-import { AppComponent } from './../../app.component';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,15 +31,14 @@ export class RecoveryClaimViewComponent implements OnInit {
     private addVehicleService: AddVehicleService,
     private datePipe: DatePipe,
     private toaster: Toaster,
-    private router: Router,
-    public app:AppComponent
+    private router: Router
 
   ) {
 
     this.endDate = this.datePipe.transform(new Date(),"dd/MM/yyyy");
     this.recoveryType = sessionStorage.getItem("claimType");
 
-    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.choosedList = JSON.parse(sessionStorage.getItem("selectStatusDetails") || '{}');
 
     // this.activatedRoute.queryParams.subscribe(

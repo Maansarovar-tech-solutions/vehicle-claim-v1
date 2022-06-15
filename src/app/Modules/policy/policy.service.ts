@@ -8,14 +8,11 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map, retry, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/Auth/auth.service';
-import * as CryptoJS from 'crypto-js';
-
 
 @Injectable({
   providedIn: 'root',
 })
 export class PolicyService {
-  public CryKey:any='MaaN';
   public Token:any;
   public username='motor';
   public password='motor123#';
@@ -24,28 +21,16 @@ export class PolicyService {
     private authService:AuthService
     ) { }
 
-    getToken() {
-      this.authService.isloggedToken.subscribe((event: any) => {
-        if (event != undefined && event != '' && event != null) {
-          this.Token = event;
-        } else {
-          this.Token = this.decryptData(sessionStorage.getItem("UserToken"));
-        }
-      });
-      return this.Token;
-    }
-
-    decryptData(data: any) {
-      try {
-        const bytes = CryptoJS.AES.decrypt(data, this.CryKey);
-        if (bytes.toString()) {
-          return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-        }
-        return data;
-      } catch (e) {
-        console.log(e);
+  getToken() {
+    this.authService.isloggedToken.subscribe((event: any) => {
+      if (event != undefined && event != '' && event != null) {
+        this.Token = event;
+      } else {
+        this.Token = sessionStorage.getItem('UserToken');
       }
-    }
+    });
+    return this.Token;
+  }
 
 
 

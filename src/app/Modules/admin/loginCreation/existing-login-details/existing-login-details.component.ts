@@ -6,7 +6,6 @@ import * as Mydatas from '../../../../../assets/app-config.json';
 import { MatSort } from '@angular/material/sort';
 import { ExcelSaveService } from 'src/app/Shared/Services/excel-save.service';
 import { Router } from '@angular/router';
-import { AppComponent } from 'src/app/app.component';
 export interface UserData {
   BodyName:String,
   CoreCode:String,
@@ -41,11 +40,9 @@ export class ExistingLoginDetailsComponent implements OnInit {
   constructor(
     private addVehicleService: AddVehicleService,
     private excelService:ExcelSaveService,
-    private router:Router,
-    public app:AppComponent
-
-  ) {
-    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    private router:Router
+  ) { 
+    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     console.log("Received UserDetails",this.userDetails)
     this.insuranceValue = this.userDetails?.LoginResponse?.InsuranceId;
     // this.makeMasterList = [
@@ -109,7 +106,7 @@ export class ExistingLoginDetailsComponent implements OnInit {
     //this.getExistingLoginList();
   }
   onInitialFetchData(){
-
+    
   }
   applyFilter(event: Event) {
     console.log("eValue",event)
@@ -159,9 +156,9 @@ export class ExistingLoginDetailsComponent implements OnInit {
       (err) => { }
     );
   }
-  exportAsXLSX():void {
-    this.excelService.exportAsExcelFile(this.makeMasterList, 'MakeMasterDetails');
- }
+  exportAsXLSX():void {  
+    this.excelService.exportAsExcelFile(this.makeMasterList, 'MakeMasterDetails');  
+ } 
  onEditLogin(event:any){
    console.log("Edit Event",event);
     sessionStorage.setItem('editLoginId',JSON.stringify(event));

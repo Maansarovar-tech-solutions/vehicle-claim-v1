@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/Auth/auth.service';
 import * as Mydatas from '../../../../assets/app-config.json';
 import { LoginService } from './login.service';
-import * as CryptoJS from 'crypto-js';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,8 +14,6 @@ import * as CryptoJS from 'crypto-js';
 export class LoginComponent implements OnInit {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
-  public CryKey: any = this.AppConfig.CryKey;
-
   public loginForm!: FormGroup;
   public insuranceCompany:any[]=[];
   public insuranceId:any='';
@@ -69,14 +67,20 @@ export class LoginComponent implements OnInit {
       }
       this.loginService.onPostMethodSync(UrlLink, ReqObj).subscribe(
         (data: any) => {
+          console.log("LoginData", data);
           if(data?.LoginResponse?.Token != null){
             let Token = data?.LoginResponse?.Token;
             this.authService.login(data);
             this.authService.UserToken(Token);
-            sessionStorage.setItem("Userdetails", this.encryptData(data));
-            sessionStorage.setItem("UserToken",this.encryptData(Token));
+            sessionStorage.setItem("UserToken",Token);
+            sessionStorage.setItem("Userdetails", JSON.stringify(data));
+            let userType = data?.LoginResponse?.UserType;
+
             sessionStorage.setItem('claimType','Receivable')
+
             this.router.navigate(['/Home/Receivable']);
+
+            //}
 
           }
         },
@@ -84,33 +88,6 @@ export class LoginComponent implements OnInit {
       );
     }
 
-
-
   }
-
-  decryptData(data:any) {
-    try {
-      const bytes = CryptoJS.AES.decrypt(data, this.CryKey);
-      if (bytes.toString()) {
-        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      }
-      return data;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  encryptData(data:any):any {
-    try {
-      return CryptoJS.AES.encrypt(JSON.stringify(data), this.CryKey).toString();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-
-
 
 }
-
-

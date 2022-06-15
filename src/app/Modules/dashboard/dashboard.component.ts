@@ -1,4 +1,3 @@
-import { AppComponent } from './../../app.component';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import * as Mydatas from '../../../assets/app-config.json';
@@ -78,9 +77,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private router: Router,
-    public app:AppComponent
   ) {
-    this.LoginDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType = sessionStorage.getItem("claimType");
 
     this.daysDropdown=[

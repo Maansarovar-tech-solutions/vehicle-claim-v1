@@ -1,4 +1,3 @@
-import { AppComponent } from './../../../../app.component';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as Mydatas from '../../../../../assets/app-config.json';
@@ -39,9 +38,8 @@ export class NewLoginDetailsComponent implements OnInit {
   entryDate: any;
   userDetails: any;
   constructor(private router:Router,
-    public app:AppComponent,
     private addVehicleService: AddVehicleService,private toaster: Toaster,) {
-      this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+      this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     let loginDetails = JSON.parse(sessionStorage.getItem('editLoginId') || '{}');
     this.companyId  = sessionStorage.getItem('loginCompanyId');
     if(loginDetails?.LoginId){
@@ -62,7 +60,7 @@ export class NewLoginDetailsComponent implements OnInit {
         "Code": "TL",
         "Description": "Total Loss",
         "ImageIcon": "data:image/jpg;base64,"
-      }
+      } 
     ];
     this.regionList = [
       {
@@ -80,7 +78,7 @@ export class NewLoginDetailsComponent implements OnInit {
       {
         "Code": "South",
         "Description": "South"
-      }
+      }  
     ];
     this.getUserTypeList();
     this.depreciationList = [];
@@ -104,7 +102,7 @@ export class NewLoginDetailsComponent implements OnInit {
     if(this.productBasedList.length!=0){
       let Exist = this.productBasedList.some((ele:any)=>ele.claimType == rowData.Code);
       if(Exist){
-
+        
         return true;
       }
       else{
@@ -123,16 +121,16 @@ export class NewLoginDetailsComponent implements OnInit {
     this.depreciationList = [];
     if(!Exist){
         if(this.managerList.length!=0){
-          this.depreciationList = this.depreciationList.concat(this.managerList);
+          this.depreciationList = this.depreciationList.concat(this.managerList); 
         }
         if(this.adminList.length!=0){
-          this.depreciationList = this.depreciationList.concat(this.adminList);
+          this.depreciationList = this.depreciationList.concat(this.adminList); 
         }
         if(this.approverList.length!=0){
-          this.depreciationList = this.depreciationList.concat(this.approverList);
+          this.depreciationList = this.depreciationList.concat(this.approverList); 
         }
         if(this.officerList.length!=0){
-          this.depreciationList = this.depreciationList.concat(this.officerList);
+          this.depreciationList = this.depreciationList.concat(this.officerList); 
         }
         this.depreciationList = this.depreciationList.filter(entry=>entry.UserType!= undefined);
         let i=0;
@@ -152,7 +150,7 @@ export class NewLoginDetailsComponent implements OnInit {
           this.depreciationList = [];
           this.getProductDetails(rowData);
         }
-
+        
     }
     else{
       console.log("Selected Values are",rowData);
@@ -196,7 +194,7 @@ export class NewLoginDetailsComponent implements OnInit {
             });
             this.router.navigate(['Home/ExistingLoginDetails'])
             // this.toastr.showSuccess("Login Details Inserted/Updated Successfully", "Login Creation");
-            //
+            // 
           }
     }).catch((err) => {
       console.log("Error",err)
@@ -225,12 +223,12 @@ export class NewLoginDetailsComponent implements OnInit {
       console.log("Checked Event");
       let Exist = this.productBasedList.some(entry=>entry.claimType == rowData.Code);
       if(!Exist){
-
+        
           let entry = {
             "claimType":rowData.Code,
             "UserTypeBasedDetails":[]
           }
-
+          
           this.productBasedList.push(entry);
           if(this.productValue == rowData.Code){
             this.filterRowList(rowData,'direct');
@@ -305,7 +303,7 @@ export class NewLoginDetailsComponent implements OnInit {
       else if(this.addUserType == 'approver'){
         if(this.approverList.length!=0){
           let Exist = this.approverList.some(entry=>entry.UserType == this.addUserType);
-
+          
           if(Exist){
             this.toaster.open({
               text: 'Approver Information Already Present',
@@ -327,7 +325,7 @@ export class NewLoginDetailsComponent implements OnInit {
       else if(this.addUserType == 'admin'){
         if(this.adminList.length!=0){
           let Exist = this.adminList.some(entry=>entry.UserType == this.addUserType);
-
+          
           if(Exist){
             this.toaster.open({
               text: 'Admin Information Already Present',
@@ -484,7 +482,7 @@ export class NewLoginDetailsComponent implements OnInit {
               this.getProductDetails(this.productList[0]);
             }
           }
-      },
+      },  
       (err) => { }
     );
   }
@@ -505,7 +503,7 @@ export class NewLoginDetailsComponent implements OnInit {
           });
             //this.toastr.showSuccess("Password Updated Successfully", "Password");
             this.changePassword = false;this.newPassword = "";this.reNewPassword = "";this.oldPassword = "";
-
+          
         }).catch((err) => {
           console.log("Error",err);
       });;
@@ -518,7 +516,7 @@ export class NewLoginDetailsComponent implements OnInit {
       });
       //this.toastr.showError('New Passwords Does Not Match', 'New Password Error');
     }
-
+    
   }
 }
 
