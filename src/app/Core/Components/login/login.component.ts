@@ -69,7 +69,6 @@ export class LoginComponent implements OnInit {
       }
       this.loginService.onPostMethodSync(UrlLink, ReqObj).subscribe(
         (data: any) => {
-    alert(this.loginForm.valid)
 
           if(data?.LoginResponse?.Token != null){
             let Token = data?.LoginResponse?.Token;

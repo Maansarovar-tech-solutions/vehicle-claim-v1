@@ -84,15 +84,20 @@
                         <li class="nav-item">
                             <a class="nav-link" [class.active]="isCurrentRoute('Policy')" (click)="onNavigation('Policy');">Policy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Statement Of Account</a>
-                            <ul class="dropdown-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" [class.active]="isCurrentRoute('Statement Of Account')" (click)="onNavigation(6)">Statement Of Account</a>
+                            <!-- <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" [class.active]="isCurrentRoute('Receivable Account Statement')" (click)="onNavigation(6)">Receivable</a></li>
                                 <li><a class="dropdown-item" [class.active]="isCurrentRoute('Payable Account Statement')" (click)="onNavigation(7)">Payable</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Reports</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reports</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item">Claim Submitted</a></li>
+                                <li><a class="dropdown-item">Claim Recieved</a></li>
+                                <li><a class="dropdown-item">Ageing Analysis</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Masters</a>

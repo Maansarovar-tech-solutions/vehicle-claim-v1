@@ -50,6 +50,7 @@ export class ClaimStatusComponent implements OnInit {
   closeResult: any;
   @ViewChild('content') content : any;
   @ViewChild('content1') content1 : any;
+  @ViewChild('content2') content2 : any;
   documentAIDetails: any[]=[];
   ownerDocList: any[]=[];
   recoveryDocList: any[]=[];
@@ -418,6 +419,27 @@ export class ClaimStatusComponent implements OnInit {
     this.modalService.dismissAll();
   }
   onFormSubmit(){
+    
+    let userDetails = this.userDetails?.LoginResponse;
+    if(userDetails.InsuranceCompanyName == this.recoveryInformation?.InsuranceCompanyName){
+      let StatusCode = this.f.claimStatus.value;
+        if(StatusCode){
+            if(StatusCode=='ATP' || StatusCode == 'CREQ'){
+              this.modalService.open(this.content2, { size: 'lg', backdrop: 'static' });
+            }
+            else{
+                this.onAltSubmit();
+            }
+        }
+        else{
+          this.onAltSubmit();
+        }
+    }
+    else{
+      this.onAltSubmit();
+    }
+  }
+  onAltSubmit(){
     let userDetails = this.userDetails?.LoginResponse;
     let docIdList:any = [];
     if(this.ownerDocList.length!=0 || this.recoveryDocList.length!=0){
