@@ -281,7 +281,10 @@ export class NavbarComponent implements OnInit {
   onSearchDetails() {
     var UrlLink = '';
     var ReqObj = {};
-
+    console.log("Final Search Req",this.searchBy)
+    if(this.searchBy == undefined || this.searchBy == "" || this.searchBy == null){
+      this.searchBy = 'Chassis Number';
+    }
     if (this.searchBy == 'Chassis Number') {
       // UrlLink = `${this.ApiUrl1}totalloss/vehicleIinfo/bychassisno`;
       // ReqObj = {
@@ -303,10 +306,11 @@ export class NavbarComponent implements OnInit {
 
     return this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe((data: any) => {
       console.log("Search Data", data);
-      this.searchData = data.Result?.VehicleDetails;
+      if(data.ErrorMessage.length==0){
+        this.searchData = data.Result?.VehicleDetails;
         sessionStorage.setItem("searchList", JSON.stringify(data.Result));
         this.router.navigate(['Home/Vehicle-Search'])
-
+      }
     }, (err) => { })
   }
 

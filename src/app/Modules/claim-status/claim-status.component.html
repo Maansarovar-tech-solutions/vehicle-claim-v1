@@ -368,7 +368,7 @@
                                                             class="fa fa-eye"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteUploadedDoc(i,'owner')"><i class="fa fa-trash"></i></a>
                                                 </td>
                                                 <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'owner')"><i
                                                             class="fa fa-download"></i></a>
@@ -439,7 +439,7 @@
                                                 <th scope="col">FileName</th>
                                                 <th scope="col">Doument Type</th>
                                                 <th scope="col">View</th>
-                                                <!-- <th scope="col" >Delete</th> -->
+                                                <th scope="col">Delete</th>
                                                 <th scope="col">Download</th>
                                                 <th scope="col">AI Details<br>
                                                     <small>*File Size must be Above 400kb</small>
@@ -455,9 +455,9 @@
                                                     <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'receiver')"><i
                                                             class="fa fa-eye"></i></a>
                                                 </td>
-                                                <!-- <td *ngIf="claimType == 'Receivable'">
-                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteUploadedDoc(i)"><i class="fa fa-trash"></i></a>
-                                                    </td> -->
+                                                <td *ngIf="claimType == 'Receivable'">
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteUploadedDoc(i,'receiver')"><i class="fa fa-trash"></i></a>
+                                                </td>
                                                 <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'receiver')"><i
                                                             class="fa fa-download"></i></a></td>
                                                 <td>
