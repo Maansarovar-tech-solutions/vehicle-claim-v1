@@ -39,7 +39,7 @@ export class VehicleSearchComponent implements OnInit {
     private datePipe: DatePipe,
     public app:AppComponent
   ) {
-    this.LoginDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    this.LoginDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
     console.log("Login Details",this.LoginDetails);
     let searchData = JSON.parse(sessionStorage.getItem("searchList") || '{}');
     this.claimType = null;

@@ -29,7 +29,7 @@ export class PolicyService {
         if (event != undefined && event != '' && event != null) {
           this.Token = event;
         } else {
-          this.Token = this.decryptData(sessionStorage.getItem("UserToken"));
+          this.Token = sessionStorage.getItem("UserToken");
         }
       });
       return this.Token;

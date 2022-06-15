@@ -40,7 +40,7 @@ export class RecoveryClaimViewComponent implements OnInit {
     this.endDate = this.datePipe.transform(new Date(),"dd/MM/yyyy");
     this.recoveryType = sessionStorage.getItem("claimType");
 
-    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
     this.choosedList = JSON.parse(sessionStorage.getItem("selectStatusDetails") || '{}');
 
     // this.activatedRoute.queryParams.subscribe(

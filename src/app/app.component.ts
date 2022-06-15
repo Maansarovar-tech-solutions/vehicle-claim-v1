@@ -26,10 +26,11 @@ export class AppComponent implements OnInit {
 
     this.load();
 
-    let Userdetails = this.decryptData(sessionStorage.getItem("Userdetails"));
+    let Userdetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
+    JSON.stringify(sessionStorage.getItem("Userdetails"))
     console.log(Userdetails)
     if (Userdetails && Object.keys(Userdetails).length != 0) {
-      this.loginData = this.decryptData(sessionStorage.getItem("Userdetails"));
+      this.loginData = JSON.stringify(sessionStorage.getItem("Userdetails"));
       this.authService.login(this.loginData);
       console.log(this.loginData);
     }

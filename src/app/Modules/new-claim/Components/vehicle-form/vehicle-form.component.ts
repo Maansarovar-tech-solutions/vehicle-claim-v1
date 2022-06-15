@@ -74,7 +74,7 @@ export class VehicleFormComponent implements OnInit {
 
   ) {
     this.minDate = new Date();
-    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
     this.claimType = sessionStorage.getItem("claimType") || '';
     this.claimTypeId = sessionStorage.getItem("claimTypeId") || '';
 

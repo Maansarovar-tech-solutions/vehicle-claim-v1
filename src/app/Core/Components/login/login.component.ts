@@ -73,8 +73,8 @@ export class LoginComponent implements OnInit {
             let Token = data?.LoginResponse?.Token;
             this.authService.login(data);
             this.authService.UserToken(Token);
-            sessionStorage.setItem("Userdetails", this.encryptData(data));
-            sessionStorage.setItem("UserToken",this.encryptData(Token));
+            sessionStorage.setItem("Userdetails", JSON.stringify(data));
+            sessionStorage.setItem("UserToken",Token);
             sessionStorage.setItem('claimType','Receivable')
             this.router.navigate(['/Home/Receivable']);
 

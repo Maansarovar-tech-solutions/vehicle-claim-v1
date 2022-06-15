@@ -41,7 +41,7 @@ export class NewLoginDetailsComponent implements OnInit {
   constructor(private router:Router,
     public app:AppComponent,
     private addVehicleService: AddVehicleService,private toaster: Toaster,) {
-      this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+      this.userDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
     let loginDetails = JSON.parse(sessionStorage.getItem('editLoginId') || '{}');
     this.companyId  = sessionStorage.getItem('loginCompanyId');
     if(loginDetails?.LoginId){

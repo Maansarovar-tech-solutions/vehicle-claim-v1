@@ -69,7 +69,7 @@ export class ClaimStatusComponent implements OnInit {
     private toaster: Toaster,
     public app:AppComponent
   ) {
-    this.userDetails = this.app.decryptData(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
     this.recoveryType=sessionStorage.getItem("claimType");
     this.events1 = [
       {
