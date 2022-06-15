@@ -455,7 +455,7 @@ export class ClaimStatusComponent implements OnInit {
             caption: 'Submitted',
             type: 'success',
           });
-          this.router.navigate(['Home']);
+          this.router.navigate([`Home/${this.claimType}`]);
         }
       },
       (err) => { }
