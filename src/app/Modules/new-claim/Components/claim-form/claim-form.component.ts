@@ -62,7 +62,7 @@ export class ClaimFormComponent implements OnInit {
     public app:AppComponent
 
   ) {
-    this.userDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.claimEditReq = JSON.parse(sessionStorage.getItem("claimEditReq") || '{}');
     console.log("VehicleDetails", this.VehicleDetails);
   }

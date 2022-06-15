@@ -45,7 +45,7 @@ export class ExistingLoginDetailsComponent implements OnInit {
     public app:AppComponent
 
   ) {
-    this.userDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     console.log("Received UserDetails",this.userDetails)
     this.insuranceValue = this.userDetails?.LoginResponse?.InsuranceId;
     // this.makeMasterList = [

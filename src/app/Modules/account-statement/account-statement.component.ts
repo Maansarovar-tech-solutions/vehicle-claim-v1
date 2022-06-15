@@ -36,7 +36,7 @@ export class AccountStatementComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.userDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
+    this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
         if(this.userDetails && this.claimType == 'Receivable'){
             let insValue = this.userDetails.LoginResponse.InsuranceId;
             if(insValue == 'OMAN') this.companyType = '1';

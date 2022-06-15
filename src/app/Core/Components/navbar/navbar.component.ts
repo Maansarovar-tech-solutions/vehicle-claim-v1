@@ -54,7 +54,7 @@ export class NavbarComponent implements OnInit {
     public dialog: MatDialog,
     public app:AppComponent
   ) {
-    this.LoginDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
+    this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     console.log(this.LoginDetails);
     this.recoveryType = sessionStorage.getItem("claimType");
 

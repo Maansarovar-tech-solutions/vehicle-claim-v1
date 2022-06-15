@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     public app:AppComponent
   ) {
-    this.LoginDetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
+    this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType = sessionStorage.getItem("claimType");
 
     this.daysDropdown=[

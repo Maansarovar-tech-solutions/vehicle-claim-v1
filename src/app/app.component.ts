@@ -15,22 +15,23 @@ export class AppComponent implements OnInit {
   name = 'Angular 6';
   public loginData: any;
   public showIframe: any = false;
-  public AppConfig: any;
-  public ApiUrl1: any;
-  public CryKey: any;
+  public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1=this.AppConfig.ApiUrl1;
+  public CryKey=this.AppConfig.CryKey;
   constructor(
     private router: Router,
     private authService: AuthService,
     private http: HttpClient
   ) {
 
-    this.load();
+    // this.load();
 
-    let Userdetails = JSON.stringify(sessionStorage.getItem("Userdetails"));
-    JSON.stringify(sessionStorage.getItem("Userdetails"))
+    let Userdetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     console.log(Userdetails)
-    if (Userdetails && Object.keys(Userdetails).length != 0) {
-      this.loginData = JSON.stringify(sessionStorage.getItem("Userdetails"));
+    if (Userdetails !=null && Object.keys(Userdetails).length != 0) {
+    console.log(Userdetails)
+
+      this.loginData = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
       this.authService.login(this.loginData);
       console.log(this.loginData);
     }
