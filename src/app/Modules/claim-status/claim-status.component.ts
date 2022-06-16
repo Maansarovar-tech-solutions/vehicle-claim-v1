@@ -425,6 +425,11 @@ export class ClaimStatusComponent implements OnInit {
       let StatusCode = this.f.claimStatus.value;
         if(StatusCode){
             if(StatusCode=='ATP' || StatusCode == 'CREQ'){
+              if(this.approvedVehicleValue == "" || this.approvedVehicleValue == undefined || this.approvedVehicleValue == null) this.approvedVehicleValue = 0;
+              if(this.approvedSalvageValue == "" || this.approvedSalvageValue == undefined || this.approvedSalvageValue == null) this.approvedSalvageValue = 0;
+              if(this.approvedRepairCost == "" || this.approvedRepairCost == undefined || this.approvedRepairCost == null) this.approvedRepairCost = 0;
+              if(this.approvedReplacementCost == "" || this.approvedReplacementCost == undefined || this.approvedReplacementCost == null) this.approvedReplacementCost = 0;
+              if(this.approvedTotalClaimCost == "" || this.approvedTotalClaimCost == undefined || this.approvedTotalClaimCost == null) this.approvedTotalClaimCost = 0;
               this.modalService.open(this.content2, { size: 'lg', backdrop: 'static' });
             }
             else{
