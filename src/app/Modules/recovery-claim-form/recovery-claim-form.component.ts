@@ -792,8 +792,8 @@ export class RecoveryClaimFormComponent implements OnInit {
       RecoveryInformation: {
         VehMakeId: this.f.VehicleMakeIdOther.value,
         VehMakeDesc:this.onGetCodeDesc(this.makeList,this.f.VehicleMakeIdOther.value),
-        VehModelId:this.onGetCodeDesc(this.modelList,this.f.VehicleModelIdOther.value),
-        VehModelDesc: this.f.VehicleModelIdOther.value,
+        VehModelId:this.f.VehicleModelIdOther.value,
+        VehModelDesc: this.onGetCodeDesc(this.modelList,this.f.VehicleModelIdOther.value),
         CivilId: this.f.OtherCivilId.value,
         PlateCode: this.f.OtherPlateCode.value,
         PlateNumber: this.f.OtherPlateNumber.value,
@@ -856,6 +856,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   }
   onGetCodeDesc(data:any[],code:any){
      let index = data.findIndex((ele:any)=>ele.Code == code);
+     console.log(index,code)
      if(index == -1){
        return code
      }else{
