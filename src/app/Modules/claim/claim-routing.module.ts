@@ -10,11 +10,11 @@ const routes: Routes = [
   },
 
   {
-    path: 'loss-claim-form',
+    path: 'claim-form',
     component: RecoveryClaimFormComponent,
     data: {
-      title: 'Total Loss Claim',
-      breadcrumb: 'Total Loss Claim',
+      title: 'Claim Form',
+      breadcrumb: 'Claim Form',
     },
   },
 

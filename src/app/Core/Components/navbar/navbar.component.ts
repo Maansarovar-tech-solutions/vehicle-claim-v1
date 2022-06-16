@@ -287,7 +287,7 @@ export class NavbarComponent implements OnInit {
       sessionStorage.setItem('claimTypeId', id);
 
       if(id ==12){
-        this.router.navigate(['/Home/Claim/loss-claim-form']);
+        this.router.navigate(['/Home/Claim/claim-form']);
       }else{
         this.router.navigate(['/Home/recovery-claim-form']);
       }
