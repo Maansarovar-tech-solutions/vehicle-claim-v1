@@ -1151,6 +1151,11 @@ export class RecoveryClaimFormComponent implements OnInit {
   }
 
   okay(){
-    this.router.navigate(['Home/Receivable']);
+    if(this.claimTypeId == 12){
+       this.router.navigate(['Home/Claim']);
+    }else{
+      this.router.navigate(['Home/Receivable']);
+
+    }
    }
 }

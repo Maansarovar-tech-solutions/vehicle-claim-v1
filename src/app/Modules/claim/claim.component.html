@@ -10,14 +10,22 @@
           </div>
         </div>
         <div class="vision-grid-item">
-          <div class="vision-grid-item-title">Company Wise Claim</div>
+          <div class="vision-grid-item-title">TPL Claim Company Claim</div>
           <div class="vision-grid-item-body">
-            <ng-container *ngIf="totalGraphClaimCounts">
-              <app-bar-chart [totalGraphClaimCounts]="totalGraphClaimCounts"></app-bar-chart>
+            <ng-container *ngIf="totalRecoveryClaimCounts">
+              <app-bar-chart [totalGraphClaimCounts]="totalRecoveryClaimCounts"></app-bar-chart>
           </ng-container>
           </div>
         </div>
-        
+        <div class="vision-grid-item">
+          <div class="vision-grid-item-title">Total Loss Claim Company Claim</div>
+          <div class="vision-grid-item-body">
+            <ng-container *ngIf="totalTPLlaimCounts">
+              <app-bar-chart [totalGraphClaimCounts]="totalTPLlaimCounts"></app-bar-chart>
+          </ng-container>
+          </div>
+        </div>
+
 
       </div>
     </div>
