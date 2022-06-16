@@ -699,10 +699,14 @@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6 col-lg-6">
-                    <label><b>Policy No</b></label>~&nbsp; {{recoveryPolicyNo}}
+                    <label><b>Policy No</b></label>~&nbsp;
+                    <span *ngIf="recoveryPolicyNo">{{recoveryPolicyNo}}</span>
+                    <span *ngIf="!recoveryPolicyNo">N/A</span>
                 </div>
                 <div class="col-md-6 col-lg-6">
-                    <label><b>Claim No</b></label>~&nbsp;{{recoveryClaimNo}}
+                    <label><b>Claim No</b></label>~&nbsp;
+                    <span *ngIf="recoveryClaimNo">{{recoveryClaimNo}}</span>
+                    <span *ngIf="!recoveryClaimNo">N/A</span>
                 </div>
             </div>
             <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'Y'">
@@ -713,7 +717,7 @@
                     {{approvedVehicleValue}}
                 </div>
             </div>
-            <div class="row  border-1 ">
+            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'Y'">
                 <div class="col-md-3 col-lg-3 offset-5 text-right">
                     <label><b>Salvage Amount</b></label>
                 </div>
@@ -729,12 +733,12 @@
                     {{approvedRepairCost}}
                 </div>
             </div>
-            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'N'">
+            <div class="row  border-1 ">
                 <div class="col-md-3 col-lg-3 offset-5 text-right">
                     <label><b>Replacement Car</b></label>
                 </div>
                 <div class="col-md-3 col-lg-3 offset-1 text-right">
-                    {{approvedRepairCost}}
+                    {{approvedReplacementCost}}
                 </div>
             </div>
             <div class="row  border-1 ">
@@ -749,7 +753,7 @@
         <div class="card-footer">
             <div class="text-end">
                 <button class="btn btn-danger" (click)="hide()">Cancel</button>&nbsp;
-                <button class="btn btn-info" (click)="onAltSubmit()">Confirm</button>
+                <button class="btn btn-info" (click)="onAltSubmit();hide()">Confirm</button>
             </div>
         </div>
     </div>
