@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountStatementComponent } from '../account-statement/account-statement.component';
 import { ExistingClaimComponent } from '../existing-claim/existing-claim.component';
+import { ClaimReceivedComponent } from '../reports/claim-received/claim-received.component';
+import { ClaimSubmittedComponent } from '../reports/claim-submitted/claim-submitted.component';
+import { AgeingAnalysisComponent } from '../reports/ageing-analysis/ageing-analysis.component';
 
 const routes: Routes = [
   {
@@ -78,6 +81,30 @@ const routes: Routes = [
     data: {
       title: 'Payable Account Statement',
       breadcrumb: 'Payable Account Statement',
+    },
+  },
+  {
+    path: 'claimSubmittedReports',
+    component: ClaimSubmittedComponent,
+    data: {
+      title: 'Claim Submitted Reports',
+      breadcrumb: 'claim Submitted Reports',
+    },
+  },
+  {
+    path: 'claimReceivedReports',
+    component: ClaimReceivedComponent,
+    data: {
+      title: 'Claim Received Reports',
+      breadcrumb: 'claim Received Reports',
+    },
+  },
+  {
+    path: 'ageingAnalysisReports',
+    component: AgeingAnalysisComponent,
+    data: {
+      title: 'Ageing Analysis',
+      breadcrumb: 'Ageing Analysis',
     },
   },
   {

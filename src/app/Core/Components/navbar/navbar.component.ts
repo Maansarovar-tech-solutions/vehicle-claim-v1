@@ -75,7 +75,7 @@ export class NavbarComponent implements OnInit {
         return null;
       })).subscribe((customData: any) => {
         this.pageName = customData;
-        console.log(this.pageName)
+        console.log("PageName",this.pageName)
         this.sharedService.onGetPageTitle(this.pageName);
 
       });
@@ -261,9 +261,18 @@ export class NavbarComponent implements OnInit {
       sessionStorage.setItem('claimType', String(val))
       this.router.navigate(['/Home/Receivable']);
     }
-    if (val === 'Payable') {
+    else if (val === 'Payable') {
       sessionStorage.setItem('claimType', String(val))
       this.router.navigate(['/Home/Payable']);
+    }
+    else if(val === 'claimSubmitted'){
+      this.router.navigate(['/Home/claimSubmittedReports']);
+    }
+    else if(val === 'claimReceived'){
+      this.router.navigate(['/Home/claimReceivedReports']);
+    }
+    else if(val === 'ageingAnalysis'){
+      this.router.navigate(['/Home/ageingAnalysisReports']);
     }
   }
 

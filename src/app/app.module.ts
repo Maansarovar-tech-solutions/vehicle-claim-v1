@@ -46,6 +46,9 @@ import { ExistingLoginDetailsComponent } from './Modules/admin/loginCreation/exi
 import { DragDropFileUploadDirective } from './Shared/Directives/drag-drop.directive';
 import { ClaimComponent } from './Modules/claim/claim.component';
 import { PieChartComponent } from './Modules/claim/Components/pie-chart/pie-chart.component';
+import { ClaimSubmittedComponent } from './Modules/reports/claim-submitted/claim-submitted.component';
+import { ClaimReceivedComponent } from './Modules/reports/claim-received/claim-received.component';
+import { AgeingAnalysisComponent } from './Modules/reports/ageing-analysis/ageing-analysis.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,9 @@ import { PieChartComponent } from './Modules/claim/Components/pie-chart/pie-char
     ExistingClaimComponent,
     AddNewLoginDetailsComponent,
     RecoveryClaimFormComponent,
+    ClaimSubmittedComponent,
+    ClaimReceivedComponent,
+    AgeingAnalysisComponent,
   ],
   imports: [
     BrowserModule,

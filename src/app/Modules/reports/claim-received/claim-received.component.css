@@ -1,0 +1,236 @@
+.vision-grid {
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+}
+
+.vision-grid-column-2 {
+    grid-template-columns: 1fr;
+}
+
+.vision-grid-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.vision-grid-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 15px;
+    color: var(--theme2);
+}
+
+.vision-grid-item-body {
+    padding: 10px;
+}
+
+.accordion-collapse {
+    border: 0;
+}
+
+.accordion-button {
+    padding: 0px;
+    border: 0;
+    color: #333333;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background: none;
+    color: #dc3545;
+}
+
+.accordion-body {
+    padding: 15px;
+}
+
+.accordion-button::after {
+    width: auto;
+    height: auto;
+    content: "+";
+    font-size: 40px;
+    background-image: none;
+    font-weight: 100;
+    color: #1b6ce5;
+    transform: translateY(-4px);
+}
+
+.accordion-button:not(.collapsed)::after {
+    width: auto;
+    height: auto;
+    background-image: none;
+    content: "-";
+    font-size: 48px;
+    transform: translate(-5px, -4px);
+    transform: rotate(0deg);
+}
+
+.view-claim-information {
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.view-claim-information-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.view-claim-information-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 900;
+    padding: 10px;
+    color: #0d6efd;
+}
+
+.view-claim-information-status-item {
+    grid-column: span 3;
+}
+
+.view-claim-information-status-item .status-radio-grid {
+    padding: 10px;
+}
+
+.status-radio-grid {
+    grid-area: main;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.insurance-details .insurance-details-strip {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 4rem;
+    padding: 15px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    color: white;
+    background-color: #0d6efd;
+    border-radius: 1.5rem;
+}
+
+.status-update-grid {
+    grid-area: main;
+    border-radius: 10px;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.status-update-grid-item {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    min-height: 100px;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.policy-info-strip {
+    border-radius: 1rem;
+}
+
+.policy-info-strip .view-claim-information-item-title {
+    padding: 10px 20px;
+    color: white;
+    background-color: #0547f3;
+    justify-content: start;
+}
+
+.policy-info-strip .policy-info-strip-icon {
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.20), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.10), 0 16px 16px rgba(0, 0, 0, 0.05);
+}
+
+.policy-info-strip .policy-info-strip-title {
+    margin: 0 .8rem;
+}
+
+.policy-info-strip-label {
+    font-weight: 900;
+}
+
+.policy-info-strip-value {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.view-claim-information .list-group-flush .list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.view-claim-information-item-remarks {
+    grid-column: span 3;
+}
+
+.view-claim-information-item-remarks .view-claim-information-item-body {
+    padding: 10px 20px;
+}
+
+.claim-type:first-child {
+    grid-column-end: 4;
+}
+
+.claim-type .view-claim-information-item-title {
+    background-color: #0ec772;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+}
+
+.policy-info {
+    grid-column-start: 1;
+}
+
+.document-info {
+    grid-column: span 2;
+}
+
+.document-preview .bg-light {
+    margin: .5rem;
+}
+
+.document-preview .doc-preview {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.doc-download {
+    text-align: center;
+    color: var(--theme1);
+}
+
+.fault-company .view-claim-information-item-title {
+    color: var(--theme2);
+    font-weight: 900;
+}
+
+.doc-preview svg {
+    height: 20px;
+    width: 20px;
+}

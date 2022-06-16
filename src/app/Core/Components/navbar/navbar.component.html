@@ -94,9 +94,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reports</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item">Claim Submitted</a></li>
-                                <li><a class="dropdown-item">Claim Recieved</a></li>
-                                <li><a class="dropdown-item">Ageing Analysis</a></li>
+                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Claim Submitted')" (click)="onNavigation('claimSubmitted')">Claim Submitted</a></li>
+                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Claim Recieved')" (click)="onNavigation('claimReceived')">Claim Recieved</a></li>
+                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Ageing Analysis')" (click)="onNavigation('ageingAnalysis')">Ageing Analysis</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -111,7 +111,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="getApiDetails();">
+                            <a class="nav-link" [class.active]="isCurrentRoute('API Doc')" (click)="getApiDetails();">
                 API Doc
               </a>
                         </li>
@@ -232,6 +232,11 @@
                         <button type="button" (click)="onStartNewClaim(11)" class="report-btn"><img
                 src="./assets/images/recovery.png" class="report-icon" /> <span class="report-text">Add
                 Recovery Claim</span></button>
+                    </div>
+                    <div *ngIf="pageName == 'Statement Of Account'">
+                        <button type="button" class="report-btn"><img
+                  src="./assets/images/losses.png" class="report-icon" /> <span
+                  class="report-text">Add SOA</span></button>
                     </div>
                     <div *ngIf="pageName == 'Claim'">
                         <button type="button" (click)="onStartNewClaim(12)" class="report-btn"><img

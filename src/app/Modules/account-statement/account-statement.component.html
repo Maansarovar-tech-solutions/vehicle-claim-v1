@@ -4,10 +4,92 @@
             <div class="vision-grid claim-card vision-grid-column-2">
                 <div class="vision-grid-item">
                     <div class="vision-grid-item-title">
-                        <div>Account Statement</div>
+                        <div>Payable SOA Upload</div>
                         <div></div>
                     </div>
                     <div class="vision-grid-item-body">
+                        <form [formGroup]="claimForm">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 offset-2">
+                                    <mat-form-field class="mat-form-width" appearance="outline">
+                                        <mat-label>Insurance Company</mat-label>
+                                        <input type="text" matInput formControlName="InsuranceId" [matAutocomplete]="autoGroup" required>
+                                        <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="onDisplayInsurComp">
+                                            <mat-optgroup *ngFor="let group of filterinsurCompanyLis | async" [label]="group.letter">
+                                                <mat-option *ngFor="let name of group.names" [value]="name.Code">
+                                                    {{name.CodeDescription}}
+                                                </mat-option>
+                                            </mat-optgroup>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="(f.InsuranceId.errors) || (!f.InsuranceId.valid && f.InsuranceId.touched)">
+                                            <span *ngIf="f.InsuranceId.errors?.required" class="error-text">This
+                                            field
+                                            is required</span>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2 col-lg-2">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Month</mat-label>
+                                        <mat-select>
+                                            <mat-option value="January">January</mat-option>
+                                            <mat-option value="February">February</mat-option>
+                                            <mat-option value="March">March</mat-option>
+                                            <mat-option value="April">April</mat-option>
+                                            <mat-option value="May">May</mat-option>
+                                            <mat-option value="June">June</mat-option>
+                                            <mat-option value="July">July</mat-option>
+                                            <mat-option value="August">August</mat-option>
+                                            <mat-option value="September">September</mat-option>
+                                            <mat-option value="October">October</mat-option>
+                                            <mat-option value="November">November</mat-option>
+                                            <mat-option value="December">December</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2 col-lg-2">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Year</mat-label>
+                                        <mat-select>
+                                            <mat-option value="2022">2022</mat-option>
+                                            <mat-option value="2021">2021</mat-option>
+                                            <mat-option value="2020">2020</mat-option>
+                                            <mat-option value="2019">2019</mat-option>
+                                            <mat-option value="2018">2018</mat-option>
+                                            <mat-option value="2017">2017</mat-option>
+                                            <mat-option value="2016">2016</mat-option>
+                                            <mat-option value="2015">2015</mat-option>
+                                            <mat-option value="2014">2014</mat-option>
+                                            <mat-option value="2013">2013</mat-option>
+                                            <mat-option value="2012">2012</mat-option>
+                                            <mat-option value="2011">2011</mat-option>
+                                            <mat-option value="2010">2010</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-8 col-lg-8 offset-2">
+                                <div class="imag-card my-3" appDragDropFileUpload (click)="doc.click()">
+                                    <input style="display: none;" type="file" #doc>
+                                    <div>
+                                        <div class="center">
+                                            <b class="text-dark">
+                                            <i class="far fa-images"></i> Drag or Click</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="report-btn mx-1"><img
+                                src="./assets/images/uploadIcon.png" class="report-icon" /> <span
+                                class="report-text">Upload</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div class="vision-grid-item-body">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <mat-form-field appearance="outline">
@@ -139,23 +221,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
-                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
-                                                    <div class="imgbox" style="
-                                            background-image: url('./assets/images/gulf-insu.png');
-                                            background-position: center;
-                                            background-repeat: no-repeat;
-                                            background-size: cover;
-                                            height: 100px;
-                                            padding: 2px;">
-                                                    </div>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
-                                                        <a mat-raised-button class="mx-1"><i
-                                                class="fas fa-download mx-1"></i></a>
-                                                    </div>
-                                                </mat-card>
-                                          </div> -->
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -188,24 +254,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
-                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
-                                                    <div class="imgbox" style="
-                                                background-image: url('./assets/images/gulf-insu.png');
-                                                background-position: center;
-                                                background-repeat: no-repeat;
-                                                background-size: cover;
-                                                height: 100px;
-                                                padding: 2px;">
-                                                    </div>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
-                                                        <a mat-raised-button class="mx-1"><i
-                                                    class="fas fa-download mx-1"></i></a>
-                                                    </div>
-                                                </mat-card>
-                                            </div> -->
-                                        </div>
+                                            </div>
                                     </div>
                                 </div>
 
@@ -237,24 +286,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
-                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
-                                                    <div class="imgbox" style="
-                                            background-image: url('./assets/images/gulf-insu.png');
-                                            background-position: center;
-                                            background-repeat: no-repeat;
-                                            background-size: cover;
-                                            height: 100px;
-                                            padding: 2px;">
-                                                    </div>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
-                                                        <a mat-raised-button class="mx-1"><i
-                                                class="fas fa-download mx-1"></i></a>
-                                                    </div>
-                                                </mat-card>
-                                            </div> -->
-                                        </div>
+                                            </div>
                                     </div>
                                 </div>
 
@@ -286,24 +318,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
-                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
-                                                    <div class="imgbox" style="
-                                            background-image: url('./assets/images/gulf-insu.png');
-                                            background-position: center;
-                                            background-repeat: no-repeat;
-                                            background-size: cover;
-                                            height: 100px;
-                                            padding: 2px;">
-                                                    </div>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
-                                                        <a mat-raised-button class="mx-1"><i
-                                                class="fas fa-download mx-1"></i></a>
-                                                    </div>
-                                                </mat-card>
-                                            </div> -->
-                                        </div>
+                                            </div>
                                     </div>
                                 </div>
 
@@ -335,26 +350,128 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="claim-type" *ngIf="claimType != 'Payable'">
-                                                <mat-card class="col-md-3 col-lg-3 col-1 col-sm-2">
-                                                    <div class="imgbox" style="
-                                            background-image: url('./assets/images/gulf-insu.png');
-                                            background-position: center;
-                                            background-repeat: no-repeat;
-                                            background-size: cover;
-                                            height: 100px;
-                                            padding: 2px;">
-                                                    </div>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a mat-raised-button class="mx-1"><i class="far fa-eye mx-1"></i></a>
-                                                        <a mat-raised-button class="mx-1"><i
-                                                class="fas fa-download mx-1"></i></a>
-                                                    </div>
-                                                </mat-card>
-                                            </div> -->
-                                        </div>
+                                            </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="vision-grid-item">
+                    <div class="vision-grid-item-title">
+                        <div>SOA Details</div>
+                        <div></div>
+                    </div>
+                    <div class="vision-grid-item-body">
+                        <div class="row">
+                            <div class="col-md-2 col-lg-2">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Month</mat-label>
+                                    <mat-select>
+                                        <mat-option value="January">January</mat-option>
+                                        <mat-option value="February">February</mat-option>
+                                        <mat-option value="March">March</mat-option>
+                                        <mat-option value="April">April</mat-option>
+                                        <mat-option value="May">May</mat-option>
+                                        <mat-option value="June">June</mat-option>
+                                        <mat-option value="July">July</mat-option>
+                                        <mat-option value="August">August</mat-option>
+                                        <mat-option value="September">September</mat-option>
+                                        <mat-option value="October">October</mat-option>
+                                        <mat-option value="November">November</mat-option>
+                                        <mat-option value="December">December</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-2 col-lg-2">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Year</mat-label>
+                                    <mat-select>
+                                        <mat-option value="2022">2022</mat-option>
+                                        <mat-option value="2021">2021</mat-option>
+                                        <mat-option value="2020">2020</mat-option>
+                                        <mat-option value="2019">2019</mat-option>
+                                        <mat-option value="2018">2018</mat-option>
+                                        <mat-option value="2017">2017</mat-option>
+                                        <mat-option value="2016">2016</mat-option>
+                                        <mat-option value="2015">2015</mat-option>
+                                        <mat-option value="2014">2014</mat-option>
+                                        <mat-option value="2013">2013</mat-option>
+                                        <mat-option value="2012">2012</mat-option>
+                                        <mat-option value="2011">2011</mat-option>
+                                        <mat-option value="2010">2010</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="col-md-2 col-lg-2 mt-2">
+                                <button class="btn btn-outline-info">Search</button>
+                            </div> -->
+
+                        </div>
+                        <div class="container">
+                            <div class="card-body">
+                                <app-masters-grid [cols]="columnHeader" [data]="claimList">
+                                </app-masters-grid>
+                                <!-- <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item text-center">
+                                                <span><b>Insurance Company</b></span>
+                                            </div>
+                                            <div class="flex-item text-center">
+                                                <span><b>Payable</b></span>
+                                            </div>
+                                            <div class="flex-item text-center">
+                                                <span><b>Receivable</b></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>Qatar Islamic Statement</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>Qatar Insurance Statement</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="flex-item">
+                                                <span>Gulf Insurance Statement</span>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                            <div class="flex-item">
+                                                <button class="btn btn-secondary"><i
+                                                class="fas fa-download mx-1"></i>Download</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul> -->
                             </div>
                         </div>
                     </div>

@@ -40,6 +40,18 @@
                 <ng-container *ngIf="col.config.isViewClaim">
                     <a class="action-btn list-group-item-primary mx-1" (click)="onEdit.emit(element)">View</a>
                 </ng-container>
+                <ng-container *ngIf="col.config.isReportsPayable && element.PayableYN=='Y'">
+                    <a class="action-btn list-group-item-primary mx-1">Download</a>
+                </ng-container>
+                <ng-container *ngIf="col.config.isReportsPayable && element.PayableYN=='N'">
+                    <span>N/A</span>
+                </ng-container>
+                <ng-container *ngIf="col.config.isReportsReceivable && element.ReceivableYN=='Y'">
+                    <a class="action-btn list-group-item-primary mx-1">Download</a>
+                </ng-container>
+                <ng-container *ngIf="col.config.isReportsReceivable && element.ReceivableYN=='N'">
+                    <span>N/A</span>
+                </ng-container>
                 <ng-container *ngIf="col.config.isClaimCount && element.ClaimCount!=0">
                     <a class="action-btn list-group-item-primary mx-1" (click)="onEdit.emit(element)">{{element.ClaimCount}}</a>
                 </ng-container>
