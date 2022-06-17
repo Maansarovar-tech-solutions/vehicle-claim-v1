@@ -181,14 +181,14 @@ export class VehicleFormComponent implements OnInit {
 
       VehicleMakeId: ['', Validators.required],
       VehicleModelId: ['', Validators.required],
-      RegistrationTypeId: ['', Validators.required],
+      RegistrationTypeId: [''],
       VehicleBodyId: ['', Validators.required],
       ManufactureYear: ['', Validators.required],
-      ColorId: ['', Validators.required],
-      PlateCode: ['', Validators.required],
+      ColorId: [''],
+      PlateCode: [''],
       PlateNumber: ['', Validators.required],
       VehicleChassisNumber: ['', Validators.required],
-      VehicleEngineNumber: ['', Validators.required],
+      VehicleEngineNumber: [''],
 
     });
   }
@@ -440,9 +440,9 @@ export class VehicleFormComponent implements OnInit {
           "VehicleMakeId": this.f.VehicleMakeId.value,
           "VehicleModelId": this.f.VehicleModelId.value,
           "VehicleBodyId": this.vehicleBodyId,
-          "RegistrationTypeId": this.f.RegistrationTypeId.value,
+          "RegistrationTypeId": "1",
           "ManufactureYear": this.f.ManufactureYear.value,
-          "ColorId": this.f.ColorId.value,
+          "ColorId": "1",
           "PlateCode": this.f.PlateCode.value,
           "PlateNumber": this.f.PlateNumber.value,
           "VehicleChassisNumber": this.f.VehicleChassisNumber.value,
