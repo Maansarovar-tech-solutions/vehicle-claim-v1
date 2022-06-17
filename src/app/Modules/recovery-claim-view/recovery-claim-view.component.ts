@@ -27,6 +27,7 @@ export class RecoveryClaimViewComponent implements OnInit {
   public startDate:any='01/01/2022';
   public endDate:any='30/05/2022';
   public recoveryType: any = '';
+  public finalLabelName:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private addVehicleService: AddVehicleService,
@@ -141,12 +142,22 @@ export class RecoveryClaimViewComponent implements OnInit {
   }
 
   onLoadData(data: any[]) {
+    console.log(this.choosedList);
+
     if (this.recoveryType == 'Receivable') {
+      let labelName = 'View';
+      if(this.choosedList.StatusCode == 'PAC' || this.choosedList.StatusCode =='CREQ' || this.choosedList.StatusCode =='ATP'){
+        labelName = 'Process'
+      }else{
+        labelName = 'View';
+      }
+      this.finalLabelName = labelName;
       this.columnHeader = [
         {
           key: "actions", display: "Actions",
           config: {
             isEdit: true,
+            btnlabel:labelName
           },
         },
         { key: "ClaimNumber", display: "Claim Number" },
@@ -167,11 +178,21 @@ export class RecoveryClaimViewComponent implements OnInit {
 
     }
     if (this.recoveryType == 'Payable') {
+      let labelName = 'View';
+      if(this.choosedList.StatusCode == 'PED' || this.choosedList.StatusCode == 'CRES' || this.choosedList.StatusCode == 'DNT'){
+        labelName = 'Process'
+      }else{
+        labelName = 'View'
+      }
+      this.finalLabelName = labelName;
+
+
       this.columnHeader = [
         {
           key: "actions", display: "Actions",
           config: {
             isEdit: true,
+            btnlabel:labelName
           },
         },
         { key: "ClaimNumber", display: "Claim Number" },
@@ -210,6 +231,7 @@ export class RecoveryClaimViewComponent implements OnInit {
 
   onProcced(event: any) {
     console.log(event)
+    event['finalLabelName'] = this.finalLabelName;
     sessionStorage.setItem('selectedClaimDetails',JSON.stringify(event));
     this.router.navigate([`Home/${this.recoveryType}/recovery-claim-grid/Claim-Details`]);
   }
