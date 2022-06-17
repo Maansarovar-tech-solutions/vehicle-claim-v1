@@ -78,6 +78,7 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                       "headers": {
+                        "Content-Security-Policy-Report-Only": "trusted-types angular myEscapePolicy; require-trusted-types-for 'script';"
                       }
                   },
                     "configurations": {

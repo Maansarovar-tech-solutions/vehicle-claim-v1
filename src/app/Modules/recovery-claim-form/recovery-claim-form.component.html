@@ -433,7 +433,7 @@
                                                 <mat-form-field class="mat-form-width" appearance="outline">
                                                     <mat-label>Vehicle Make</mat-label>
                                                     <input type="text" placeholder="Select Make" matInput formControlName="VehicleMakeIdOther" [matAutocomplete]="makeOther" required>
-                                                    <mat-autocomplete autoActiveFirstOption #makeOther="matAutocomplete" [displayWith]="onDisplayVehicleMake" (optionSelected)="onChangeVehicleMake($event.option.value)">
+                                                    <mat-autocomplete autoActiveFirstOption #makeOther="matAutocomplete" [displayWith]="onDisplayVehicleMake" (optionSelected)="onChangeVehicleMakeOther($event.option.value)">
                                                         <mat-option *ngFor="let option of filterMakeListOther | async" [value]="option.Code">
                                                             {{option.CodeDescription}}
                                                         </mat-option>

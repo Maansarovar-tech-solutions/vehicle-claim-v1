@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^11.0.0",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
     "@ng-select/ng-select": "^8.1.1",
+    "@types/trusted-types": "^2.0.2",
     "@uiowa/digit-only": "^3.2.0",
     "angular-datatables": "^13.0.1",
     "angular-recaptcha3": "^2.0.0",

@@ -6,6 +6,7 @@ import { AuthGuard } from './Auth/auth.guard';
 import { HomeLayoutComponent } from './Core/Layout/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './Core/Layout/login-layout/login-layout.component';
 import { AdminLayoutComponent } from './Core/Layout/admin-layout/admin-layout.component';
+import { CustomPreloadingStrategy } from './custom-preloading-strategy';
 const routes: Routes = [
   { path: '', redirectTo: 'Login', pathMatch: 'full' },
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./Modules/home/home.module').then((n) => n.HomeModule),
         data: {
+          preload: true,
           title: "Home",
           breadcrumb: 'Home',
         },
@@ -77,7 +79,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true, scrollPositionRestoration: 'enabled' })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, scrollPositionRestoration: 'enabled',preloadingStrategy: CustomPreloadingStrategy })],
   exports: [RouterModule],
+  providers: [ CustomPreloadingStrategy ]
 })
 export class AppRoutingModule { }
