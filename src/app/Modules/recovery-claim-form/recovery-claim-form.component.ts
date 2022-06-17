@@ -126,13 +126,23 @@ export class RecoveryClaimFormComponent implements OnInit {
       this.f.RepairCost.valueChanges.pipe(startWith(0)),
       this.f.NoOfDays.valueChanges.pipe(startWith(0)),
       this.f.PerDayCost.valueChanges.pipe(startWith(0)),
-    ]).subscribe(([VehicleValue, RepairCost, NoOfDays, PerDayCost]) => {
-      const dataList = [VehicleValue, RepairCost, NoOfDays, PerDayCost];
+      this.f.SalvageCost.valueChanges.pipe(startWith(0)),
+      this.f.RecovTotalLossYn.valueChanges.pipe(startWith(false)),
+    ]).subscribe(([VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn]) => {
+      const dataList = [VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn];
       console.log(dataList)
-      let vehicleAndRepair = Number(dataList[0]) + Number(dataList[1]);
-      let noDaysAndPerDay = Number(dataList[2]) * Number(dataList[3]);
-      let totalValue = vehicleAndRepair + noDaysAndPerDay;
-      this.f.TotalValue.setValue(totalValue);
+      let sum1 = 0
+      if(!dataList[5]){
+        sum1 =  Number(dataList[1]) + (Number(dataList[2]) * Number(dataList[3]));
+      }else{
+        sum1 =  Number(dataList[0]) + Number(dataList[4]+(Number(dataList[2]) * Number(dataList[3])));
+
+      }
+
+      // let vehicleAndRepair = Number(dataList[0]) + Number(dataList[1]);
+      // let noDaysAndPerDay = Number(dataList[2]) * Number(dataList[3]);
+      // let totalValue = vehicleAndRepair + noDaysAndPerDay;
+      this.f.TotalValue.setValue(sum1);
     });
   }
 
