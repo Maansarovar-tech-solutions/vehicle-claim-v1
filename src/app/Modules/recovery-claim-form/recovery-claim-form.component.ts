@@ -40,6 +40,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   public filterMakeListOther!: Observable<any[]>;
   public modelList: any[] = [];
   public filterModelListOur!: Observable<any[]>;
+  public modelListOther: any[] = [];
   public filterModelListOther!: Observable<any[]>;
 
   public claimTypeList: any[] = [];
@@ -357,11 +358,19 @@ export class RecoveryClaimFormComponent implements OnInit {
       startWith(''),
       map((value) => this._filterModelList(value, this.modelList))
     );
+
+  }
+  async onChangeVehicleMakeOther(Code: any) {
+    this.modelListOther = await this.onGetVehicleModelList(Code);
+
     this.filterModelListOther = this.f.VehicleModelIdOther.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filterModelList(value, this.modelList))
+      map((value) => this._filterModelList(value, this.modelListOther))
     );
   }
+
+
+
   async onChangeVehicleModel(Code: any) {
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == Code);
     this.f.VehicleBodyId.setValue(this.modelList[index].BodyDescription);
@@ -447,8 +456,8 @@ export class RecoveryClaimFormComponent implements OnInit {
   };
   onDisplayVehicleModelother = (code: any) => {
     if (!code) return '';
-    let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
-    if(index) return this.modelList[index].ModelDescription;
+    let index = this.modelListOther.findIndex((obj: any) => obj.ModelId == code);
+    if(index) return this.modelListOther[index].ModelDescription;
     else return '';
   };
   onDisplayRegistrationType = (code: any) => {
@@ -793,7 +802,7 @@ export class RecoveryClaimFormComponent implements OnInit {
         VehMakeId: this.f.VehicleMakeIdOther.value,
         VehMakeDesc:this.onGetCodeDesc(this.makeList,this.f.VehicleMakeIdOther.value),
         VehModelId:this.f.VehicleModelIdOther.value,
-        VehModelDesc: this.onGetCodeDesc(this.modelList,this.f.VehicleModelIdOther.value),
+        VehModelDesc: this.onGetModelCodeDesc(this.modelListOther,this.f.VehicleModelIdOther.value),
         CivilId: this.f.OtherCivilId.value,
         PlateCode: this.f.OtherPlateCode.value,
         PlateNumber: this.f.OtherPlateNumber.value,
@@ -855,12 +864,24 @@ export class RecoveryClaimFormComponent implements OnInit {
     );
   }
   onGetCodeDesc(data:any[],code:any){
+
      let index = data.findIndex((ele:any)=>ele.Code == code);
-     console.log(index,code)
+     console.log(data,code,index)
+
      if(index == -1){
        return code
      }else{
       return data[index].CodeDescription;
+     }
+  }
+
+  onGetModelCodeDesc(data:any[],code:any){
+    let index = data.findIndex((ele:any)=>ele.ModelId == code);
+     console.log(data,code,index)
+     if(index == -1){
+       return code
+     }else{
+      return data[index].ModelDescription;
      }
   }
 

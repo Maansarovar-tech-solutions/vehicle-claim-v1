@@ -112,6 +112,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./../dashboard/dashboard.module').then((n) => n.DashboardModule),
     data: {
+      preload: true,
       title: 'Receivable',
       breadcrumb: 'Receivable',
     },
