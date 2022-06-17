@@ -85,7 +85,7 @@
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Accident Description</mat-label>
-                                                    <input matInput placeholder="Accident Description" formControlName="AccidentDescription">
+                                                    <textarea matInput placeholder="Accident Description" formControlName="AccidentDescription"></textarea>
                                                     <mat-error *ngIf="(f.AccidentDescription.errors) || (!f.AccidentDescription.valid && f.AccidentDescription.touched)">
                                                         <span *ngIf="f.AccidentDescription.errors?.required" class="error-text">This
                             field is
@@ -654,7 +654,8 @@
                             </div>
                             <div class="text-center">
                                 <button class="vision-btn maroon-bg-color" matStepperPrevious>Back</button>
-                                <button class="vision-btn blue-bg-color" (click)="onDocumentProceed()">Next</button>
+                                <button class="vision-btn blue-bg-color" (click)="onDocumentProceed('DFT')">Save</button>
+                                <button class="vision-btn blue-bg-color" (click)="onDocumentProceed('PED')">Save</button>
                             </div>
                         </div>
                     </div>

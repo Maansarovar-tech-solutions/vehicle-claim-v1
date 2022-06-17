@@ -858,15 +858,12 @@ export class RecoveryClaimFormComponent implements OnInit {
       return data[index].CodeDescription;
      }
   }
-  onDocumentProceed(){
-    let statusCode = "";
-    if(this.uploadedDocList.length!=0){
+  onDocumentProceed(statusCode:any){
+    if(statusCode=='PED'){
       this.claimStatus = "Open"
-      statusCode = "PED";
     }
     else{
       this.claimStatus = "Draft"
-      statusCode = "DFT";
     }
     let userDetails = this.userDetails?.LoginResponse;
     let UrlLink = `${this.ApiUrl1}api/update/status`;
