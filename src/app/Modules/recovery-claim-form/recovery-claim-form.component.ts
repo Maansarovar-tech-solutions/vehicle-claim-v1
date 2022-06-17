@@ -720,22 +720,9 @@ export class RecoveryClaimFormComponent implements OnInit {
     };
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
+        console.log("Policy-save",data);
         if (data?.Message == 'Success') {
-          // if (data?.Result?.Response == 'Saved Successfully') {
-          //   this.toaster.open({
-          //     text: 'Policy Created Successfully',
-          //     caption: 'Submitted',
-          //     type: 'success',
-          //   });
-          // }
-          // if (data?.Result?.Response == 'Updated Successfully') {
-          //   this.toaster.open({
-          //     text: 'Policy Updated Successfully',
-          //     caption: 'Submitted',
-          //     type: 'success',
-          //   });
-          // }
+          this.PolicyReferenceNumber = data?.Result?.PolicyReferenceNumber
           let obj = {
             VehicleChassisNumber: data?.Result?.VehicleChassisNumber,
             PolicyNumber: this.f.PolicyNumber.value,
@@ -751,8 +738,8 @@ export class RecoveryClaimFormComponent implements OnInit {
     let userDetails = this.userDetails?.LoginResponse;
     let UrlLink = ``;
     if (
-      this.claimEditReq?.AccidentNumber != '' &&
-      this.claimEditReq?.AccidentNumber != null
+      this.ClaimReferenceNumber != '' &&
+      this.ClaimReferenceNumber != null
     ) {
       UrlLink = `${this.ApiUrl1}api/update/claim`;
     } else {
@@ -810,52 +797,38 @@ export class RecoveryClaimFormComponent implements OnInit {
         InsuranceId: this.f.InsuranceId.value,
       },
     };
-    console.log(ReqObj);
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You Want to Move Claim to Open Status?",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes',
-      cancelButtonText: "No",
-    }).then((result) => {
-      if (result.isConfirmed) {
-         ReqObj.CommonInformation.OpenStatusYn='Y';
-         this.SubmitClaimDetails(UrlLink,ReqObj);
-      }
-      else{
-        ReqObj.CommonInformation.OpenStatusYn='N';
-        this.SubmitClaimDetails(UrlLink,ReqObj);
-      }
-    })
+    ReqObj.CommonInformation.OpenStatusYn='Y';
+    this.SubmitClaimDetails(UrlLink,ReqObj);
+    // console.log(ReqObj);
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You Want to Move Claim to Open Status?",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes',
+    //   cancelButtonText: "No",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //      ReqObj.CommonInformation.OpenStatusYn='Y';
+    //      this.SubmitClaimDetails(UrlLink,ReqObj);
+    //   }
+    //   else{
+    //     ReqObj.CommonInformation.OpenStatusYn='N';
+    //     this.SubmitClaimDetails(UrlLink,ReqObj);
+    //   }
+    // })
   }
   SubmitClaimDetails(UrlLink:any,ReqObj:any){
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         if (data?.Message == 'Success') {
-          console.log(data);
+          console.log("Claim-save",data);
           this.claimResponse = data?.Result;
           this.ClaimReferenceNumber = this.claimResponse?.ClaimReferenceNumber;
           this.onGetUploadedDocuments(this.ClaimReferenceNumber);
           sessionStorage.removeItem('claimEditReq');
-          // if (data?.Result?.Response == 'Saved Successfully') {
-          //   console.log(data?.Result?.Response);
-          //   this.toaster.open({
-          //     text: 'Claim Intimated Successfully',
-          //     caption: 'Submitted',
-          //     type: 'success',
-          //   });
-          // }
-          // if (data?.Result?.Response == 'Updated Succesfully') {
-          //   console.log(data?.Result?.Response);
-          //   this.toaster.open({
-          //     text: 'Claim Updated Successfully',
-          //     caption: 'Submitted',
-          //     type: 'success',
-          //   });
-          // }
           this.myStepper.next();
 
         }
