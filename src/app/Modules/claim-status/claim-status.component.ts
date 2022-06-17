@@ -1,3 +1,4 @@
+import { RecoveryClaimViewComponent } from './../recovery-claim-view/recovery-claim-view.component';
 import { AppComponent } from './../../app.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -37,6 +38,7 @@ export class ClaimStatusComponent implements OnInit {
   public recoveryType:any='';
   public recoveryPolicyInfo:any;
   public isNewPolicy:boolean=false;
+  public isProcess:boolean=true;
   claimType: string | null;
   imageUrl: any;
   uploadDocList: any[]=[];
@@ -68,7 +70,7 @@ export class ClaimStatusComponent implements OnInit {
     private modalService:NgbModal,
     private newClaimService:NewClaimService,
     private toaster: Toaster,
-    public app:AppComponent
+    public app:AppComponent,
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType=sessionStorage.getItem("claimType");
@@ -101,6 +103,12 @@ export class ClaimStatusComponent implements OnInit {
     ];
 
     this.claimDetails = JSON.parse(sessionStorage.getItem("selectedClaimDetails") || '{}');
+    if(this.claimDetails.finalLabelName == 'Process'){
+      this.isProcess = true;
+    }else{
+      this.isProcess = false;
+
+    }
     console.log("Received Details",this.claimDetails);
     this.onGetClaimDetails(this.claimDetails)
     this.claimType = sessionStorage.getItem('claimType');
@@ -419,7 +427,7 @@ export class ClaimStatusComponent implements OnInit {
     this.modalService.dismissAll();
   }
   onFormSubmit(){
-    
+
     let userDetails = this.userDetails?.LoginResponse;
     if(userDetails.InsuranceCompanyName == this.recoveryInformation?.InsuranceCompanyName){
       let StatusCode = this.f.claimStatus.value;
