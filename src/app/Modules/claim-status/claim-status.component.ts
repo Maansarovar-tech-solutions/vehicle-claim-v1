@@ -453,6 +453,14 @@ export class ClaimStatusComponent implements OnInit {
     }
   }
   onAltSubmit(){
+    if(this.f.claimStatus.value == 'ATP'){
+      this.approvedTotalClaimCost = this.accidentInformation?.TotalValue;
+
+    }
+    if(this.f.claimStatus.value == 'REJ'){
+      this.approvedTotalClaimCost = 0;
+
+    }
     let userDetails = this.userDetails?.LoginResponse;
     let docIdList:any = [];
     if(this.ownerDocList.length!=0 || this.recoveryDocList.length!=0){
