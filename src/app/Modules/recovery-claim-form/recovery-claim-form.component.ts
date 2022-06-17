@@ -99,6 +99,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   veiwSelectedDocUrl: any;
   documentAIDetails: any;
   isLinear = false;
+  claimStatus: any;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -807,7 +808,7 @@ export class RecoveryClaimFormComponent implements OnInit {
         InsuranceId: this.f.InsuranceId.value,
       },
     };
-    ReqObj.CommonInformation.OpenStatusYn='Y';
+    //ReqObj.CommonInformation.OpenStatusYn='Y';
     this.SubmitClaimDetails(UrlLink,ReqObj);
     // console.log(ReqObj);
     // Swal.fire({
@@ -857,7 +858,35 @@ export class RecoveryClaimFormComponent implements OnInit {
       return data[index].CodeDescription;
      }
   }
-
+  onDocumentProceed(){
+    let statusCode = "";
+    if(this.uploadedDocList.length!=0){
+      this.claimStatus = "Open"
+      statusCode = "PED";
+    }
+    else{
+      this.claimStatus = "Draft"
+      statusCode = "DFT";
+    }
+    let userDetails = this.userDetails?.LoginResponse;
+    let UrlLink = `${this.ApiUrl1}api/update/status`;
+    let ReqObj = {
+      "ClaimReferenceNumber": this.claimResponse?.ClaimReferenceNumber,
+      "UpdatedBy": userDetails?.LoginId,
+      "InsuranceId": userDetails?.InsuranceId,
+      "StatusCode": statusCode,
+    }
+    this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data)
+        let res:any = data;
+        if(res?.ErrorMessage.length==0){
+          this.myStepper.next();
+        }
+      },
+      (err) => { }
+    );
+  }
   onGetModelCodeDesc(data:any[],code:any){
     let index = data.findIndex((ele:any)=>ele.ModelId == code);
      console.log(data,code,index)
