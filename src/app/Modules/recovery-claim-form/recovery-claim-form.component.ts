@@ -781,15 +781,16 @@ export class RecoveryClaimFormComponent implements OnInit {
         ClaimTypeId: this.f.ClaimTypeId.value,
         PolicyReferenceNumber: this.PolicyReferenceNumber,
         PoliceReferenceNo: this.f.PoliceReferenceNo.value,
+
+        RecovTotalLossYn:this.f.RecovTotalLossYn.value == true?'Y':'N',
         VehicleValue: this.f.VehicleValue.value,
+        SalvageCost:this.f.SalvageCost.value,
+        BodilyInjury:this.f.BodilyInjury.value,
+        PropertyDamage:this.f.PropertyDamage.value,
         RepairCost: this.f.RepairCost.value,
         NoOfDays: this.f.NoOfDays.value,
         PerDayCost: this.f.PerDayCost.value,
         TotalValue: this.f.TotalValue.value,
-        RecovTotalLossYn:this.f.RecovTotalLossYn.value == true?'Y':'N',
-        SalvageCost:this.f.SalvageCost.value,
-        BodilyInjury:this.f.BodilyInjury.value,
-        PropertyDamage:this.f.PropertyDamage.value,
       },
       CommonInformation: {
         ClaimReferenceNumber: this.ClaimReferenceNumber,
@@ -826,30 +827,7 @@ export class RecoveryClaimFormComponent implements OnInit {
         InsuranceId: this.f.InsuranceId.value,
       },
     };
-    //ReqObj.CommonInformation.OpenStatusYn='Y';
-    this.SubmitClaimDetails(UrlLink,ReqObj);
-    // console.log(ReqObj);
-    // Swal.fire({
-    //   title: 'Are you sure?',
-    //   text: "You Want to Move Claim to Open Status?",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#3085d6',
-    //   cancelButtonColor: '#d33',
-    //   confirmButtonText: 'Yes',
-    //   cancelButtonText: "No",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //      ReqObj.CommonInformation.OpenStatusYn='Y';
-    //      this.SubmitClaimDetails(UrlLink,ReqObj);
-    //   }
-    //   else{
-    //     ReqObj.CommonInformation.OpenStatusYn='N';
-    //     this.SubmitClaimDetails(UrlLink,ReqObj);
-    //   }
-    // })
-  }
-  SubmitClaimDetails(UrlLink:any,ReqObj:any){
+    console.log(ReqObj)
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         if (data?.Message == 'Success') {
@@ -864,7 +842,9 @@ export class RecoveryClaimFormComponent implements OnInit {
       },
       (err) => {}
     );
+
   }
+
   onGetCodeDesc(data:any[],code:any){
 
      let index = data.findIndex((ele:any)=>ele.Code == code);

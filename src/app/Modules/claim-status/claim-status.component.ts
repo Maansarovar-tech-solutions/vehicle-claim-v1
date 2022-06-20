@@ -140,7 +140,12 @@ export class ClaimStatusComponent implements OnInit {
       const dataList = [claimStatus,VehicleValue, SalvageCost, BodilyInjury, PropertyDamage,RepairCost,PerDayCost];
       let repaireCostBodyInjuProperty = (Number(dataList[3]) + Number(dataList[4]) + Number(dataList[5]));
       let perdayCost = Number(dataList[6]);
-      let total = repaireCostBodyInjuProperty + perdayCost;
+      let subVehicleAndSalvage=0;
+
+      if(this.accidentInformation?.recovTotalLossYn == 'Y'){
+          subVehicleAndSalvage = (Number(dataList[1]) - Number(dataList[2]))
+      }
+      let total = repaireCostBodyInjuProperty + perdayCost + subVehicleAndSalvage;
       this.f.TotalValue.setValue(total);
     });
 
