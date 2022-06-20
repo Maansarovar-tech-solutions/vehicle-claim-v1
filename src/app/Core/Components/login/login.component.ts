@@ -76,12 +76,17 @@ export class LoginComponent implements OnInit {
             this.authService.UserToken(Token);
             sessionStorage.setItem("Userdetails", JSON.stringify(data));
             sessionStorage.setItem("UserToken",Token);
-            sessionStorage.setItem('claimType','Receivable')
-            this.router.navigate(['/Home/Receivable']);
 
+            if(data?.LoginResponse?.ParticipantYn == "N"){
+              sessionStorage.setItem('claimType','Payable')
+              this.router.navigate(['/Home/Payable']);
+            }else{
+              sessionStorage.setItem('claimType','Receivable')
+              this.router.navigate(['/Home/Receivable']);
+            }
           }
         },
-    
+
     (err: any) => { console.log(err)}
       );
     }

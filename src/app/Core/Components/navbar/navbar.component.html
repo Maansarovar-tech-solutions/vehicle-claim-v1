@@ -1,48 +1,50 @@
 <mat-toolbar>
-    <mat-toolbar-row class="toolbar-row-1">
-        <span class="example-spacer"></span>
-        <div mat-button [matMenuTriggerFor]="menu" class="user-sec">
-            <img src="./assets/images/user.png" class="user-img" />
-            <i class="	fas fa-angle-down down-aro"></i>
-        </div>
-        <button (click)="onLogOut()" class="logout-btn123 btn btn-small">
+  <mat-toolbar-row class="toolbar-row-1">
+    <span class="example-spacer"></span>
+    <div mat-button [matMenuTriggerFor]="menu" class="user-sec">
+      <img src="./assets/images/user.png" class="user-img" />
+      <i class="	fas fa-angle-down down-aro"></i>
+    </div>
+    <button (click)="onLogOut()" class="logout-btn123 btn btn-small">
       <span>Logout</span>
       <i class="fas fa-sign-out-alt mx-2"></i>
     </button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item><i class="fas fa-angle-right mr-5"></i>{{LoginDetails?.LoginResponse?.LoginId}}</button>
-            <button mat-menu-item><i
-          class="fas fa-angle-right mr-5"></i>{{LoginDetails?.LoginResponse?.InsuranceCompanyName}}
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item><i class="fas fa-angle-right mr-5"></i>{{LoginDetails?.LoginResponse?.LoginId}}</button>
+      <button mat-menu-item><i class="fas fa-angle-right mr-5"></i>{{LoginDetails?.LoginResponse?.InsuranceCompanyName}}
       </button>
-        </mat-menu>
-    </mat-toolbar-row>
+    </mat-menu>
+  </mat-toolbar-row>
 
-    <mat-toolbar-row class="toolbar-row-2">
-        <div class="logos">
-            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="./assets/images/qic-insu.png" class="img-fluid">
-            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'TC'" src="./assets/images/beema.png" class="img-fluid">
-            <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="./assets/images/islamic.png" class="img-fluid">
-        </div>
-        <span class="example-spacer"></span>
-        <div class="">
-            <div class="search-input-box">
-                <select [(ngModel)]="searchBy" [ngModelOptions]="{standalone: true}" class="form-select form-select-sm">
+  <mat-toolbar-row class="toolbar-row-2">
+    <div class="logos">
+      <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'QIC'" src="./assets/images/qic-insu.png"
+        class="img-fluid">
+      <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'TC'" src="./assets/images/beema.png" class="img-fluid">
+      <img *ngIf="LoginDetails?.LoginResponse?.InsuranceId == 'OMAN'" src="./assets/images/islamic.png"
+        class="img-fluid">
+    </div>
+    <span class="example-spacer"></span>
+    <div class="">
+      <div class="search-input-box">
+        <select [(ngModel)]="searchBy" [ngModelOptions]="{standalone: true}" class="form-select form-select-sm">
           <option value="">Search By</option>
           <option value='Chassis Number'>Chassis No</option>
           <option value='PolicyNo'>Policy No</option>
         </select>
 
-                <div class="input-group input-group-sm">
-                    <input type="text" class="form-control form-control-sm" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchValue">
-                    <span class="input-group-text" (click)="onSearchDetails()"><i class='fas fa-search'></i></span>
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control form-control-sm" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="searchValue">
+          <span class="input-group-text" (click)="onSearchDetails()"><i class='fas fa-search'></i></span>
 
-                </div>
-            </div>
         </div>
+      </div>
+    </div>
 
 
 
-        <!-- <div class="px-2">
+    <!-- <div class="px-2">
       <mat-form-field appearance="legacy" class="form-control123 search-fld-top">
         <mat-label>Search By</mat-label>
         <mat-select [(ngModel)]="searchBy" [ngModelOptions]="{standalone: true}">
@@ -60,67 +62,72 @@
       <button type="button" mat-raised-button123 class="btn-tp-search" (click)="onSearchDetails()"><i
           class='fas fa-search'></i></button>
     </div> -->
-    </mat-toolbar-row>
+  </mat-toolbar-row>
 
-    <mat-toolbar-row class="toolbar-row-3">
-        <nav class="navbar navbar-expand-sm bg-light nave-style">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+  <mat-toolbar-row class="toolbar-row-3">
+    <nav class="navbar navbar-expand-sm bg-light nave-style">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
           <i class="fa fa-bars"></i>
         </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
 
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('Receivable')" (click)="onNavigation('Receivable')">Claim Receivable</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="onNavigation('Payable');">Claim
-                              Payable</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('Claim')" (click)="onNavigation('Claims');">Claim</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('Policy')" (click)="onNavigation('Policy');">Policy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('Statement Of Account')" (click)="onNavigation(6)">Statement Of Account</a>
-                            <!-- <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Receivable Account Statement')" (click)="onNavigation(6)">Receivable</a></li>
-                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Payable Account Statement')" (click)="onNavigation(7)">Payable</a></li>
-                            </ul> -->
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reports</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Claim Submitted')" (click)="onNavigation('claimSubmitted')">Claim Submitted</a></li>
-                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Claim Recieved')" (click)="onNavigation('claimReceived')">Claim Recieved</a></li>
-                                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Ageing Analysis')" (click)="onNavigation('ageingAnalysis')">Ageing Analysis</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Masters</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" (click)="redirectMake()">Make Master</a></li>
-                                <li><a class="dropdown-item" (click)="redirectModel()">Model Master</a></li>
-                                <li><a class="dropdown-item" (click)="redirectBodyType()">Body Type Master</a></li>
-                                <li><a class="dropdown-item" (click)="redirectColour()">Colour Master</a></li>
-                                <li><a class="dropdown-item" (click)="redirectIns()">Insurance Company Master</a></li>
-                                <li><a class="dropdown-item" (click)="getUserCreation()">UserCreation</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [class.active]="isCurrentRoute('API Doc')" (click)="getApiDetails();">
+          <ul class="navbar-nav">
+            <ng-container *ngIf="LoginDetails?.LoginResponse?.ParticipantYn == 'Y'">
+              <li class="nav-item">
+                <a class="nav-link" [class.active]="isCurrentRoute('Receivable')"
+                  (click)="onNavigation('Receivable')">Claim Receivable</a>
+              </li>
+            </ng-container>
+
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Payable')" (click)="onNavigation('Payable');">Claim
+                Payable</a>
+            </li>
+            <ng-container *ngIf="LoginDetails?.LoginResponse?.ParticipantYn == 'Y'">
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Claim')" (click)="onNavigation('Claims');">Claim</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Policy')" (click)="onNavigation('Policy');">Policy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('Statement Of Account')"
+                (click)="onNavigation(6)">Statement Of Account</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Reports</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Claim Submitted')"
+                    (click)="onNavigation('claimSubmitted')">Claim Submitted</a></li>
+                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Claim Recieved')"
+                    (click)="onNavigation('claimReceived')">Claim Recieved</a></li>
+                <li><a class="dropdown-item" [class.active]="isCurrentRoute('Ageing Analysis')"
+                    (click)="onNavigation('ageingAnalysis')">Ageing Analysis</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Masters</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="redirectMake()">Make Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectModel()">Model Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectBodyType()">Body Type Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectColour()">Colour Master</a></li>
+                <li><a class="dropdown-item" (click)="redirectIns()">Insurance Company Master</a></li>
+                <li><a class="dropdown-item" (click)="getUserCreation()">UserCreation</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="isCurrentRoute('API Doc')" (click)="getApiDetails();">
                 API Doc
               </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </mat-toolbar-row>
+            </li>
+          </ng-container>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 
@@ -214,137 +221,135 @@
 
 
 <mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side" opened="false">
-        <div class="menuconatiner">
+  <mat-drawer #drawer mode="side" opened="false">
+    <div class="menuconatiner">
 
-        </div>
-    </mat-drawer>
-    <mat-drawer-content>
-        <div class="d-md-flex flex-md-row breadcrumb-container">
-            <div class="">
-                <app-breadcrumb></app-breadcrumb>
-            </div>
-            <div class="">
-                <div class="well text-right">
-                    <div *ngIf="pageName == 'Receivable'">
-                        <button type="button" class="report-btn" (click)="uploadExcelModal()"><img
-                        src="./assets/images/uploadIcon.png" class="report-icon" /> <span class="report-text">Claim Upload</span></button>
-                        <button type="button" (click)="onStartNewClaim(11)" class="report-btn"><img
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="d-md-flex flex-md-row breadcrumb-container">
+      <div class="">
+        <app-breadcrumb></app-breadcrumb>
+      </div>
+      <div class="">
+        <div class="well text-right">
+          <div *ngIf="pageName == 'Receivable'">
+            <button type="button" class="report-btn" (click)="uploadExcelModal()"><img
+                src="./assets/images/uploadIcon.png" class="report-icon" /> <span class="report-text">Claim
+                Upload</span></button>
+            <button type="button" (click)="onStartNewClaim(11)" class="report-btn"><img
                 src="./assets/images/recovery.png" class="report-icon" /> <span class="report-text">Add
                 Recovery Claim</span></button>
-                    </div>
-                    <div *ngIf="pageName == 'Statement Of Account'">
-                        <button type="button" class="report-btn"><img
-                  src="./assets/images/losses.png" class="report-icon" /> <span
-                  class="report-text">Add SOA</span></button>
-                    </div>
-                    <div *ngIf="pageName == 'Claim'">
-                        <button type="button" (click)="onStartNewClaim(12)" class="report-btn"><img
-                src="./assets/images/losses.png" class="report-icon" /> <span
-                class="report-text">Add Claim</span></button>
-                    </div>
-                    <div *ngIf="pageName == 'Policy'">
-                        <button type="button" (click)="onUploadPolicy()" class="report-btn"><img
-                src="./assets/images/losses.png" class="report-icon" /> <span
-                class="report-text">Upload Policy</span></button>
-                    </div>
-                    <div *ngIf="pageName == 'Policy'">
-                        <button type="button" (click)="onStartNewClaim('Policy')" class="report-btn"><img
-                src="./assets/images/losses.png" class="report-icon" /> <span
-                class="report-text">Add Policy</span></button>
-                    </div>
+          </div>
+          <div *ngIf="pageName == 'Statement Of Account'">
+            <button type="button" class="report-btn"><img src="./assets/images/losses.png" class="report-icon" /> <span
+                class="report-text">Add SOA</span></button>
+          </div>
+          <div *ngIf="pageName == 'Claim'">
+            <button type="button" (click)="onStartNewClaim(12)" class="report-btn"><img src="./assets/images/losses.png"
+                class="report-icon" /> <span class="report-text">Add Claim</span></button>
+          </div>
+          <div *ngIf="pageName == 'Policy'">
+            <button type="button" (click)="onUploadPolicy()" class="report-btn"><img src="./assets/images/losses.png"
+                class="report-icon" /> <span class="report-text">Upload Policy</span></button>
+          </div>
+          <div *ngIf="pageName == 'Policy'">
+            <button type="button" (click)="onStartNewClaim('Policy')" class="report-btn"><img
+                src="./assets/images/losses.png" class="report-icon" /> <span class="report-text">Add
+                Policy</span></button>
+          </div>
 
-                    <ng-container *ngIf="pageName == 'Vehicle Search'">
-                        <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(12)"><img
-              src="./assets/images/losses.png" class="report-icon" /> <span
-              class="report-text">Add Claim</span>
-          </button>
-                        <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(11)"><img
-              src="./assets/images/losses.png" class="report-icon" /> <span
-              class="report-text">Add Recovery Claim</span>
-          </button>
-                    </ng-container>
-                </div>
-            </div>
+          <ng-container *ngIf="pageName == 'Vehicle Search'">
+            <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(12)"><img
+                src="./assets/images/losses.png" class="report-icon" /> <span class="report-text">Add Claim</span>
+            </button>
+            <button type="button" class="report-btn mx-1" (click)="onMoveClaimInfo(11)"><img
+                src="./assets/images/losses.png" class="report-icon" /> <span class="report-text">Add Recovery
+                Claim</span>
+            </button>
+          </ng-container>
         </div>
-        <hr class="m-0 p-0">
+      </div>
+    </div>
+    <hr class="m-0 p-0">
 
-        <div class="main-content">
-            <div *ngIf="showIframe">
-                <iframe src="http://192.168.1.9:8081/swagger-ui/" WIDTH='98%' style="margin-left:20px;min-height: 900px;" HEIGHT='100%'>
+    <div class="main-content">
+      <div *ngIf="showIframe">
+        <iframe src="http://192.168.1.9:8081/swagger-ui/" WIDTH='98%' style="margin-left:20px;min-height: 900px;"
+          HEIGHT='100%'>
         </iframe>
-            </div>
+      </div>
 
-            <div class="router-content" *ngIf="!showIframe">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-    </mat-drawer-content>
+      <div class="router-content" *ngIf="!showIframe">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-drawer-content>
 </mat-drawer-container>
 <ng-template #content1 let-c="close" let-d="dismiss">
-    <div class="card-header">
-        <div class="d-flex bd-highlight">
-            <div class="p-2 w-100 bd-highlight">
-                <h5>Claim Upload</h5>
-            </div>
-            <div class="p-2 flex-shrink-1 bd-highlight">
-                <button type="button" class="example-spacer btn-close" (click)="hide()"></button>
-            </div>
-        </div>
+  <div class="card-header">
+    <div class="d-flex bd-highlight">
+      <div class="p-2 w-100 bd-highlight">
+        <h5>Claim Upload</h5>
+      </div>
+      <div class="p-2 flex-shrink-1 bd-highlight">
+        <button type="button" class="example-spacer btn-close" (click)="hide()"></button>
+      </div>
     </div>
-    <div class="card-body">
-        <div class="text-end">
-            <button type="button" class="report-btn mx-1" (click)="onSampleDownload()"><img
-          src="./assets/images/download.png" class="report-icon" /> <span
-          class="report-text">Sample Document Download</span>
-          </button>
+  </div>
+  <div class="card-body">
+    <div class="text-end">
+      <button type="button" class="report-btn mx-1" (click)="onSampleDownload()"><img src="./assets/images/download.png"
+          class="report-icon" /> <span class="report-text">Sample Document Download</span>
+      </button>
+    </div>
+    <div class="row" *ngIf="uploadDocList.length==0">
+      <div class="col-md-4 col-lg-4 offset-4">
+        <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
+        <div class="imag-card my-3" (click)="doc.click()">
+          <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+          <div>
+            <div class="center mb-2">
+              <b class="text-dark">
+                Add Documents
+              </b>
+            </div>
+          </div>
         </div>
-        <div class="row" *ngIf="uploadDocList.length==0">
-            <div class="col-md-4 col-lg-4 offset-4">
-                <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
-                <div class="imag-card my-3" (click)="doc.click()">
-                    <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
-                    <div>
-                        <div class="center mb-2">
-                            <b class="text-dark">
-                            Add Documents
-                        </b>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- </ng-container> -->
-            </div>
-        </div>
-        <ng-container *ngIf="uploadDocList.length!=0">
-            <table class="table table-bordered mt-2">
-                <thead>
-                    <tr>
-                        <th scope="col">S.No</th>
-                        <th scope="col">FileName</th>
-                        <th scope="col">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let document of uploadDocList;let i=index">
-                        <th scope="row">{{i+1}}</th>
-                        <td>{{document.filename}}</td>
-                        <td>
-                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- </ng-container> -->
+      </div>
+    </div>
+    <ng-container *ngIf="uploadDocList.length!=0">
+      <table class="table table-bordered mt-2">
+        <thead>
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">FileName</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let document of uploadDocList;let i=index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{document.filename}}</td>
+            <td>
+              <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-        </ng-container>
-        <div class="text-center">
-            <button type="button" class="report-btn"><img
-            src="./assets/images/uploadIcon.png" class="report-icon" /> <span class="report-text">Upload</span></button>
-        </div>
+    </ng-container>
+    <div class="text-center">
+      <button type="button" class="report-btn"><img src="./assets/images/uploadIcon.png" class="report-icon" /> <span
+          class="report-text">Upload</span></button>
     </div>
-    <div class="card-footer">
-        <div class="text-end p-0">
-            <button class="btn btn-danger mb-1 mr-1" (click)="hide()">Close</button>&nbsp;
-        </div>
+  </div>
+  <div class="card-footer">
+    <div class="text-end p-0">
+      <button class="btn btn-danger mb-1 mr-1" (click)="hide()">Close</button>&nbsp;
     </div>
+  </div>
 </ng-template>

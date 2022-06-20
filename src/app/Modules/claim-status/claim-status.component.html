@@ -1,758 +1,730 @@
 <div class="page-content">
-    <div class="vision-card">
-        <div class="vision-card-body mb-4 customborder-1">
-            <div class="view-claim-information">
-                <div class="view-claim-information-item accident-info">
-                    <div class="recovery-claim-information-item-title">
-                        <span>Accident Information</span>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item label-green">
-                                        <div><b>Claim Number</b></div>
-                                        <div><b>{{accidentInformation?.ClaimNumber}}</b></div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div>Accident Date</div>
-                                        <div>{{accidentInformation?.AccidentDate}}</div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div>Accident Location</div>
-                                        <div>{{accidentInformation?.AccidentLocation}}</div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <div>Claim Type</div>
-                                        <div>{{accidentInformation?.ClaimTypeDesc}}</div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div>Police Reference No</div>
-                                        <div>{{accidentInformation?.PoliceReferenceNo}}</div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div>Intimated Date</div>
-                                        <div>{{accidentInformation?.ClaimIntimatedDate}}</div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="vision-card-body">
-            <div class="middle-line"></div>
-            <div class="recovery-claim-information">
-                <div class="recovery-claim-information-item">
-                    <div class="fault-tag fault-tag-green">
-                        Not At Fault
-                    </div>
-                    <div class="recovery-claim-information-item-title">
-                        <span>{{policyInformation?.InsuranceCompanyName}}</span>
-                        <div class="flag-green">
-
-                        </div>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <ul class="list-group list-group-flush ">
-                            <li class="list-group-item">
-                                <div>Civil Id</div>
-                                <div>{{policyInformation?.CivilId}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Chassis No</div>
-                                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Make</div>
-                                <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Model</div>
-                                <div>{{vehicleInformation?.VehicleModelDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Plate Number</div>
-                                <div>{{vehicleInformation?.PlateCharacter}} {{vehicleInformation?.PlateNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Body Type</div>
-                                <div>{{vehicleInformation?.VehicleBodyDes}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Registration Type</div>
-                                <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Year.Of.Manufacturing</div>
-                                <div>{{vehicleInformation?.ManufactureYear}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Policy Number</div>
-                                <div>{{policyInformation?.PolicyNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Claim Number</div>
-                                <div>{{accidentInformation?.ClaimNumber}}</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item">
-                    <div class="fault-tag fault-tag-red">
-                        At Fault
-                    </div>
-                    <div class="recovery-claim-information-item-title">
-                        <span>{{recoveryInformation?.InsuranceCompanyName}}</span>
-                        <div class="flag-red">
-
-                        </div>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <ul class="list-group list-group-flush ">
-                            <li class="list-group-item">
-                                <div>Civil Id</div>
-                                <div>{{recoveryInformation?.CivilId}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Chassis No</div>
-                                <div>{{recoveryInformation?.VehicleChassisNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Make</div>
-                                <div>{{recoveryInformation?.VehMakeDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Model</div>
-                                <div>{{recoveryInformation?.VehModelDesc}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Plate Number</div>
-                                <div>{{recoveryInformation?.PlateCharacter}} {{recoveryInformation?.PlateNumber}}</div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Policy Number</div>
-                                <div>
-                                    <ng-container *ngIf="!faultCompany">
-                                        {{recoveryPolicyNo}}
-                                    </ng-container>
-                                    <ng-container *ngIf="faultCompany">
-                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="recoveryPolicyNo" placeholder="Enter Policy No">
-                                    </ng-container>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>Claim Number</div>
-                                <div class="text-end">
-                                    <ng-container *ngIf="!faultCompany">
-                                        {{recoveryClaimNo}}
-                                    </ng-container>
-                                    <ng-container *ngIf="faultCompany">
-                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="recoveryClaimNo" placeholder="Enter Claim No">
-                                    </ng-container>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item claim-amount">
-                    <div class="recovery-claim-information-item-title">
-                        <span>Claim Amount</span>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <ul class="list-group list-group-flush ">
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-md-3 offset-md-6 text-end"><small>Request Amount</small></div>
-                                    <div class="col-md-3 text-end"><small>Approved Amount</small></div>
-                                </div>
-                            </li>
-                            <ng-container *ngIf="accidentInformation?.recovTotalLossYn == 'Y'">
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-md-6">Vehicle Value</div>
-                                        <div class="col-md-3 text-end">{{accidentInformation?.VehicleValue}}</div>
-                                        <div class="col-md-3 text-end">
-                                            <ng-container *ngIf="!faultCompany">
-                                                {{approvedVehicleValue}}
-                                            </ng-container>
-                                            <ng-container *ngIf="faultCompany">
-                                                <input type="text" [(ngModel)]="approvedVehicleValue" (change)="onChangeClaimValue()" class="form-control form-control-sm">
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-md-6">Salvage Amount</div>
-                                        <div class="col-md-3 text-end">{{accidentInformation?.SalvageCost}}</div>
-                                        <div class="col-md-3 text-end">
-                                            <ng-container *ngIf="!faultCompany">
-                                                {{approvedSalvageValue}}
-                                            </ng-container>
-                                            <ng-container *ngIf="faultCompany">
-                                                <input type="text" [(ngModel)]="approvedSalvageValue" (change)="onChangeClaimValue()" class="form-control form-control-sm">
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ng-container>
-                            <ng-container *ngIf="accidentInformation?.recovTotalLossYn == 'N'">
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-md-6">Repair Cost</div>
-                                        <div class="col-md-3 text-end">{{accidentInformation?.RepairCost}}</div>
-                                        <div class="col-md-3 text-end">
-                                            <ng-container *ngIf="!faultCompany">
-                                                {{approvedRepairCost}}
-                                            </ng-container>
-                                            <ng-container *ngIf="faultCompany">
-                                                <input type="text" [(ngModel)]="approvedRepairCost" (change)="onChangeClaimValue()" class="form-control form-control-sm">
-                                            </ng-container>
-
-                                        </div>
-                                    </div>
-                                </li>
-                            </ng-container>
-
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        Replacement Car<br>
-                                        <small>
-                      {{accidentInformation?.NoOfDays}}&nbsp;Days /
-                      {{accidentInformation?.PerDayCost}}&nbsp;per Day
-                    </small>
-
-                                    </div>
-                                    <div class="col-md-3 text-end">
-                                        {{accidentInformation?.NoOfDays * accidentInformation?.PerDayCost}}
-                                    </div>
-                                    <div class="col-md-3 text-end">
-                                        <ng-container *ngIf="!faultCompany">
-                                            {{approvedReplacementCost}}
-                                        </ng-container>
-                                        <ng-container *ngIf="faultCompany">
-                                            <input type="text" [(ngModel)]="approvedReplacementCost" (change)="onChangeClaimValue()" class="form-control form-control-sm">
-                                        </ng-container>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item label-green fw-bold">
-                                <div class="row">
-                                    <div class="col-md-6">Total Claim Amount</div>
-                                    <div class="col-md-3 text-end">{{accidentInformation?.TotalValue}}</div>
-                                    <div class="col-md-3 text-end">
-                                        <ng-container *ngIf="!faultCompany">
-                                            {{approvedTotalClaimCost}}
-                                        </ng-container>
-                                        <ng-container *ngIf="faultCompany">
-                                            <input type="text" [(ngModel)]="approvedTotalClaimCost" class="form-control form-control-sm" disabled>
-                                        </ng-container>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="vision-card">
-        <div class="vision-card-body">
-            <div class="view-claim-information">
-                <!-- <div class="view-claim-information-item document-info" *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (commonInformation?.Status == 'DNT' && recoveryType == 'Payable') || (recoveryType == 'Payable')"> -->
-                <div class="view-claim-information-item document-info" *ngIf="isProcess">
-
-                    <div class="recovery-claim-information-item-title">
-                        <span>Status Update</span>
-                        <span>
-              <!-- <telegram-icon></telegram-icon> -->
-            </span>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <form [formGroup]="claimStatusForm">
-                            <div class="d-md-flex flex-md-row mb-2">
-                                <div class="px-2 flex-fill">
-                                    <div class="row">
-
-                                        <div class="col-md-3 col-lg-3">
-                                            <div class="vision-form-control-box">
-                                                <label class="vision-form-label">Status</label>
-                                                <select class="vision-form-control" formControlName="claimStatus">
-                            <option value="">Select</option>
-                            <ng-container *ngFor="let item of claimStatusList">
-                              <option value="{{item.StatusCode}}">
-                                {{item.StatusDesc}}</option>
-                            </ng-container>
-                          </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-lg-3">
-                                            <div class="vision-form-control-box">
-                                                <label class="vision-form-label">Remarks</label>
-                                                <textarea rows="2" class="vision-form-control" formControlName="claimStatusRemarks">
-                                              </textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-lg-3" *ngIf="commonInformation?.PreviousRemarks">
-                                            <div class="vision-form-control-box">
-                                                <label class="vision-form-label">Previous Remarks</label><br> {{commonInformation?.PreviousRemarks}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="view-claim-information-item document-info">
-                    <div class="recovery-claim-information-item-title">
-                        <span>Document Information</span>
-                        <span>
-              <!-- <telegram-icon></telegram-icon> -->
-            </span>
-                    </div>
-                    <div class="view-claim-information-item-body ">
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 offset-3">
-                                <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
-                                <input style="display: none;" [multiple]="true" (change)="onUploadDocuments($event,null,'direct')" type="file" #doc multiple>
-                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
-                                    <div>
-                                        <div class="center mb-2">
-                                            <b class="text-dark">
-                        <i class="far fa-images"></i> Drag or Click
-                      </b>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- </ng-container> -->
-                            </div>
-                        </div>
-                        <div class="view-claim-information-item document-info ownerDoc" *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
-                            <div class="view-claim-information-item-title">
-                                <span class="text-success">{{policyInformation?.InsuranceCompanyName}}</span>
-                                <div class="flag-green">
-
-                                </div>
-                            </div>
-                            <div class="view-claim-information-item-body p-3">
-                                <ng-container *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
-                                    <table class="table table-border-1ed">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">S.No</th>
-                                                <th scope="col">FileName</th>
-                                                <th scope="col">Doument Type</th>
-                                                <th scope="col">View</th>
-                                                <th scope="col">Delete</th>
-                                                <th scope="col">Download</th>
-                                                <th scope="col">AI Details<br>
-                                                    <small>*File Size must be Above 400kb</small>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let document of ownerDocList;let i=index">
-                                                <th scope="row">{{i+1}}</th>
-                                                <td>{{document.FileName}}</td>
-                                                <td>{{document.DocDesc}}</td>
-                                                <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'owner')"><i class="fa fa-eye"></i></a>
-                                                </td>
-                                                <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteUploadedDoc(i,'owner')"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'owner')"><i class="fa fa-download"></i></a>
-                                                </td>
-                                                <td>
-                                                    <ng-container *ngIf="document.DocDesc=='Accident Images'">
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i,'owner')">Get AI</button>
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid!=null" (click)="viewApiDetails(i,'owner')">View AI</button>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="document.DocDesc!='Accident Images'">
-                                                        <p>N/A</p>
-                                                    </ng-container>
-                                                </td>
-                                            </tr>
-                                            <ng-container *ngIf="userDetails?.LoginResponse?.InsuranceCompanyName == policyInformation?.InsuranceCompanyName">
-                                                <tr *ngFor="let document of uploadDocList;let i=index">
-                                                    <th scope="row">{{i+1}}</th>
-                                                    <td>{{document.filename}}</td>
-                                                    <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
-                              <option value="">Select</option>
-                              <option *ngFor="let item of docTypeList" [value]="item.Code">
-                                {{item.CodeDescription}}
-                              </option>
-                            </select></td>
-                                                    <td>
-                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
-                                                    </td>
-                                                    <td>
-                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                    <td> N/A </td>
-                                                    <td> N/A </td>
-                                                </tr>
-                                            </ng-container>
-
-                                        </tbody>
-                                    </table>
-
-                                    <div class="text-center mb-2" *ngIf="uploadDocList.length!=0 && (userDetails?.LoginResponse?.InsuranceCompanyName == policyInformation?.InsuranceCompanyName)">
-                                        <button type="button" class="report-btn mx-1" (click)="saveDocuments()"><img
-                        src="./assets/images/uploadIcon.png" class="report-icon" /> <span
-                        class="report-text">Upload</span>
-                    </button>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-
-                        <div class="view-claim-information-item document-info mt-2 recoveryDoc">
-                            <div class="view-claim-information-item-title">
-                                <span class="text-danger">{{recoveryInformation?.InsuranceCompanyName}}</span>
-                                <div class="flag-red">
-
-                                </div>
-                            </div>
-                            <div class="view-claim-information-item-body p-3">
-                                <ng-container *ngIf="recoveryDocList.length==0">
-                                    <div class="text-center">
-                                        <p>No Document Available</p>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="recoveryDocList.length!=0 || uploadDocList.length !=0">
-                                    <table class="table table-border-1ed">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">S.No</th>
-                                                <th scope="col">FileName</th>
-                                                <th scope="col">Doument Type</th>
-                                                <th scope="col">View</th>
-                                                <th scope="col">Delete</th>
-                                                <th scope="col">Download</th>
-                                                <th scope="col">AI Details<br>
-                                                    <small>*File Size must be Above 400kb</small>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let document of recoveryDocList;let i=index">
-                                                <td scope="row">{{i+1}}</td>
-                                                <td>{{document.FileName}}</td>
-                                                <td>{{document.DocDesc}}</td>
-                                                <td>
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewUploadedDocument(i,'receiver')"><i class="fa fa-eye"></i></a>
-                                                </td>
-                                                <td *ngIf="claimType == 'Receivable'">
-                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteUploadedDoc(i,'receiver')"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                                <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onGetOriginalImage(i,'receiver')"><i
-                              class="fa fa-download"></i></a></td>
-                                                <td>
-                                                    <ng-container *ngIf="document.DocDesc=='Accident Images'">
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid==null" (click)="generateApiDetails(i,'receiver')">Get AI</button>
-                                                        <button class="btn btn-primary" *ngIf="document.Assessmentid!=null" (click)="viewApiDetails(i,'receiver')">View AI</button>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="document.DocDesc!='Accident Images'">
-                                                        <p>N/A</p>
-                                                    </ng-container>
-                                                </td>
-                                            </tr>
-                                            <ng-container *ngIf="userDetails?.LoginResponse?.InsuranceCompanyName == recoveryInformation?.InsuranceCompanyName">
-                                                <tr *ngFor="let document of uploadDocList;let i=index">
-                                                    <th scope="row">{{i+1}}</th>
-                                                    <td>{{document.filename}}</td>
-                                                    <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
-                              <option value="">Select</option>
-                              <option *ngFor="let item of docTypeList" [value]="item.Code">
-                                {{item.CodeDescription}}
-                              </option>
-                            </select></td>
-                                                    <td>
-                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
-                                                    </td>
-                                                    <td>
-                                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                    <td> N/A </td>
-                                                    <td> N/A </td>
-                                                </tr>
-                                            </ng-container>
-
-                                        </tbody>
-                                    </table>
-                                    <div class="text-center mb-2" *ngIf="uploadDocList.length!=0 && (userDetails?.LoginResponse?.InsuranceCompanyName == recoveryInformation?.InsuranceCompanyName)">
-                                        <button type="button" class="report-btn mx-1" (click)="saveDocuments()"><img
-                        src="./assets/images/uploadIcon.png" class="report-icon" /> <span
-                        class="report-text">Upload</span>
-                    </button>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="recovery-claim-information mt-3">
-                <!-- <div class="recovery-claim-information-item">
-                    <div class="recovery-claim-information-item-title">
-                        {{policyInformation?.InsuranceCompanyName}}
-                        <span>
-                  <telegram-icon></telegram-icon>
-                </span>
-                    </div>
-                    <div class="recovery-claim-information-item-body">
-                        <div class="vision-grid-item">
-                            <div class="vision-grid-item-body">
-                                <div class="row" *ngIf="ownerTrackList.length!=0">
-                                    <div class="col-md-10 col-lg-10 offset-1">
-                                        <p-timeline [value]="ownerTrackList">
-                                            <ng-template pTemplate="content" let-event>
-                                                <small class="p-text-secondary">&#123;&#123;event.EntryDate&#125;&#125;</small>
-                                            </ng-template>
-                                            <ng-template pTemplate="opposite" let-event>
-                                                &#123;&#123;event.StatusDesc&#125;&#125;<br>
-                                                <small class="p-text-secondary">&#123;&#123;event.Remarks&#125;&#125;</small>
-                                            </ng-template>
-                                        </p-timeline>
-                                    </div>
-                                </div>
-                                <div class="text-center" *ngIf="ownerTrackList.length==0">
-                                    <span>No Data Available</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="recovery-claim-information-item revocery-claim-information-status-item">
-                    <div class="recovery-claim-information-item-title">
-                        {{recoveryInformation?.InsuranceCompanyName}}
-                        <span>
-                        <telegram-icon></telegram-icon>
-                      </span>
-                    </div>
-                    <div class="recovery-claim-information-item-body ">
-                        <div class="vision-grid-item">
-                            <div class="vision-grid-item-body">
-                                <div class="row" *ngIf="recoveryTrackList.length!=0">
-                                    <div class="col-md-10 col-lg-10 offset-1">
-                                        <p-timeline [value]="recoveryTrackList">
-                                            <ng-template pTemplate="content" let-event>
-                                                <small class="p-text-secondary">&#123;&#123;event.EntryDate&#125;&#125;</small>
-                                            </ng-template>
-                                            <ng-template pTemplate="opposite" let-event>
-                                                &#123;&#123;event.StatusDesc&#125;&#125;<br>
-                                                <small class="p-text-secondary">&#123;&#123;event.Remarks&#125;&#125;</small>
-                                            </ng-template>
-                                        </p-timeline>
-                                    </div>
-                                </div>
-                                <div class="text-center" *ngIf="recoveryTrackList.length==0">
-                                    <span>No Data Available</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div> -->
-                <!-- <div class="view-claim-information-item document-info">
+  <div class="vision-card">
+    <div class="vision-card-body mb-4 customborder-1">
+      <div class="view-claim-information">
+        <div class="view-claim-information-item accident-info">
           <div class="recovery-claim-information-item-title">
-            <span>Tracking Information</span>
+            <span>Accident Information</span>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item label-green">
+                    <div><b>Claim Number</b></div>
+                    <div><b>{{accidentInformation?.ClaimNumber}}</b></div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Accident Date</div>
+                    <div>{{accidentInformation?.AccidentDate}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Accident Location</div>
+                    <div>{{accidentInformation?.AccidentLocation}}</div>
+                  </li>
+
+
+                </ul>
+              </div>
+              <div class="col-12 col-md-6">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <div>Claim Type</div>
+                    <div>{{accidentInformation?.ClaimTypeDesc}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Police Reference No</div>
+                    <div>{{accidentInformation?.PoliceReferenceNo}}</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Intimated Date</div>
+                    <div>{{accidentInformation?.ClaimIntimatedDate}}</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-block">
+                <div class="row">
+                  <div class="col-12 col-lg-4">Accident Description</div>
+                  <div class="col-12 col-lg-8 pl-3">{{accidentInformation?.AccidentDescription}}</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="vision-card-body">
+      <div class="middle-line"></div>
+      <div class="recovery-claim-information">
+        <div class="recovery-claim-information-item">
+          <div class="fault-tag fault-tag-green">
+            Not At Fault
+          </div>
+          <div class="recovery-claim-information-item-title">
+            <span>{{policyInformation?.InsuranceCompanyName}}</span>
+            <div class="flag-green">
+
+            </div>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Civil Id</div>
+                <div>{{policyInformation?.CivilId}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Chassis No</div>
+                <div>{{vehicleInformation?.VehicleChassisNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Make</div>
+                <div>{{vehicleInformation?.VehicleMakeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Model</div>
+                <div>{{vehicleInformation?.VehicleModelDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Plate Number</div>
+                <div>{{vehicleInformation?.PlateCharacter}} {{vehicleInformation?.PlateNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Body Type</div>
+                <div>{{vehicleInformation?.VehicleBodyDes}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Registration Type</div>
+                <div>{{vehicleInformation?.RegistrationTypeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Year.Of.Manufacturing</div>
+                <div>{{vehicleInformation?.ManufactureYear}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Policy Number</div>
+                <div>{{policyInformation?.PolicyNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Claim Number</div>
+                <div>{{accidentInformation?.ClaimNumber}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item">
+          <div class="fault-tag fault-tag-red">
+            At Fault
+          </div>
+          <div class="recovery-claim-information-item-title">
+            <span>{{recoveryInformation?.InsuranceCompanyName}}</span>
+            <div class="flag-red">
+
+            </div>
+          </div>
+          <div class="recovery-claim-information-item-body">
+            <ul class="list-group list-group-flush ">
+              <li class="list-group-item">
+                <div>Civil Id</div>
+                <div>{{recoveryInformation?.CivilId}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Chassis No</div>
+                <div>{{recoveryInformation?.VehicleChassisNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Make</div>
+                <div>{{recoveryInformation?.VehMakeDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Model</div>
+                <div>{{recoveryInformation?.VehModelDesc}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Plate Number</div>
+                <div>{{recoveryInformation?.PlateCharacter}} {{recoveryInformation?.PlateNumber}}</div>
+              </li>
+              <li class="list-group-item">
+                <div>Policy Number</div>
+                <div>
+                  <ng-container *ngIf="!faultCompany">
+                    {{recoveryPolicyNo}}
+                  </ng-container>
+                  <ng-container *ngIf="faultCompany">
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="recoveryPolicyNo"
+                      placeholder="Enter Policy No">
+                  </ng-container>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div>Claim Number</div>
+                <div class="text-end">
+                  <ng-container *ngIf="!faultCompany">
+                    {{recoveryClaimNo}}
+                  </ng-container>
+                  <ng-container *ngIf="faultCompany">
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="recoveryClaimNo"
+                      placeholder="Enter Claim No">
+                  </ng-container>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="recovery-claim-information-item claim-amount">
+
+          <div class="recovery-claim-information-item-body">
+            <form [formGroup]="claimStatusForm">
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3 text-end" [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC'|| claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'offset-md-6' : 'offset-md-9'">
+                          <small>Request Amount</small></div>
+                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC'|| claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <small>Approved Amount</small></div>
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="accidentInformation?.BodilyInjury && accidentInformation?.BodilyInjury !=''">
+                      <div class="row">
+                        <div class="col-md-6">Body Injury</div>
+                        <div class="text-end"
+                          [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                          {{accidentInformation?.BodilyInjury}}</div>
+                          <ng-container *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                            <div class="col-md-3 text-end">
+                              <input type="number" class="form-control form-control-sm" formControlName="BodilyInjury">
+                            </div>
+                          </ng-container>
+
+                      </div>
+                    </li>
+                    <li class="list-group-item" *ngIf="accidentInformation?.PropertyDamage && accidentInformation?.PropertyDamage !=''">
+                      <div class="row">
+                        <div class="col-md-6">Property Damage</div>
+                        <div class="text-end"
+                          [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                          {{accidentInformation?.PropertyDamage}}</div>
+                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <input type="number" class="form-control form-control-sm" formControlName="PropertyDamage">
+                        </div>
+                      </div>
+                    </li>
+                    <ng-container *ngIf="accidentInformation?.recovTotalLossYn == 'Y'">
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-6">Vehicle Value</div>
+                          <div class="text-end"
+                            [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                            {{accidentInformation?.VehicleValue}}</div>
+                          <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                            <input type="number" formControlName="VehicleValue" class="form-control form-control-sm">
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item" *ngIf="accidentInformation?.SalvageCost && accidentInformation?.SalvageCost !=''">
+                        <div class="row">
+                          <div class="col-md-6">Salvage Amount</div>
+                          <div class="text-end"
+                            [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                            {{accidentInformation?.SalvageCost}}</div>
+                          <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                            <input type="number" formControlName="SalvageCost" class="form-control form-control-sm">
+                          </div>
+                        </div>
+                      </li>
+                    </ng-container>
+                      <li class="list-group-item">
+                        <div class="row">
+                          <div class="col-md-6">Repair Cost</div>
+                          <div class="text-end"
+                            [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                            {{accidentInformation?.RepairCost}}</div>
+                          <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                            <input type="number" formControlName="RepairCost" class="form-control form-control-sm">
+
+                          </div>
+                        </div>
+                      </li>
+
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-6">
+                          Replacement Car<br>
+                          <small>
+                            {{accidentInformation?.NoOfDays}}&nbsp;Days /
+                            {{accidentInformation?.PerDayCost}}&nbsp;per Day
+                          </small>
+                        </div>
+                        <div class="text-end"
+                          [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                          {{accidentInformation?.NoOfDays * accidentInformation?.PerDayCost}}
+                        </div>
+                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <input type="number" formControlName="PerDayCost" class="form-control form-control-sm">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item label-green fw-bold">
+                      <div class="row">
+                        <div class="col-md-6">Total Claim Amount</div>
+                        <div class="text-end"
+                          [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                          {{accidentInformation?.TotalValue}}</div>
+                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <input type="number" formControlName="TotalValue" class="form-control form-control-sm">
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <!-- <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <small>Approved Amount</small>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          {{recoveryInformation?.RecovBodilyInjury}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          {{recoveryInformation?.RecovPropertyDamage}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          {{recoveryInformation?.RecovVehicleValue}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          {{recoveryInformation?.RecovSalvageCost}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          {{recoveryInformation?.RecovRepairCost}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          {{recoveryInformation?.RecovReplamentAmt}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-3">
+                          {{recoveryInformation?.RecovTotalValue}}
+                        </div>
+                      </div>
+                    </li>
+                   </ul> -->
+                </div>
+              </div>
+              <ng-container *ngIf="isProcess">
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <div class="recovery-claim-information-item-title">
+                      <span>Action Update</span>
+                    </div>
+
+                    <div class="p-3">
+                      <mat-radio-group aria-label="Select an option" formControlName="claimStatus">
+                        <ng-container *ngFor="let item of claimStatusList">
+                          <mat-radio-button value="{{item.StatusCode}}">{{item.StatusDesc}}</mat-radio-button>
+                        </ng-container>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <ng-container *ngIf="isProcess">
+                      <ng-container *ngIf="commonInformation?.PreviousRemarks != ''">
+                        <div class="vision-form-control-box">
+                          <label class="vision-form-label">Queries Reason</label><br>
+                          {{commonInformation?.PreviousRemarks}}
+                        </div>
+                      </ng-container>
+                      <ng-container
+                        *ngIf="claimStatusForm.controls['claimStatus'].value =='CRES' || claimStatusForm.controls['claimStatus'].value =='CREQ' || claimStatusForm.controls['claimStatus'].value =='PAC'">
+                        <div class="vision-form-control-box">
+                          <label class="vision-form-label">Remarks</label>
+                          <textarea rows="2" class="vision-form-control" formControlName="claimStatusRemarks">
+                          </textarea>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+
+                  </div>
+                </div>
+
+              </ng-container>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="vision-card">
+    <div class="vision-card-body">
+      <div class="view-claim-information">
+
+        <div class="view-claim-information-item document-info">
+          <div class="recovery-claim-information-item-title">
+            <span>Document Information</span>
             <span>
+              <!-- <telegram-icon></telegram-icon> -->
             </span>
           </div>
-          <div class="view-claim-information-item-body">
-            <div class="row" *ngIf="totalTrackList.length!=0">
-              <div class="col-md-10 col-lg-10 offset-1">
-                <p-timeline [value]="totalTrackList">
-                  <ng-template pTemplate="content" let-event>
-                    <small class="p-text-secondary">&#123;&#123;event.EntryDate&#125;&#125;</small>
-                  </ng-template>
-                  <ng-template pTemplate="opposite" let-event>
-                    &#123;&#123;event.StatusDesc&#125;&#125; (&nbsp;{{event.InsuranceId}}&nbsp;)<br>
-                    <small class="p-text-secondary">&#123;&#123;event.Remarks&#125;&#125;</small>
-                  </ng-template>
-                </p-timeline>
+          <div class="view-claim-information-item-body ">
+            <div class="row">
+              <div class="col-md-6 col-lg-6 offset-3">
+                <input style="display: none;" [multiple]="true" (change)="onUploadDocuments($event,null,'direct')"
+                  type="file" #doc multiple>
+                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')"
+                  (click)="doc.click()">
+                  <div>
+                    <div class="center mb-2">
+                      <b class="text-dark">
+                        <i class="far fa-images"></i> Drag or Click
+                      </b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="view-claim-information-item document-info ownerDoc"
+              *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
+              <div class="view-claim-information-item-title">
+                <span class="text-success">{{policyInformation?.InsuranceCompanyName}}</span>
+                <div class="flag-green">
+
+                </div>
+              </div>
+              <div class="view-claim-information-item-body p-3">
+                <ng-container *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
+                  <table class="table table-border-1ed">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">FileName</th>
+                        <th scope="col">Doument Type</th>
+                        <th scope="col">View</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Download</th>
+                        <th scope="col">AI Details<br>
+                          <small>*File Size must be Above 400kb</small>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let document of ownerDocList;let i=index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{document.FileName}}</td>
+                        <td>{{document.DocDesc}}</td>
+                        <td>
+                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View"
+                            (click)="onViewUploadedDocument(i,'owner')"><i class="fa fa-eye"></i></a>
+                        </td>
+                        <td>
+                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete"
+                            (click)="onDeleteUploadedDoc(i,'owner')"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
+                            title="Download" (click)="onGetOriginalImage(i,'owner')"><i class="fa fa-download"></i></a>
+                        </td>
+                        <td>
+                          <ng-container *ngIf="document.DocDesc=='Accident Images'">
+                            <button class="btn btn-primary" *ngIf="document.Assessmentid==null"
+                              (click)="generateApiDetails(i,'owner')">Get AI</button>
+                            <button class="btn btn-primary" *ngIf="document.Assessmentid!=null"
+                              (click)="viewApiDetails(i,'owner')">View AI</button>
+                          </ng-container>
+                          <ng-container *ngIf="document.DocDesc!='Accident Images'">
+                            <p>N/A</p>
+                          </ng-container>
+                        </td>
+                      </tr>
+                      <ng-container
+                        *ngIf="userDetails?.LoginResponse?.InsuranceCompanyName == policyInformation?.InsuranceCompanyName">
+                        <tr *ngFor="let document of uploadDocList;let i=index">
+                          <th scope="row">{{i+1}}</th>
+                          <td>{{document.filename}}</td>
+                          <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
+                              <option value="">Select</option>
+                              <option *ngFor="let item of docTypeList" [value]="item.Code">
+                                {{item.CodeDescription}}
+                              </option>
+                            </select></td>
+                          <td>
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View"
+                              (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
+                          </td>
+                          <td>
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
+                              title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                          </td>
+                          <td> N/A </td>
+                          <td> N/A </td>
+                        </tr>
+                      </ng-container>
+
+                    </tbody>
+                  </table>
+
+                  <div class="text-center mb-2"
+                    *ngIf="uploadDocList.length!=0 && (userDetails?.LoginResponse?.InsuranceCompanyName == policyInformation?.InsuranceCompanyName)">
+                    <button type="button" class="report-btn mx-1" (click)="saveDocuments()"><img
+                        src="./assets/images/uploadIcon.png" class="report-icon" /> <span
+                        class="report-text">Upload</span>
+                    </button>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="view-claim-information-item document-info mt-2 recoveryDoc">
+              <div class="view-claim-information-item-title">
+                <span class="text-danger">{{recoveryInformation?.InsuranceCompanyName}}</span>
+                <div class="flag-red">
+
+                </div>
+              </div>
+              <div class="view-claim-information-item-body p-3">
+                <ng-container *ngIf="recoveryDocList.length==0">
+                  <div class="text-center">
+                    <p>No Document Available</p>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="recoveryDocList.length!=0 || uploadDocList.length !=0">
+                  <table class="table table-border-1ed">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">FileName</th>
+                        <th scope="col">Doument Type</th>
+                        <th scope="col">View</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Download</th>
+                        <th scope="col">AI Details<br>
+                          <small>*File Size must be Above 400kb</small>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let document of recoveryDocList;let i=index">
+                        <td scope="row">{{i+1}}</td>
+                        <td>{{document.FileName}}</td>
+                        <td>{{document.DocDesc}}</td>
+                        <td>
+                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View"
+                            (click)="onViewUploadedDocument(i,'receiver')"><i class="fa fa-eye"></i></a>
+                        </td>
+                        <td *ngIf="claimType == 'Receivable'">
+                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                            (click)="onDeleteUploadedDoc(i,'receiver')"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
+                            title="Download" (click)="onGetOriginalImage(i,'receiver')"><i
+                              class="fa fa-download"></i></a></td>
+                        <td>
+                          <ng-container *ngIf="document.DocDesc=='Accident Images'">
+                            <button class="btn btn-primary" *ngIf="document.Assessmentid==null"
+                              (click)="generateApiDetails(i,'receiver')">Get AI</button>
+                            <button class="btn btn-primary" *ngIf="document.Assessmentid!=null"
+                              (click)="viewApiDetails(i,'receiver')">View AI</button>
+                          </ng-container>
+                          <ng-container *ngIf="document.DocDesc!='Accident Images'">
+                            <p>N/A</p>
+                          </ng-container>
+                        </td>
+                      </tr>
+                      <ng-container
+                        *ngIf="userDetails?.LoginResponse?.InsuranceCompanyName == recoveryInformation?.InsuranceCompanyName">
+                        <tr *ngFor="let document of uploadDocList;let i=index">
+                          <th scope="row">{{i+1}}</th>
+                          <td>{{document.filename}}</td>
+                          <td><select class="vision-form-control" [(ngModel)]="document.DocTypeId">
+                              <option value="">Select</option>
+                              <option *ngFor="let item of docTypeList" [value]="item.Code">
+                                {{item.CodeDescription}}
+                              </option>
+                            </select></td>
+                          <td>
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View"
+                              (click)="onViewDocument(i)"><i class="fa fa-eye"></i></a>
+                          </td>
+                          <td>
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
+                              title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                          </td>
+                          <td> N/A </td>
+                          <td> N/A </td>
+                        </tr>
+                      </ng-container>
+
+                    </tbody>
+                  </table>
+                  <div class="text-center mb-2"
+                    *ngIf="uploadDocList.length!=0 && (userDetails?.LoginResponse?.InsuranceCompanyName == recoveryInformation?.InsuranceCompanyName)">
+                    <button type="button" class="report-btn mx-1" (click)="saveDocuments()"><img
+                        src="./assets/images/uploadIcon.png" class="report-icon" /> <span
+                        class="report-text">Upload</span>
+                    </button>
+                  </div>
+                </ng-container>
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
+      </div>
 
-            </div>
-        </div>
     </div>
-    <!-- <ng-container *ngIf="(commonInformation?.Status == 'CREQ' && recoveryType == 'Receivable') || (commonInformation?.Status == 'ATP' && recoveryType == 'Receivable') || (recoveryType == 'Payable')"> -->
-    <ng-container *ngIf="isProcess">
-        <div class="text-center my-4">
-            <button class="vision-btn blue-bg-color" (click)="onFormSubmit()">Submit</button>
-        </div>
-    </ng-container>
+  </div>
+  <ng-container *ngIf="isProcess">
+    <div class="text-center my-4">
+      <button class="vision-btn blue-bg-color" (click)="onFormSubmit()">Submit</button>
+    </div>
+  </ng-container>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">View Image</h5>
-                <button type="button" class="btn-close" (click)="hide()"></button>
-            </div>
-            <div class="modal-body">
-                <h3 class="text-center">{{viewFileName}}</h3>
-                <img [src]="veiwSelectedDocUrl" width="100%">
-            </div>
-        </div>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View Image</h5>
+        <button type="button" class="btn-close" (click)="hide()"></button>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">{{viewFileName}}</h3>
+        <img [src]="veiwSelectedDocUrl" width="100%">
+      </div>
     </div>
+  </div>
 </ng-template>
 <ng-template #content1 let-c="close" let-d="dismiss">
-    <div class="card-header">
-        <h5>AI Details</h5>
+  <div class="card-header">
+    <h5>AI Details</h5>
+  </div>
+  <div *ngFor="let document of documentAIDetails" class="p-1">
+    <div class="row">
+      <div class="text-center">
+        <h2>{{document.Filename}}</h2>
+      </div>
     </div>
-    <div *ngFor="let document of documentAIDetails" class="p-1">
-        <div class="row">
-            <div class="text-center">
-                <h2>{{document.Filename}}</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <img [src]="document.RawImage" class="img-fluid">
-                <div class="d-flex justify-content-center">
-                    <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.RawImage)"><i class="far fa-eye mx-1"></i></a> -->
-                    <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.RawImage)"><i
+    <div class="row">
+      <div class="col-md-4">
+        <img [src]="document.RawImage" class="img-fluid">
+        <div class="d-flex justify-content-center">
+          <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.RawImage)"><i class="far fa-eye mx-1"></i></a> -->
+          <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.RawImage)"><i
               class="fas fa-download mx-1"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <img [src]="document.PartsImage" class="img-fluid">
-                <div class="d-flex justify-content-center">
-                    <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.PartsImage)"><i class="far fa-eye mx-1"></i></a> -->
-                    <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.PartsImage)"><i
-              class="fas fa-download mx-1"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <img [src]="document.DamageImage" class="img-fluid">
-                <div class="d-flex justify-content-center">
-                    <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.DamageImage)"><i class="far fa-eye mx-1"></i></a> -->
-                    <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.DamageImage)"><i
-              class="fas fa-download mx-1"></i></a>
-                </div>
-            </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-md-10 offset-1" *ngIf="document.Report.length!=0">
-                <table border-1="1" class="table table-hover table-striped responsive">
-                    <thead class="table-info">
-                        <tr>
-                            <th style="padding:15px;" class="customRow"><b>Part</b></th>
-                            <th style="padding:15px;" class="customRow"><b>Action</b></th>
-                            <th style="padding:15px;" class="customRow"><b>Damage</b></th>
-                            <th style="padding:15px;" class="customRow"><b>Region</b></th>
-                            <th style="padding:15px;" class="customRow"><b>Damage Severity</b></th>
-                            <th style="padding:15px;" class="customRow"><b>Internal Damage</b></th>
-                            <th style="padding:15px;" class="customRow"><b>Percentage</b></th>
-                            <th style="padding:15px;" class="customRow"><b>Cost Estimation</b></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let entry of  document.Report; let i = index">
-                            <td style="padding:5px;">{{entry.Part}}</td>
-                            <td style="padding:5px;">{{entry.Action}} </td>
-                            <td style="padding:5px;">{{entry.Damage}} </td>
-                            <td style="padding:5px;">{{entry.Region}} </td>
-                            <td style="padding:5px;">{{entry.Damageseverity}}</td>
-                            <td style="padding:5px;">{{entry.InternalDamage}} </td>
-                            <td style="padding:5px;">{{entry.Percentage}} </td>
-                            <td style="padding:5px;">{{entry.Costestimation}} </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-9" *ngIf="document.Report.length==0">
-                <div class="text-center">
-                    <h4>No Damages Found</h4>
-                </div>
-            </div>
+      </div>
+      <div class="col-md-4">
+        <img [src]="document.PartsImage" class="img-fluid">
+        <div class="d-flex justify-content-center">
+          <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.PartsImage)"><i class="far fa-eye mx-1"></i></a> -->
+          <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.PartsImage)"><i
+              class="fas fa-download mx-1"></i></a>
         </div>
-        <hr>
+      </div>
+      <div class="col-md-4">
+        <img [src]="document.DamageImage" class="img-fluid">
+        <div class="d-flex justify-content-center">
+          <!-- <a mat-raised-button class="mx-1" (click)="onViewImage(document,document.DamageImage)"><i class="far fa-eye mx-1"></i></a> -->
+          <a mat-raised-button class="mx-1" (click)="onDownloadImage(document,document.DamageImage)"><i
+              class="fas fa-download mx-1"></i></a>
+        </div>
+      </div>
     </div>
-    <div class="text-end p-0">
-        <button class="btn btn-danger mb-1" (click)="hide()">Close</button>
+    <div class="row mt-3">
+      <div class="col-md-10 offset-1" *ngIf="document.Report.length!=0">
+        <table border-1="1" class="table table-hover table-striped responsive">
+          <thead class="table-info">
+            <tr>
+              <th style="padding:15px;" class="customRow"><b>Part</b></th>
+              <th style="padding:15px;" class="customRow"><b>Action</b></th>
+              <th style="padding:15px;" class="customRow"><b>Damage</b></th>
+              <th style="padding:15px;" class="customRow"><b>Region</b></th>
+              <th style="padding:15px;" class="customRow"><b>Damage Severity</b></th>
+              <th style="padding:15px;" class="customRow"><b>Internal Damage</b></th>
+              <th style="padding:15px;" class="customRow"><b>Percentage</b></th>
+              <th style="padding:15px;" class="customRow"><b>Cost Estimation</b></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of  document.Report; let i = index">
+              <td style="padding:5px;">{{entry.Part}}</td>
+              <td style="padding:5px;">{{entry.Action}} </td>
+              <td style="padding:5px;">{{entry.Damage}} </td>
+              <td style="padding:5px;">{{entry.Region}} </td>
+              <td style="padding:5px;">{{entry.Damageseverity}}</td>
+              <td style="padding:5px;">{{entry.InternalDamage}} </td>
+              <td style="padding:5px;">{{entry.Percentage}} </td>
+              <td style="padding:5px;">{{entry.Costestimation}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-9" *ngIf="document.Report.length==0">
+        <div class="text-center">
+          <h4>No Damages Found</h4>
+        </div>
+      </div>
     </div>
+    <hr>
+  </div>
+  <div class="text-end p-0">
+    <button class="btn btn-danger mb-1" (click)="hide()">Close</button>
+  </div>
 </ng-template>
 <ng-template #content2 let-c="close" let-d="dismiss">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are You Sure Want to Proceed?</h5>
-        </div>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-6 col-lg-6">
-                    <label><b>Policy No</b></label>~&nbsp;
-                    <span *ngIf="recoveryPolicyNo">{{recoveryPolicyNo}}</span>
-                    <span *ngIf="!recoveryPolicyNo">N/A</span>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                    <label><b>Claim No</b></label>~&nbsp;
-                    <span *ngIf="recoveryClaimNo">{{recoveryClaimNo}}</span>
-                    <span *ngIf="!recoveryClaimNo">N/A</span>
-                </div>
-            </div>
-            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'Y'">
-                <div class="col-md-3 col-lg-3 offset-5 text-right">
-                    <label><b>Vehicle Value</b></label>
-                </div>
-                <div class="col-md-3 col-lg-3 offset-1 text-right">
-                    {{approvedVehicleValue}}
-                </div>
-            </div>
-            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'Y'">
-                <div class="col-md-3 col-lg-3 offset-5 text-right">
-                    <label><b>Salvage Amount</b></label>
-                </div>
-                <div class="col-md-3 col-lg-3 offset-1 text-right">
-                    {{approvedSalvageValue}}
-                </div>
-            </div>
-            <div class="row  border-1 " *ngIf="accidentInformation?.recovTotalLossYn == 'N'">
-                <div class="col-md-3 col-lg-3 offset-5 text-right">
-                    <label><b>Repair Cost</b></label>
-                </div>
-                <div class="col-md-3 col-lg-3 offset-1 text-right">
-                    {{approvedRepairCost}}
-                </div>
-            </div>
-            <div class="row  border-1 ">
-                <div class="col-md-3 col-lg-3 offset-5 text-right">
-                    <label><b>Replacement Car</b></label>
-                </div>
-                <div class="col-md-3 col-lg-3 offset-1 text-right">
-                    {{approvedReplacementCost}}
-                </div>
-            </div>
-            <div class="row  border-1 ">
-                <div class="col-md-3 col-lg-3 offset-5 text-right">
-                    <label><b>Total Claim Amount</b></label>
-                </div>
-                <div class="col-md-3 col-lg-3 offset-1 text-right">
-                    {{approvedTotalClaimCost}}
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="text-end">
-                <button class="btn btn-danger" (click)="hide()">Cancel</button>&nbsp;
-                <button class="btn btn-info" (click)="onAltSubmit();hide()">Confirm</button>
-            </div>
-        </div>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="modal-title" id="exampleModalLabel">Are You Sure Want to Proceed?</h5>
     </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-6 col-lg-6">
+          <div class="d-flex justify-content-between">
+            <label>Requsted Amount</label>
+            <label>{{accidentInformation.TotalValue}}</label>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <div class="d-flex justify-content-between">
+            <label>Approved Amount</label>
+            <label>{{showTotalValue}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="text-end">
+        <button class="btn btn-danger" (click)="hide()">Cancel</button>&nbsp;
+        <button class="btn btn-info" (click)="onAltSubmit();hide()">Confirm</button>
+      </div>
+    </div>
+  </div>
 </ng-template>

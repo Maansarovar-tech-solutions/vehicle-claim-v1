@@ -82,7 +82,9 @@ export class DashboardComponent implements OnInit {
   ) {
     this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType = sessionStorage.getItem("claimType");
-
+    if(this.LoginDetails?.LoginResponse?.ParticipantYn == "N"){
+      this.statusName = 'Payable';
+    }
     this.daysDropdown=[
       {
         startDay:0,
@@ -152,6 +154,8 @@ export class DashboardComponent implements OnInit {
     "DFT":"./assets/images/drafts.png",
     "DNT":"./assets/images/debit-note.png",
     "CNT":"./assets/images/credit-note.png",
+    "PAC":"./assets/images/partially-approved.png",
+
 
   }
   onGetTplClaimRecoveryList() {

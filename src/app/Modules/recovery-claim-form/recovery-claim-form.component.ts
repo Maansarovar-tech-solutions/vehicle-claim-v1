@@ -122,6 +122,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     // this.onGetPolicyInformation();
     this.onInitialFetchData();
 
+
     combineLatest([
       this.f.VehicleValue.valueChanges.pipe(startWith(0)),
       this.f.RepairCost.valueChanges.pipe(startWith(0)),
@@ -129,20 +130,26 @@ export class RecoveryClaimFormComponent implements OnInit {
       this.f.PerDayCost.valueChanges.pipe(startWith(0)),
       this.f.SalvageCost.valueChanges.pipe(startWith(0)),
       this.f.RecovTotalLossYn.valueChanges.pipe(startWith(false)),
-    ]).subscribe(([VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn]) => {
-      const dataList = [VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn];
+      this.f.BodilyInjury.valueChanges.pipe(startWith(0)),
+      this.f.PropertyDamage.valueChanges.pipe(startWith(0)),
+
+    ]).subscribe(([VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn,BodilyInjury,PropertyDamage]) => {
+      const dataList = [VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn,BodilyInjury,PropertyDamage];
       console.log(dataList)
       let sum1 = 0
-      if(!dataList[5]){
-        sum1 =  Number(dataList[1]) + (Number(dataList[2]) * Number(dataList[3]));
+      if(dataList[5] == true){
+        let repaireCostBodyInjuProperty = (Number(dataList[1]) + Number(dataList[6]) + Number(dataList[7]));
+        let subVehicleValueAndSavlvageCost = Number(dataList[0]) - Number(dataList[4]);
+        let noDaysAndPerDay = Number(dataList[2]) * Number(dataList[3]);
+        this.f.totalOfDayCost.setValue(noDaysAndPerDay);
+        sum1 =  repaireCostBodyInjuProperty + subVehicleValueAndSavlvageCost + noDaysAndPerDay;
       }else{
-        sum1 =  Number(dataList[0]) + Number(dataList[4]+(Number(dataList[2]) * Number(dataList[3])));
+        let repaireCostBodyInjuProperty = (Number(dataList[1]) + Number(dataList[6]) + Number(dataList[7]));
+        let noDaysAndPerDay = (Number(dataList[2]) * Number(dataList[3]));
+        this.f.totalOfDayCost.setValue(noDaysAndPerDay);
+        sum1 =  repaireCostBodyInjuProperty + noDaysAndPerDay;
 
       }
-
-      // let vehicleAndRepair = Number(dataList[0]) + Number(dataList[1]);
-      // let noDaysAndPerDay = Number(dataList[2]) * Number(dataList[3]);
-      // let totalValue = vehicleAndRepair + noDaysAndPerDay;
       this.f.TotalValue.setValue(sum1);
     });
   }
@@ -186,11 +193,13 @@ export class RecoveryClaimFormComponent implements OnInit {
       OtherCivilId: ['', Validators.required],
       InsuranceId: ['', Validators.required],
 
+      BodilyInjury:[0, Validators.required],
+      PropertyDamage:[0, Validators.required],
       RepairCost: [0, Validators.required],
       NoOfDays: [0, Validators.required],
       PerDayCost: [0, Validators.required],
-      TotalValue: [0, Validators.required],
-
+      totalOfDayCost:[0],
+      TotalValue: [0],
 
       LicenceNumber: [''],
       DriverDateOfBirth: [''],
@@ -201,6 +210,10 @@ export class RecoveryClaimFormComponent implements OnInit {
 
 
     });
+    this.claimForm.controls['totalOfDayCost'].disable();
+    this.claimForm.controls['TotalValue'].disable();
+
+
   }
   get f() {
     return this.claimForm.controls;
@@ -547,7 +560,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.ClaimReferenceNumber = claim?.ClaimReferenceNumber;
           this.PolicyReferenceNumber = claim?.PolicyReferenceNumber;
           this.f.VehicleMakeIdOther.setValue(RecoveryInformation?.VehMakeId);
-          this.modelList = await this.onGetVehicleModelList(
+          this.modelListOther = await this.onGetVehicleModelList(
             RecoveryInformation?.VehMakeId
           );
           if (this.modelList.length > 0) {
@@ -564,6 +577,9 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.f.RepairCost.setValue(AccidentInformation?.RepairCost)
           this.f.NoOfDays.setValue(AccidentInformation?.NoOfDays)
           this.f.PerDayCost.setValue(AccidentInformation?.PerDayCost);
+          this.f.BodilyInjury.setValue(AccidentInformation?.BodilyInjury);
+          this.f.PropertyDamage.setValue(AccidentInformation?.PropertyDamage);
+
           if(AccidentInformation.RecovTotalLossYn=='Y')
           this.f.RecovTotalLossYn.setValue(true);
           else this.f.RecovTotalLossYn.setValue(false);
@@ -772,6 +788,8 @@ export class RecoveryClaimFormComponent implements OnInit {
         TotalValue: this.f.TotalValue.value,
         RecovTotalLossYn:this.f.RecovTotalLossYn.value == true?'Y':'N',
         SalvageCost:this.f.SalvageCost.value,
+        BodilyInjury:this.f.BodilyInjury.value,
+        PropertyDamage:this.f.PropertyDamage.value,
       },
       CommonInformation: {
         ClaimReferenceNumber: this.ClaimReferenceNumber,

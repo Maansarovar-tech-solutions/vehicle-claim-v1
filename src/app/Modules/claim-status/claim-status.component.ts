@@ -3,7 +3,7 @@ import { AppComponent } from './../../app.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import * as Mydatas from '../../../assets/app-config.json';
 import { AddVehicleService } from '../add-vehicle/add-vehicle.service';
@@ -39,6 +39,9 @@ export class ClaimStatusComponent implements OnInit {
   public recoveryPolicyInfo:any;
   public isNewPolicy:boolean=false;
   public isProcess:boolean=true;
+  public isQuery:boolean=false;
+  public isDisabledReqAmount:boolean=false;
+  public showTotalValue='0'
   claimType: string | null;
   imageUrl: any;
   uploadDocList: any[]=[];
@@ -103,12 +106,15 @@ export class ClaimStatusComponent implements OnInit {
     ];
 
     this.claimDetails = JSON.parse(sessionStorage.getItem("selectedClaimDetails") || '{}');
+    console.log(this.claimDetails)
     if(this.claimDetails.finalLabelName == 'Process'){
       this.isProcess = true;
     }else{
       this.isProcess = false;
-
     }
+
+
+
     console.log("Received Details",this.claimDetails);
     this.onGetClaimDetails(this.claimDetails)
     this.claimType = sessionStorage.getItem('claimType');
@@ -119,17 +125,54 @@ export class ClaimStatusComponent implements OnInit {
     this.onCreateFormControl();
     this.onFetchInitialData();
     this.onGetUploadedDocuments();
+
+    combineLatest([
+      this.f.claimStatus.valueChanges.pipe(startWith('')),
+      this.f.VehicleValue.valueChanges.pipe(startWith(0)),
+      this.f.SalvageCost.valueChanges.pipe(startWith(0)),
+      this.f.BodilyInjury.valueChanges.pipe(startWith(0)),
+      this.f.PropertyDamage.valueChanges.pipe(startWith(0)),
+      this.f.RepairCost.valueChanges.pipe(startWith(0)),
+      this.f.PerDayCost.valueChanges.pipe(startWith(0)),
+
+
+    ]).subscribe(([claimStatus,VehicleValue, SalvageCost, BodilyInjury, PropertyDamage,RepairCost,PerDayCost]) => {
+      const dataList = [claimStatus,VehicleValue, SalvageCost, BodilyInjury, PropertyDamage,RepairCost,PerDayCost];
+      let repaireCostBodyInjuProperty = (Number(dataList[3]) + Number(dataList[4]) + Number(dataList[5]));
+      let perdayCost = Number(dataList[6]);
+      let total = repaireCostBodyInjuProperty + perdayCost;
+      this.f.TotalValue.setValue(total);
+    });
+
   }
 
   onCreateFormControl() {
     this.claimStatusForm = this._formBuilder.group({
-      claimStatus: ['', Validators.required],
+      claimStatus: ['PED', Validators.required],
       claimStatusRemarks: ['', Validators.required],
       reqAmount: ['', Validators.required],
       acceAmount: ['', Validators.required],
 
+      VehicleValue:[0, Validators.required],
+      SalvageCost:[0, Validators.required],
+      BodilyInjury:[0, Validators.required],
+      PropertyDamage:[0, Validators.required],
+      RepairCost: [0, Validators.required],
+      PerDayCost: [0, Validators.required],
+      TotalValue: [0],
 
     });
+    this.claimStatusForm.controls['TotalValue'].disable();
+
+    if(this.claimDetails?.Status=='PAC' || this.claimDetails?.Status=='ATP' || this.claimDetails?.Status=='DNT' || this.claimDetails?.Status=='CNT'){
+       this.isDisabledReqAmount = true;
+       this.f.VehicleValue.disable();
+       this.f.SalvageCost.disable();
+       this.f.BodilyInjury.disable();
+       this.f.PropertyDamage.disable();
+       this.f.RepairCost.disable();
+       this.f.PerDayCost.disable();
+    }
   }
   get f() { return this.claimStatusForm.controls; };
 
@@ -432,12 +475,13 @@ export class ClaimStatusComponent implements OnInit {
     if(userDetails.InsuranceCompanyName == this.recoveryInformation?.InsuranceCompanyName){
       let StatusCode = this.f.claimStatus.value;
         if(StatusCode){
-            if(StatusCode=='ATP' || StatusCode == 'CREQ'){
-              if(this.approvedVehicleValue == "" || this.approvedVehicleValue == undefined || this.approvedVehicleValue == null) this.approvedVehicleValue = 0;
-              if(this.approvedSalvageValue == "" || this.approvedSalvageValue == undefined || this.approvedSalvageValue == null) this.approvedSalvageValue = 0;
-              if(this.approvedRepairCost == "" || this.approvedRepairCost == undefined || this.approvedRepairCost == null) this.approvedRepairCost = 0;
-              if(this.approvedReplacementCost == "" || this.approvedReplacementCost == undefined || this.approvedReplacementCost == null) this.approvedReplacementCost = 0;
-              if(this.approvedTotalClaimCost == "" || this.approvedTotalClaimCost == undefined || this.approvedTotalClaimCost == null) this.approvedTotalClaimCost = 0;
+            if(StatusCode=='ATP' || StatusCode == 'PAC'){
+              if(this.f.claimStatus.value == 'ATP'){
+                this.showTotalValue = this.accidentInformation.TotalValue
+              }
+              if(this.f.claimStatus.value == 'PAC'){
+                this.showTotalValue = this.f.TotalValue.value
+              }
               this.modalService.open(this.content2, { size: 'lg', backdrop: 'static' });
             }
             else{
@@ -454,13 +498,38 @@ export class ClaimStatusComponent implements OnInit {
   }
   onAltSubmit(){
     if(this.f.claimStatus.value == 'ATP'){
-      this.approvedTotalClaimCost = this.accidentInformation?.TotalValue;
-
+      var PerDayCost:any = Number(this.accidentInformation.NoOfDays)*(this.accidentInformation.PerDayCost)
+      var VehicleValue:any = this.accidentInformation.VehicleValue
+      var SalvageCost:any = this.accidentInformation.SalvageCost
+      var RepairCost:any = this.accidentInformation.RepairCost
+      var BodilyInjury:any = this.accidentInformation.BodilyInjury
+      var PropertyDamage:any = this.accidentInformation.PropertyDamage
+      var TotalValue:any = this.accidentInformation.TotalValue
     }
     if(this.f.claimStatus.value == 'REJ'){
-      this.approvedTotalClaimCost = 0;
-
+      var PerDayCost:any = 0;
+      var VehicleValue:any = 0;
+      var SalvageCost:any = 0;
+      var RepairCost:any = 0;
+      var BodilyInjury:any = 0;
+      var PropertyDamage:any = 0;
+      var TotalValue:any = 0;
     }
+
+    if(this.f.claimStatus.value == 'PAC'){
+      var PerDayCost:any = this.f.PerDayCost.value
+      var VehicleValue:any = this.f.VehicleValue.value
+      var SalvageCost:any = this.f.SalvageCost.value
+      var RepairCost:any = this.f.RepairCost.value
+      var BodilyInjury:any = this.f.BodilyInjury.value
+      var PropertyDamage:any = this.f.PropertyDamage.value
+      var TotalValue:any = this.f.TotalValue.value
+
+      if(this.accidentInformation.TotalValue == this.f.TotalValue.value){
+        this.f.claimStatus.setValue("ATP");
+      }
+    }
+
     let userDetails = this.userDetails?.LoginResponse;
     let docIdList:any = [];
     if(this.ownerDocList.length!=0 || this.recoveryDocList.length!=0){
@@ -480,13 +549,17 @@ export class ClaimStatusComponent implements OnInit {
       "Remarks":this.f.claimStatusRemarks.value,
       "AcceptedReserveAmount":this.f.acceAmount.value,
       "ReserveAmount":this.f.reqAmount.value,
-      "RecovRepairCost":String(this.approvedRepairCost),
-      "RecovTotalValue":String(this.approvedTotalClaimCost),
-      "RecovReplacementAmt": this.approvedReplacementCost,
       "RecovClaimNo":this.recoveryClaimNo,
       "RecovPolicyNo":this.recoveryPolicyNo,
-      "RecovVehicleValue": this.approvedVehicleValue,
-      "RecovSalvageCost": this.approvedSalvageValue
+
+      "RecovReplacementAmt": PerDayCost,
+      "RecovVehicleValue": VehicleValue,
+      "RecovSalvageCost": SalvageCost,
+      "RecovRepairCost":RepairCost,
+      "RecovBodilyInjury":BodilyInjury,
+      "RecovPropertyDamage":PropertyDamage,
+      "RecovTotalValue":TotalValue,
+
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -585,11 +658,20 @@ export class ClaimStatusComponent implements OnInit {
           this.vehicleInformation=this.claimInformation?.VehicleInformation;
           this.recoveryClaimNo = this.recoveryInformation?.RecovClaimNo;
           this.recoveryPolicyNo = this.recoveryInformation?.RecovPolicyNo;
-          this.approvedRepairCost = this.recoveryInformation?.RecovRepairCost;
-          this.approvedReplacementCost = this.recoveryInformation?.RecovReplamentAmt;
-          this.approvedTotalClaimCost = this.recoveryInformation?.RecovTotalValue;
-          this.approvedSalvageValue = this.recoveryInformation?.RecovSalvageCost;
-          this.approvedVehicleValue = this.recoveryInformation?.RecovVehicleValue;
+
+          // this.approvedRepairCost = this.recoveryInformation?.RecovRepairCost;
+          // this.approvedReplacementCost = this.recoveryInformation?.RecovReplamentAmt;
+          // this.approvedTotalClaimCost = this.recoveryInformation?.RecovTotalValue;
+          // this.approvedSalvageValue = this.recoveryInformation?.RecovSalvageCost;
+          // this.approvedVehicleValue = this.recoveryInformation?.RecovVehicleValue;
+
+          this.f.VehicleValue.setValue(this.recoveryInformation?.RecovVehicleValue)
+          this.f.SalvageCost.setValue(this.recoveryInformation?.RecovSalvageCost)
+          this.f.BodilyInjury.setValue(this.recoveryInformation?.RecovBodilyInjury)
+          this.f.PropertyDamage.setValue(this.recoveryInformation?.RecovPropertyDamage)
+          this.f.RepairCost.setValue(this.recoveryInformation?.RecovRepairCost)
+          this.f.PerDayCost.setValue(this.recoveryInformation?.RecovReplamentAmt)
+
           if(this.recoveryInformation?.InsuranceId){
             if(this.recoveryInformation?.InsuranceId == userDetails?.InsuranceId){
               this.faultCompany = true;
@@ -692,4 +774,9 @@ export class ClaimStatusComponent implements OnInit {
       this.approvedTotalClaimCost = this.approvedTotalClaimCost + Number(this.approvedReplacementCost);
     }
   }
+
+
+
+
 }
+

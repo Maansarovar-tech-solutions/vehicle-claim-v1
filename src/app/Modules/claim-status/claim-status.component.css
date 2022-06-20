@@ -323,11 +323,18 @@
 .claim-amount .list-group-item {
     display: block !important;
 }
-
-
+.claim-amount{
+  grid-column: span 2;
+}
+.claim-amount .recovery-claim-information-item-body{
+  padding: .5rem;
+}
 /* .middle-line{
   position: absolute;
   height: 100vh;
   border:1px solid green;
 
 } */
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
