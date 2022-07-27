@@ -49,6 +49,8 @@ import { PieChartComponent } from './Modules/claim/Components/pie-chart/pie-char
 import { ClaimSubmittedComponent } from './Modules/reports/claim-submitted/claim-submitted.component';
 import { ClaimReceivedComponent } from './Modules/reports/claim-received/claim-received.component';
 import { AgeingAnalysisComponent } from './Modules/reports/ageing-analysis/ageing-analysis.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ChangePasswordComponent } from './Core/Components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import { AgeingAnalysisComponent } from './Modules/reports/ageing-analysis/agein
     ClaimSubmittedComponent,
     ClaimReceivedComponent,
     AgeingAnalysisComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,9 @@ import { AgeingAnalysisComponent } from './Modules/reports/ageing-analysis/agein
     NgSelectModule,
     ErrorPopupModule,
     PageHeaderModule,
+    ToastrModule.forRoot(),
     ToastNotificationsModule.forRoot({duration: 6000, type: 'primary',position:'top-right'}),
+    
     NgDynamicBreadcrumbModule,
     ButtonsModule,
     TimelineModule,
