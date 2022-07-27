@@ -17,6 +17,18 @@
                     <div class="row">
                       <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <mat-form-field appearance="outline">
+                          <mat-label>Insured/Driver Name</mat-label>
+                          <input matInput placeholder="Driver Name" required formControlName="CustomerName">
+                          <mat-error *ngIf="(f.CustomerName.errors) || (!f.CustomerName.valid && f.CustomerName.touched)">
+                            <span *ngIf="f.CustomerName.errors?.required" class="error-text">This
+                              field
+                              is
+                              required</span>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <mat-form-field appearance="outline">
                           <mat-label>Claim Number</mat-label>
                           <input matInput placeholder="Claim Number" formControlName="ClaimNumber" required>
                           <mat-error *ngIf="(f.ClaimNumber.errors) || (!f.ClaimNumber.valid && f.ClaimNumber.touched)">
@@ -88,6 +100,40 @@
                           </mat-error>
                         </mat-form-field>
                       </div>
+                      <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Select Hour</mat-label>
+                          <mat-select formControlName="AccidentHour" required>
+                            <ng-container *ngFor="let item of hoursList">
+                              <mat-option [value]="item">{{item}}</mat-option>
+                            </ng-container>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="(f.AccidentHour.errors) || (!f.AccidentHour.valid && f.AccidentHour.touched)">
+                            <span *ngIf="f.AccidentHour.errors?.required" class="error-text">This
+                              field
+                              is
+                              required</span>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Select Minutes</mat-label>
+                          <mat-select formControlName="AccidentMiniute" required>
+                            <ng-container *ngFor="let item of minutesList">
+                              <mat-option [value]="item">{{item}}</mat-option>
+                            </ng-container>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="(f.AccidentMiniute.errors) || (!f.AccidentMiniute.valid && f.AccidentMiniute.touched)">
+                            <span *ngIf="f.AccidentMiniute.errors?.required" class="error-text">This
+                              field
+                              is
+                              required</span>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
                       <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <mat-form-field appearance="outline">
                           <mat-label>Accident Description</mat-label>
@@ -101,7 +147,13 @@
                           </mat-error>
                         </mat-form-field>
                       </div>
-
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="py-3">
+                          <mat-slide-toggle formControlName="WatchListYn">Watch List: <span
+                              class="text-primary">{{f.WatchListYn.value==true?'Yes':'No'}}</span>
+                          </mat-slide-toggle>
+                        </div>
+                      </div>
 
 
                       <ng-container *ngIf="f.ClaimTypeId.value == '12'">
@@ -599,6 +651,7 @@
                         <mat-form-field appearance="outline">
                           <mat-label>Total Value</mat-label>
                           <input type="number" min="0" matInput placeholder="Total Value" formControlName="TotalValue">
+                          <mat-icon matSuffix>{{currencyLabel}}</mat-icon>
                           <mat-error *ngIf="(f.TotalValue.errors) || (!f.TotalValue.valid && f.TotalValue.touched)">
                             <span *ngIf="f.TotalValue.errors?.required" class="error-text">This field is required</span>
                           </mat-error>

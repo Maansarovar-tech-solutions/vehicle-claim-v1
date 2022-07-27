@@ -12,6 +12,11 @@ import { RecoveryClaimViewRoutingModule } from './recovery-claim-view-routing.mo
 import { ClaimTrackingComponent } from '../claim-tracking/claim-tracking.component';
 import {TimelineModule} from 'primeng/timeline';
 import { CardModule } from "primeng/card";
+
+
+
+
+
 @NgModule({
   declarations: [
     RecoveryClaimViewComponent,
@@ -28,7 +33,7 @@ import { CardModule } from "primeng/card";
     IconsModule,
     TablesModule,
     TimelineModule,
-    CardModule
+    CardModule,
   ],
 
   providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],

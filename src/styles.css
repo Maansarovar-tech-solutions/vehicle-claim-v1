@@ -141,6 +141,14 @@ a:hover {
 
 /* To change the font size */
 
+.mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
+  top: 0 !important;
+}
+.mat-form-field-prefix .mat-icon, .mat-form-field-suffix .mat-icon {
+  font-size: 100%;
+  line-height: 2.2;
+}
+
 mat-form-field {
     font-size: 13.50px !important;
 }

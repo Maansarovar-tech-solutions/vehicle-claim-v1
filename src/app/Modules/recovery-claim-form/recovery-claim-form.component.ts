@@ -77,7 +77,11 @@ export class RecoveryClaimFormComponent implements OnInit {
   public plateCodeId: any = '';
   public yearList: any[] = [];
   public filterYearList!: Observable<any[]>;
-  public claimResponse:any;
+
+  public hoursList: any = [];
+  public minutesList: any = [];
+
+  public claimResponse: any;
 
   public bodyId: any = '';
   public EditReq: any = {};
@@ -88,40 +92,53 @@ export class RecoveryClaimFormComponent implements OnInit {
   public claimType: any = '';
   public minDate!: Date;
   public InsuranceEndDate: any;
-  uploadedDocList:any[]=[];uploadDocList:any[]=[];
+  uploadedDocList: any[] = []; uploadDocList: any[] = [];
   public showMenu: boolean = true;
-  docTypeList: any[]=[];
+  docTypeList: any[] = [];
   imageUrl: any;
-  viewFileName: any;@ViewChild('content') content : any;
-  @ViewChild('content1') content1 : any;
+  viewFileName: any; @ViewChild('content') content: any;
+  @ViewChild('content1') content1: any;
   @ViewChild('stepper') private myStepper!: MatStepper;
 
   veiwSelectedDocUrl: any;
   documentAIDetails: any;
   isLinear = false;
   claimStatus: any;
-
+  currencyLabel:any='QAR';
   constructor(
     private _formBuilder: FormBuilder,
     private newClaimService: NewClaimService,
     private toaster: Toaster,
     private router: Router,
-    private modalService:NgbModal,
-    public app:AppComponent
+    private modalService: NgbModal,
+    public app: AppComponent
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.claimEditReq = JSON.parse(
       sessionStorage.getItem('claimEditReq') || '{}'
     );
     this.claimTypeId = sessionStorage.getItem('claimTypeId');
-
+    for (let index = 0; index <= 24; index++) {
+      let hour: any = index;
+      if (index <= 9) {
+        hour = '0' + index.toString();
+      }
+      this.hoursList.push(hour.toString());
+    }
+    for (let index = 0; index <= 60; index++) {
+      let min: any = index;
+      if (index <= 9) {
+        min = '0' + index.toString();
+      }
+      this.minutesList.push(min);
+    }
   }
 
   ngOnInit(): void {
     this.onCreateFormControl();
     // this.onGetPolicyInformation();
     this.onInitialFetchData();
-
+    this.onGetCurrencyLabeleName();
 
     combineLatest([
       this.f.VehicleValue.valueChanges.pipe(startWith(0)),
@@ -133,21 +150,20 @@ export class RecoveryClaimFormComponent implements OnInit {
       this.f.BodilyInjury.valueChanges.pipe(startWith(0)),
       this.f.PropertyDamage.valueChanges.pipe(startWith(0)),
 
-    ]).subscribe(([VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn,BodilyInjury,PropertyDamage]) => {
-      const dataList = [VehicleValue, RepairCost, NoOfDays, PerDayCost,SalvageCost,RecovTotalLossYn,BodilyInjury,PropertyDamage];
-      console.log(dataList)
+    ]).subscribe(([VehicleValue, RepairCost, NoOfDays, PerDayCost, SalvageCost, RecovTotalLossYn, BodilyInjury, PropertyDamage]) => {
+      const dataList = [VehicleValue, RepairCost, NoOfDays, PerDayCost, SalvageCost, RecovTotalLossYn, BodilyInjury, PropertyDamage];
       let sum1 = 0
-      if(dataList[5] == true){
+      if (dataList[5] == true) {
         let repaireCostBodyInjuProperty = (Number(dataList[1]) + Number(dataList[6]) + Number(dataList[7]));
         let subVehicleValueAndSavlvageCost = Number(dataList[0]) - Number(dataList[4]);
         let noDaysAndPerDay = Number(dataList[2]) * Number(dataList[3]);
         this.f.totalOfDayCost.setValue(noDaysAndPerDay);
-        sum1 =  repaireCostBodyInjuProperty + subVehicleValueAndSavlvageCost + noDaysAndPerDay;
-      }else{
+        sum1 = repaireCostBodyInjuProperty + subVehicleValueAndSavlvageCost + noDaysAndPerDay;
+      } else {
         let repaireCostBodyInjuProperty = (Number(dataList[1]) + Number(dataList[6]) + Number(dataList[7]));
         let noDaysAndPerDay = (Number(dataList[2]) * Number(dataList[3]));
         this.f.totalOfDayCost.setValue(noDaysAndPerDay);
-        sum1 =  repaireCostBodyInjuProperty + noDaysAndPerDay;
+        sum1 = repaireCostBodyInjuProperty + noDaysAndPerDay;
 
       }
       this.f.TotalValue.setValue(sum1);
@@ -163,8 +179,10 @@ export class RecoveryClaimFormComponent implements OnInit {
       AccidentDescription: [''],
       SalvageAmount: [''],
       SalvagePortal: [true],
-
-
+      WatchListYn: [false],
+      CustomerName:['', Validators.required],
+      AccidentHour:['', Validators.required],
+      AccidentMiniute:['', Validators.required],
 
       PolicyNumber: ['', Validators.required],
       ClaimNumber: ['', Validators.required],
@@ -183,8 +201,9 @@ export class RecoveryClaimFormComponent implements OnInit {
       OurCivilId: ['', Validators.required],
       InsuranceTypeId: ['', Validators.required],
       VehicleValue: [0, Validators.required],
-      RecovTotalLossYn:[false],
-      SalvageCost:[''],
+      RecovTotalLossYn: [false],
+      SalvageCost: [''],
+
       OtherVehicleChassisNumber: ['', Validators.required],
       OtherPlateCode: ['', Validators.required],
       OtherPlateNumber: ['', Validators.required],
@@ -193,12 +212,12 @@ export class RecoveryClaimFormComponent implements OnInit {
       OtherCivilId: ['', Validators.required],
       InsuranceId: ['', Validators.required],
 
-      BodilyInjury:[0, Validators.required],
-      PropertyDamage:[0, Validators.required],
+      BodilyInjury: [0, Validators.required],
+      PropertyDamage: [0, Validators.required],
       RepairCost: [0, Validators.required],
       NoOfDays: [0, Validators.required],
       PerDayCost: [0, Validators.required],
-      totalOfDayCost:[0],
+      totalOfDayCost: [0],
       TotalValue: [0],
 
       LicenceNumber: [''],
@@ -219,10 +238,20 @@ export class RecoveryClaimFormComponent implements OnInit {
     return this.claimForm.controls;
   }
 
+  onGetCurrencyLabeleName() {
+    let UrlLink = `${this.ApiUrl1}dropdown/currencymaster`;
+    this.newClaimService.onGetMethodSync(UrlLink).subscribe(
+      (data: any) => {
+       this.currencyLabel = data.Result.CodeDescription
+      },
+      (err) => { }
+    );
+  }
+
   async onInitialFetchData() {
     this.claimTypeList = (await this.onGetClaimTypeList()) || [];
-    if(this.claimTypeId == '11'){
-      this.claimTypeList = this.claimTypeList.filter((ele:any)=>ele.Code =='11' || ele.Code =='12')
+    if (this.claimTypeId == '11') {
+      this.claimTypeList = this.claimTypeList.filter((ele: any) => ele.Code == '11' || ele.Code == '12')
     }
     this.filterclaimTypeList = this.f.ClaimTypeId.valueChanges.pipe(
       startWith(''),
@@ -241,7 +270,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     );
 
     this.insurCompanyList = (await this.onGetInsuranceCompList());
-    console.log('insurance-company',this.insurCompanyList);
+    console.log('insurance-company', this.insurCompanyList);
     let companyGroup = [
       {
         letter: 'Participants',
@@ -318,7 +347,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       .then((res: any) => {
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
 
@@ -331,7 +360,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       .then((res: any) => {
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
 
@@ -349,7 +378,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   };
   onDisplayInsurComp = (code: any) => {
     if (!code) return '';
-   let  insurCompanyList = [...this.insurCompanyList[0].names,...this.insurCompanyList[1].names]
+    let insurCompanyList = [...this.insurCompanyList[0].names, ...this.insurCompanyList[1].names]
     let index = insurCompanyList.findIndex((obj: any) => obj.Code == code);
     return insurCompanyList[index].CodeDescription;
   };
@@ -361,7 +390,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       .then((res: any) => {
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
 
@@ -372,7 +401,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       .then((res: any) => {
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
 
@@ -411,7 +440,7 @@ export class RecoveryClaimFormComponent implements OnInit {
 
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
   async onGetRegistrationTypList() {
@@ -421,7 +450,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       .then((res: any) => {
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
 
@@ -432,7 +461,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       .then((res: any) => {
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
   async onGetPlateCodeList() {
@@ -442,7 +471,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       .then((res: any) => {
         return res?.Result;
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
   onGetYears() {
@@ -475,13 +504,13 @@ export class RecoveryClaimFormComponent implements OnInit {
   onDisplayVehicleModel = (code: any) => {
     if (!code) return '';
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
-    if(index) return this.modelList[index].ModelDescription;
+    if (index) return this.modelList[index].ModelDescription;
     else return '';
   };
   onDisplayVehicleModelother = (code: any) => {
     if (!code) return '';
     let index = this.modelListOther.findIndex((obj: any) => obj.ModelId == code);
-    if(index) return this.modelListOther[index].ModelDescription;
+    if (index) return this.modelListOther[index].ModelDescription;
     else return '';
   };
   onDisplayRegistrationType = (code: any) => {
@@ -580,14 +609,14 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.f.BodilyInjury.setValue(AccidentInformation?.BodilyInjury);
           this.f.PropertyDamage.setValue(AccidentInformation?.PropertyDamage);
 
-          if(AccidentInformation.RecovTotalLossYn=='Y')
-          this.f.RecovTotalLossYn.setValue(true);
+          if (AccidentInformation.RecovTotalLossYn == 'Y')
+            this.f.RecovTotalLossYn.setValue(true);
           else this.f.RecovTotalLossYn.setValue(false);
           this.f.SalvageCost.setValue(AccidentInformation.SalvageCost)
           // this.f.TotalValue.setValue(AccidentInformation?.TotalValue)
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -644,7 +673,7 @@ export class RecoveryClaimFormComponent implements OnInit {
 
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
     return response;
   }
 
@@ -675,7 +704,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.onSaveClaimInfo();
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -694,7 +723,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           }
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -747,7 +776,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     };
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log("Policy-save",data);
+        console.log("Policy-save", data);
         if (data?.Message == 'Success') {
           this.PolicyReferenceNumber = data?.Result?.PolicyReferenceNumber
           let obj = {
@@ -757,7 +786,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.onGetPolicyInformation(obj);
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -781,12 +810,15 @@ export class RecoveryClaimFormComponent implements OnInit {
         ClaimTypeId: this.f.ClaimTypeId.value,
         PolicyReferenceNumber: this.PolicyReferenceNumber,
         PoliceReferenceNo: this.f.PoliceReferenceNo.value,
-
-        RecovTotalLossYn:this.f.RecovTotalLossYn.value == true?'Y':'N',
+        CustomerName:this.f.CustomerName.value,
+        AccidentHour:this.f.AccidentHour.value,
+        AccidentMiniute:this.f.AccidentMiniute.value,
+        WatchListYn:this.f.WatchListYn.value == true?'Y':'N',
+        RecovTotalLossYn: this.f.RecovTotalLossYn.value == true ? 'Y' : 'N',
         VehicleValue: this.f.VehicleValue.value,
-        SalvageCost:this.f.SalvageCost.value,
-        BodilyInjury:this.f.BodilyInjury.value,
-        PropertyDamage:this.f.PropertyDamage.value,
+        SalvageCost: this.f.SalvageCost.value,
+        BodilyInjury: this.f.BodilyInjury.value,
+        PropertyDamage: this.f.PropertyDamage.value,
         RepairCost: this.f.RepairCost.value,
         NoOfDays: this.f.NoOfDays.value,
         PerDayCost: this.f.PerDayCost.value,
@@ -802,7 +834,7 @@ export class RecoveryClaimFormComponent implements OnInit {
         RegionCode: userDetails?.RegionCode,
         VehicleChassisNumber: this.VehicleChassisNumber,
         VehicleCode: this.VehicleCode,
-        OpenStatusYn:""
+        OpenStatusYn: ""
       },
       DriverInformation: {
         DriverDateOfBirth: moment(this.f.DriverDateOfBirth.value).format(
@@ -817,9 +849,9 @@ export class RecoveryClaimFormComponent implements OnInit {
 
       RecoveryInformation: {
         VehMakeId: this.f.VehicleMakeIdOther.value,
-        VehMakeDesc:this.onGetCodeDesc(this.makeList,this.f.VehicleMakeIdOther.value),
-        VehModelId:this.f.VehicleModelIdOther.value,
-        VehModelDesc: this.onGetModelCodeDesc(this.modelListOther,this.f.VehicleModelIdOther.value),
+        VehMakeDesc: this.onGetCodeDesc(this.makeList, this.f.VehicleMakeIdOther.value),
+        VehModelId: this.f.VehicleModelIdOther.value,
+        VehModelDesc: this.onGetModelCodeDesc(this.modelListOther, this.f.VehicleModelIdOther.value),
         CivilId: this.f.OtherCivilId.value,
         PlateCode: this.f.OtherPlateCode.value,
         PlateNumber: this.f.OtherPlateNumber.value,
@@ -831,7 +863,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         if (data?.Message == 'Success') {
-          console.log("Claim-save",data);
+          console.log("Claim-save", data);
           this.claimResponse = data?.Result;
           this.ClaimReferenceNumber = this.claimResponse?.ClaimReferenceNumber;
           this.onGetUploadedDocuments(this.ClaimReferenceNumber);
@@ -840,27 +872,27 @@ export class RecoveryClaimFormComponent implements OnInit {
 
         }
       },
-      (err) => {}
+      (err) => { }
     );
 
   }
 
-  onGetCodeDesc(data:any[],code:any){
+  onGetCodeDesc(data: any[], code: any) {
 
-     let index = data.findIndex((ele:any)=>ele.Code == code);
-     console.log(data,code,index)
+    let index = data.findIndex((ele: any) => ele.Code == code);
+    console.log(data, code, index)
 
-     if(index == -1){
-       return code
-     }else{
+    if (index == -1) {
+      return code
+    } else {
       return data[index].CodeDescription;
-     }
+    }
   }
-  onDocumentProceed(statusCode:any){
-    if(statusCode=='PED'){
+  onDocumentProceed(statusCode: any) {
+    if (statusCode == 'PED') {
       this.claimStatus = "Open"
     }
-    else{
+    else {
       this.claimStatus = "Draft"
     }
     let userDetails = this.userDetails?.LoginResponse;
@@ -874,22 +906,22 @@ export class RecoveryClaimFormComponent implements OnInit {
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data)
-        let res:any = data;
-        if(res?.ErrorMessage.length==0){
+        let res: any = data;
+        if (res?.ErrorMessage.length == 0) {
           this.myStepper.next();
         }
       },
       (err) => { }
     );
   }
-  onGetModelCodeDesc(data:any[],code:any){
-    let index = data.findIndex((ele:any)=>ele.ModelId == code);
-     console.log(data,code,index)
-     if(index == -1){
-       return code
-     }else{
+  onGetModelCodeDesc(data: any[], code: any) {
+    let index = data.findIndex((ele: any) => ele.ModelId == code);
+    console.log(data, code, index)
+    if (index == -1) {
+      return code
+    } else {
       return data[index].ModelDescription;
-     }
+    }
   }
 
   onDateFormatt(data: any) {
@@ -911,8 +943,8 @@ export class RecoveryClaimFormComponent implements OnInit {
   private _filterGroup(value: any): any[] {
     if (value) {
       return this.insurCompanyList
-        .map((group:any) => ({letter: group.letter, names: _filter(group.names, value)}))
-        .filter((group:any) => group.names.length > 0);
+        .map((group: any) => ({ letter: group.letter, names: _filter(group.names, value) }))
+        .filter((group: any) => group.names.length > 0);
     }
 
     return this.insurCompanyList;
@@ -921,71 +953,71 @@ export class RecoveryClaimFormComponent implements OnInit {
 
 
   /*Document Section */
-  onUploadDocuments(target:any,fileType:any,type:any){
-    let event:any = target.target.files;
-    console.log("Event ",event);
+  onUploadDocuments(target: any, fileType: any, type: any) {
+    let event: any = target.target.files;
+    console.log("Event ", event);
     let fileList = event;
     for (let index = 0; index < fileList.length; index++) {
       const element = fileList[index];
 
-      var reader:any = new FileReader();
+      var reader: any = new FileReader();
       reader.readAsDataURL(element);
-        var filename = element.name;
+      var filename = element.name;
 
-        let imageUrl: any;
-        reader.onload = (res: { target: { result: any; }; }) => {
-          imageUrl = res.target.result;
-          this.imageUrl = imageUrl;
-          this.uploadDocList.push({ 'url': this.imageUrl,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+      let imageUrl: any;
+      reader.onload = (res: { target: { result: any; }; }) => {
+        imageUrl = res.target.result;
+        this.imageUrl = imageUrl;
+        this.uploadDocList.push({ 'url': this.imageUrl, 'DocTypeId': '', 'filename': element.name, 'JsonString': {} });
 
-        }
+      }
 
     }
-    console.log("Final File List",this.uploadDocList)
+    console.log("Final File List", this.uploadDocList)
   }
-  onDragDocument(target:any,fileType:any,type:any){
+  onDragDocument(target: any, fileType: any, type: any) {
     let fileList = target;
     for (let index = 0; index < fileList.length; index++) {
       const element = fileList[index];
 
-      var reader:any = new FileReader();
+      var reader: any = new FileReader();
       reader.readAsDataURL(element);
-        var filename = element.name;
+      var filename = element.name;
 
-        let imageUrl: any;
-        reader.onload = (res: { target: { result: any; }; }) => {
-          imageUrl = res.target.result;
-          this.imageUrl = imageUrl;
-          this.uploadDocList.push({ 'url': this.imageUrl,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+      let imageUrl: any;
+      reader.onload = (res: { target: { result: any; }; }) => {
+        imageUrl = res.target.result;
+        this.imageUrl = imageUrl;
+        this.uploadDocList.push({ 'url': this.imageUrl, 'DocTypeId': '', 'filename': element.name, 'JsonString': {} });
 
-        }
       }
+    }
   }
-  onViewDocument(index:any) {
+  onViewDocument(index: any) {
     this.viewFileName = this.uploadDocList[index].filename;
     this.veiwSelectedDocUrl = this.uploadDocList[index].url;
     this.modalService.open(this.content, { size: 'xl', backdrop: 'static' });
   }
-  onViewUploadedDocument(index:any) {
+  onViewUploadedDocument(index: any) {
     this.viewFileName = this.uploadedDocList[index].FileName;
     this.veiwSelectedDocUrl = this.uploadedDocList[index].ImgUrl;
     this.modalService.open(this.content);
   }
-  generateApiDetails(index:any){
+  generateApiDetails(index: any) {
     let UrlLink = `${this.ApiUrl1}api/uploadimage`;
     let ReqObj = {
-      "ClaimNo":  this.ClaimReferenceNumber,
+      "ClaimNo": this.ClaimReferenceNumber,
       "ListOfPath": [this.uploadedDocList[index].FilePathName
       ]
     }
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-        if(data.assessment_id){
+        if (data.assessment_id) {
           this.uploadedDocList = [];
           this.onGetUploadedDocuments(this.ClaimReferenceNumber);
         }
-        else{
+        else {
           this.toaster.open({
             text: 'File Size is Very Low',
             caption: 'AI Details Error',
@@ -996,7 +1028,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       (err) => { }
     );
   }
-  viewApiDetails(index:any){
+  viewApiDetails(index: any) {
     let UrlLink = `${this.ApiUrl2}api/imagereport`;
     let ReqObj = {
       "assessment_id": this.uploadedDocList[index].Assessmentid,
@@ -1011,7 +1043,7 @@ export class RecoveryClaimFormComponent implements OnInit {
       (err) => { }
     );
   }
-  onGetOriginalImage(index:any){
+  onGetOriginalImage(index: any) {
     let UrlLink = `${this.ApiUrl1}getoriginalimage`;
     let userDetails = this.userDetails?.LoginResponse;
     let ReqObj = {
@@ -1024,15 +1056,15 @@ export class RecoveryClaimFormComponent implements OnInit {
       (data: any) => {
         console.log(data);
         var a = document.createElement("a");
-      a.href = data.Result.ImgUrl;
-      a.download = data.Result.FileName;
-      // start download
-      a.click();
+        a.href = data.Result.ImgUrl;
+        a.download = data.Result.FileName;
+        // start download
+        a.click();
       },
       (err) => { }
     );
   }
-  onDeleteUploadedDoc(index:any){
+  onDeleteUploadedDoc(index: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1062,38 +1094,38 @@ export class RecoveryClaimFormComponent implements OnInit {
       }
     });
   }
-  saveDocuments(){
-    if(this.ClaimReferenceNumber != undefined && this.ClaimReferenceNumber != ""){
-      let i=0;
+  saveDocuments() {
+    if (this.ClaimReferenceNumber != undefined && this.ClaimReferenceNumber != "") {
+      let i = 0;
       let userDetails = this.userDetails?.LoginResponse;
-      let j = 0;let docDesc:any;
-      console.log("Upload List",this.uploadDocList)
-      for(let document of this.uploadDocList){
+      let j = 0; let docDesc: any;
+      console.log("Upload List", this.uploadDocList)
+      for (let document of this.uploadDocList) {
         let UrlLink = `${this.ApiUrl1}upload`;
-        if(document.DocTypeId){
-          let docList:any = this.docTypeList.filter((option) => option?.Code?.toLowerCase().includes(document.DocTypeId));
+        if (document.DocTypeId) {
+          let docList: any = this.docTypeList.filter((option) => option?.Code?.toLowerCase().includes(document.DocTypeId));
           docDesc = docList[0].CodeDescription;
-          console.log("Filtered DocList",docList,docDesc);
+          console.log("Filtered DocList", docList, docDesc);
           let ReqObj = {
             "ClaimNumber": this.ClaimReferenceNumber,
             "UpdatedBy": userDetails?.LoginId,
             "InsuranceId": userDetails?.InsuranceId,
-            "file":document.url,
-            "DocumentTypeId":document.DocTypeId,
+            "file": document.url,
+            "DocumentTypeId": document.DocTypeId,
             "DocDesc": docDesc,
-            "FileName":document.filename,
+            "FileName": document.filename,
             "Devicefrom": "WebApplication",
             "DocApplicable": "CLAIM_INFO"
           }
           this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
             (data: any) => {
               console.log(data);
-              let res:any = data;
-              if(res?.ErrorMessage.length!=0){
-                j+=1;
+              let res: any = data;
+              if (res?.ErrorMessage.length != 0) {
+                j += 1;
               }
-              i+=1;
-              if(i==this.uploadDocList.length && j==0){
+              i += 1;
+              if (i == this.uploadDocList.length && j == 0) {
                 this.toaster.open({
                   text: 'Documents Uploaded Successfully',
                   caption: 'Upload',
@@ -1102,7 +1134,7 @@ export class RecoveryClaimFormComponent implements OnInit {
                 this.uploadDocList = [];
                 this.onGetUploadedDocuments(this.ClaimReferenceNumber);
               }
-              else{
+              else {
                 this.uploadedDocList = [];
                 this.onGetUploadedDocuments(this.ClaimReferenceNumber);
               }
@@ -1113,7 +1145,7 @@ export class RecoveryClaimFormComponent implements OnInit {
 
       }
     }
-    else{
+    else {
       this.toaster.open({
         text: 'Please Enter Valid Claim Number',
         caption: 'Claim Number',
@@ -1121,11 +1153,11 @@ export class RecoveryClaimFormComponent implements OnInit {
       });
     }
   }
-  onGetUploadedDocuments(claimNo:any){
+  onGetUploadedDocuments(claimNo: any) {
     let UrlLink = `${this.ApiUrl1}getdoclist`;
     let userDetails = this.userDetails?.LoginResponse;
     let ReqObj = {
-      "ClaimNumber":  claimNo,
+      "ClaimNumber": claimNo,
       "InsuranceId": userDetails?.InsuranceId,
       "DocApplicable": "CLAIM_INFO"
     }
@@ -1140,7 +1172,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   hide() {
     this.modalService.dismissAll();
   }
-  onDeleteDocument(index:any) {
+  onDeleteDocument(index: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1152,39 +1184,39 @@ export class RecoveryClaimFormComponent implements OnInit {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-          this.uploadDocList.splice(index,1);
+        this.uploadDocList.splice(index, 1);
       }
     })
   }
-  onDownloadImage(documentData:any,fileData:any){
+  onDownloadImage(documentData: any, fileData: any) {
     var a = document.createElement("a");
-      a.href = fileData;
-      a.download = documentData.Filename;
-      document.body.appendChild(a);
-      a.click();
+    a.href = fileData;
+    a.download = documentData.Filename;
+    document.body.appendChild(a);
+    a.click();
   }
-  getDocumentTypeList(){
+  getDocumentTypeList() {
     let UrlLink = `${this.ApiUrl1}dropdown/doctypes`;
     let userDetails = this.userDetails?.LoginResponse;
     let ReqObj = {
       "InsuranceId": userDetails?.InsuranceId,
-      "DocApplicable":"CLAIM_INFO"
+      "DocApplicable": "CLAIM_INFO"
     }
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log("Document Types",data);
+        console.log("Document Types", data);
         this.docTypeList = data.Result;
       },
       (err) => { }
     );
   }
 
-  okay(){
-    if(this.claimTypeId == 12){
-       this.router.navigate(['Home/Claim']);
-    }else{
+  okay() {
+    if (this.claimTypeId == 12) {
+      this.router.navigate(['Home/Claim']);
+    } else {
       this.router.navigate(['Home/Receivable']);
 
     }
-   }
+  }
 }

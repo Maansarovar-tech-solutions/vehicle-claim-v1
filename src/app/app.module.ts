@@ -49,7 +49,6 @@ import { PieChartComponent } from './Modules/claim/Components/pie-chart/pie-char
 import { ClaimSubmittedComponent } from './Modules/reports/claim-submitted/claim-submitted.component';
 import { ClaimReceivedComponent } from './Modules/reports/claim-received/claim-received.component';
 import { AgeingAnalysisComponent } from './Modules/reports/ageing-analysis/ageing-analysis.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +89,7 @@ import { AgeingAnalysisComponent } from './Modules/reports/ageing-analysis/agein
     NgDynamicBreadcrumbModule,
     ButtonsModule,
     TimelineModule,
-    CardModule
+    CardModule,
   ],
   providers: [
     ɵb,

@@ -182,34 +182,44 @@
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                       <div class="row">
-                        <div class="col-md-3 text-end" [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC'|| claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'offset-md-6' : 'offset-md-9'">
-                          <small>Request Amount</small></div>
-                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC'|| claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                          <small>Approved Amount</small></div>
+                        <div class="col-md-3 text-end"
+                          [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC'|| claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'offset-md-6' : 'offset-md-9'">
+                          <small>Request Amount</small>
+                        </div>
+                        <div class="col-md-3 text-end"
+                          *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC'|| claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <small>Approved Amount</small>
+                        </div>
                       </div>
                     </li>
-                    <li class="list-group-item" *ngIf="accidentInformation?.BodilyInjury && accidentInformation?.BodilyInjury !=''">
+                    <li class="list-group-item"
+                      *ngIf="accidentInformation?.BodilyInjury && accidentInformation?.BodilyInjury !=''">
                       <div class="row">
                         <div class="col-md-6">Body Injury</div>
                         <div class="text-end"
                           [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
                           {{accidentInformation?.BodilyInjury}}</div>
-                          <ng-container *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                            <div class="col-md-3 text-end">
-                              <input type="number" min="0" class="form-control form-control-sm" formControlName="BodilyInjury">
-                            </div>
-                          </ng-container>
+                        <ng-container
+                          *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <div class="col-md-3 text-end">
+                            <input type="number" min="0" class="form-control form-control-sm"
+                              formControlName="BodilyInjury">
+                          </div>
+                        </ng-container>
 
                       </div>
                     </li>
-                    <li class="list-group-item" *ngIf="accidentInformation?.PropertyDamage && accidentInformation?.PropertyDamage !=''">
+                    <li class="list-group-item"
+                      *ngIf="accidentInformation?.PropertyDamage && accidentInformation?.PropertyDamage !=''">
                       <div class="row">
                         <div class="col-md-6">Property Damage</div>
                         <div class="text-end"
                           [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
                           {{accidentInformation?.PropertyDamage}}</div>
-                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                          <input type="number" min="0" class="form-control form-control-sm" formControlName="PropertyDamage">
+                        <div class="col-md-3 text-end"
+                          *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <input type="number" min="0" class="form-control form-control-sm"
+                            formControlName="PropertyDamage">
                         </div>
                       </div>
                     </li>
@@ -220,35 +230,42 @@
                           <div class="text-end"
                             [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
                             {{accidentInformation?.VehicleValue}}</div>
-                          <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                            <input type="number" min="0" formControlName="VehicleValue" class="form-control form-control-sm">
+                          <div class="col-md-3 text-end"
+                            *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                            <input type="number" min="0" formControlName="VehicleValue"
+                              class="form-control form-control-sm">
                           </div>
                         </div>
                       </li>
-                      <li class="list-group-item" *ngIf="accidentInformation?.SalvageCost && accidentInformation?.SalvageCost !=''">
+                      <li class="list-group-item"
+                        *ngIf="accidentInformation?.SalvageCost && accidentInformation?.SalvageCost !=''">
                         <div class="row">
                           <div class="col-md-6">Salvage Amount</div>
                           <div class="text-end"
                             [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
                             {{accidentInformation?.SalvageCost}}</div>
-                          <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                            <input type="number" min="0" formControlName="SalvageCost" class="form-control form-control-sm">
+                          <div class="col-md-3 text-end"
+                            *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                            <input type="number" min="0" formControlName="SalvageCost"
+                              class="form-control form-control-sm">
                           </div>
                         </div>
                       </li>
                     </ng-container>
-                      <li class="list-group-item">
-                        <div class="row">
-                          <div class="col-md-6">Repair Cost</div>
-                          <div class="text-end"
-                            [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
-                            {{accidentInformation?.RepairCost}}</div>
-                          <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                            <input type="number" min="0" formControlName="RepairCost" class="form-control form-control-sm">
+                    <li class="list-group-item">
+                      <div class="row">
+                        <div class="col-md-6">Repair Cost</div>
+                        <div class="text-end"
+                          [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
+                          {{accidentInformation?.RepairCost}}</div>
+                        <div class="col-md-3 text-end"
+                          *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <input type="number" min="0" formControlName="RepairCost"
+                            class="form-control form-control-sm">
 
-                          </div>
                         </div>
-                      </li>
+                      </div>
+                    </li>
 
                     <li class="list-group-item">
                       <div class="row">
@@ -263,8 +280,10 @@
                           [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
                           {{accidentInformation?.NoOfDays * accidentInformation?.PerDayCost}}
                         </div>
-                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                          <input type="number" min="0" formControlName="PerDayCost" class="form-control form-control-sm">
+                        <div class="col-md-3 text-end"
+                          *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <input type="number" min="0" formControlName="PerDayCost"
+                            class="form-control form-control-sm">
                         </div>
                       </div>
                     </li>
@@ -274,8 +293,10 @@
                         <div class="text-end"
                           [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
                           {{accidentInformation?.TotalValue}}</div>
-                        <div class="col-md-3 text-end" *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
-                          <input type="number" min="0" formControlName="TotalValue" class="form-control form-control-sm">
+                        <div class="col-md-3 text-end"
+                          *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
+                          <input type="number" min="0" formControlName="TotalValue"
+                            class="form-control form-control-sm">
                         </div>
                       </div>
                     </li>
@@ -617,7 +638,18 @@
       </div>
       <div class="modal-body">
         <h3 class="text-center">{{viewFileName}}</h3>
-        <img [src]="veiwSelectedDocUrl" width="100%">
+        <ng-container *ngIf="viewFileName.charAt(viewFileName.length - 1) == '4';else image;">
+          <video controls >
+            <source [src]="veiwSelectedDocUrl" type="video/mp4" />
+            Browser not supported
+          </video>
+
+        </ng-container>
+        <ng-template #image>
+          <img [src]="veiwSelectedDocUrl" width="100%">
+        </ng-template>
+
+
       </div>
     </div>
   </div>
