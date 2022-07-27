@@ -19,6 +19,8 @@ export class LoginService {
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public Token:any;
+  public username='motor';
+  public password='motor123#';
   constructor(
     private http: HttpClient,
     private authService:AuthService
@@ -69,6 +71,13 @@ export class LoginService {
   onPostMethodSync(UrlLink: string, ReqObj: any): Observable<any[]> {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + this.getToken());
+    return this.http
+      .post<any>(UrlLink, ReqObj, { headers: headers })
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  onPostMethodBasicSync(UrlLink: string, ReqObj: any): Observable<any[]> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'Basic ' + window.btoa(this.username+':'+this.password));
     return this.http
       .post<any>(UrlLink, ReqObj, { headers: headers })
       .pipe(retry(1), catchError(this.handleError));

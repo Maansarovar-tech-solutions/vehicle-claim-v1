@@ -4,18 +4,20 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/Auth/auth.service';
 import * as Mydatas from '../../../../assets/app-config.json';
-import { LoginService } from './login.service';
 import * as CryptoJS from 'crypto-js';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import {ToastrService} from 'ngx-toastr'
 import { Toaster } from 'ngx-toast-notifications';
+import { LoginService } from '../login/login.service';
+
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.css']
 })
-export class LoginComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit {
+
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CryKey: any = this.AppConfig.CryKey;
@@ -31,12 +33,18 @@ export class LoginComponent implements OnInit {
     private router:Router,
     private addVehicleService:AddVehicleService,
     private toaster: Toaster
-  ) { }
+  ) {
+    
+
+   }
 
   ngOnInit(): void {
     this.onCreateFormControl();
     //this.onGetInsuranceTypList();
-
+    let userName = sessionStorage.getItem('userName');
+    if(userName){
+      this.f.username.setValue(userName);
+    }
 
   }
 
@@ -44,6 +52,8 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
       InsuranceId:[''],
     });
   }
@@ -66,62 +76,55 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if(this.loginForm.valid){
-      let UrlLink = `${this.ApiUrl1}authentication/login`;
-      let ReqObj = {
-        "InsuranceId":  this.f.InsuranceId.value,
-        "UserId": this.f.username.value,
-        "Password": this.f.password.value,
+      let newPass = this.f.newPassword.value, confirmPassword = this.f.confirmPassword.value;
+      if(newPass == confirmPassword){
+          let UrlLink = `${this.ApiUrl1}basicauth/changepassword`;
+          let ReqObj = {
+            "NewPassword": this.f.newPassword.value,
+            "OldPassword": this.f.password.value,
+            "UserId": this.f.username.value
+          }
+          this.loginService.onPostMethodBasicSync(UrlLink, ReqObj).subscribe(
+            (data: any) => {
+              let res = data;
+              // if(res?.Errors.length!=0){
+              //   for(let error of res.Errors){
+              //     this.toaster.open({
+              //       text: error.Message,
+              //       caption: error.Field,
+              //       type: 'danger',
+              //     });
+              //   }
+                
+              // }
+              // else{
+                  if(data?.Message=='Success'){
+                    this.toaster.open({
+                      text: "Password Updated Successfully",
+                      caption: "Change Password",
+                      type: 'success',
+                    });
+                    this.router.navigate(['/Login']);
+                  }
+              //}
+            },
+    
+        (err: any) => { console.log(err)}
+          );
       }
-      this.loginService.onPostMethodSync(UrlLink, ReqObj).subscribe(
-        (data: any) => {
-          let res = data;
-          if(res?.Errors){
-            for(let error of res.Errors){
-              this.toaster.open({
-                text: error.Message,
-                caption: error.Field,
-                type: 'danger',
-              });
-            }
-            if(res?.ChangePasswordYn == 'Y'){
-              this.changePassword();
-            }
-          }
-          else{
-            if(data?.LoginResponse?.Token != null){
-              let Token = data?.LoginResponse?.Token;
-              this.authService.login(data);
-              this.authService.UserToken(Token);
-              sessionStorage.setItem("Userdetails", JSON.stringify(data));
-              sessionStorage.setItem("UserToken",Token);
-  
-              if(data?.LoginResponse?.ParticipantYn == "N"){
-                sessionStorage.setItem('claimType','Payable')
-                this.router.navigate(['/Home/Payable']);
-              }else{
-                sessionStorage.setItem('claimType','Receivable')
-                this.router.navigate(['/Home/Receivable']);
-              }
-            }
-          }
-          
-        },
-
-    (err: any) => { console.log(err)}
-      );
+      else{
+        this.toaster.open({
+          text: "New Passwords Not Matching",
+          caption: "Confirm Password",
+          type: 'danger',
+        });
+      }
     }
 
 
 
   }
-  changePassword(){
-    if(this.f.username.value != ''){
-      sessionStorage.setItem('userName',this.f.username.value);
-    }else{
-      sessionStorage.clear();
-    }
-    this.router.navigate(['/ChangePassword'])
-  }
+
   decryptData(data:any) {
     try {
       const bytes = CryptoJS.AES.decrypt(data, this.CryKey);
@@ -141,12 +144,5 @@ export class LoginComponent implements OnInit {
       console.log(e);
     }
   }
-  handleError(error: HttpErrorResponse) {
-    return throwError(error);
-  }
-
-
 
 }
-
-

@@ -7,6 +7,7 @@ import { HomeLayoutComponent } from './Core/Layout/home-layout/home-layout.compo
 import { LoginLayoutComponent } from './Core/Layout/login-layout/login-layout.component';
 import { AdminLayoutComponent } from './Core/Layout/admin-layout/admin-layout.component';
 import { CustomPreloadingStrategy } from './custom-preloading-strategy';
+import { ChangePasswordComponent } from './Core/Components/change-password/change-password.component';
 const routes: Routes = [
   { path: '', redirectTo: 'Login', pathMatch: 'full' },
   {
@@ -74,6 +75,10 @@ const routes: Routes = [
   {
     path: 'Login',
     component: LoginLayoutComponent,
+  },
+  {
+    path: 'ChangePassword',
+    component: ChangePasswordComponent,
   },
 
 ];
