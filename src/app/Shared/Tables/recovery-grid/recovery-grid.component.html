@@ -2,27 +2,41 @@
 
   <div class="row">
     <div class="col-md-5">
-      <div class="input-form-box">
+      <mat-form-field appearance="standard">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="key..." (keyup)="applyFilter()" formControlName="searchValue">
+        <span matSuffix><i class="fas fa-search"></i></span>
+      </mat-form-field>
+      <!-- <div class="input-form-box">
         <input type="text" placeholder="Search..." class="input-form-control" (keyup)="applyFilter()" formControlName="searchValue">
         <span class="input-form-icon">
           <i class="fas fa-search"></i>
         </span>
-      </div>
+      </div> -->
     </div>
     <div class="col-md-5">
-      <div class="input-form-box">
+      <mat-form-field appearance="standard">
+        <mat-label>Select Days</mat-label>
+        <mat-select formControlName="InsuranceId" (selectionChange)="daysFilter.emit(f.InsuranceId.value)">
+          <mat-option value="0">None</mat-option>
+          <mat-option value="10">10-Days</mat-option>
+          <mat-option value="20">20-Days</mat-option>
+          <mat-option value="30">30-Days</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- <div class="input-form-box">
         <select formControlName="InsuranceId" class="input-form-control" (change)="daysFilter.emit(f.InsuranceId.value)">
           <option value="0">None</option>
           <option value="10">10-Days</option>
           <option value="20">20-Days</option>
           <option value="30">30-Days</option>
         </select>
-      </div>
+      </div> -->
     </div>
   </div>
 </form>
 
-  <table style="width: 100% !important;" matTableResponsive mat-table [dataSource]="dataSource" matSort
+  <table style="width: 100% !important;"  mat-table [dataSource]="dataSource" matSort
     [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
     <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key">
       <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header">{{ columnHeader[i]["display"] }}</th>

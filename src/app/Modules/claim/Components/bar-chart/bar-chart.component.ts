@@ -62,7 +62,7 @@ export class BarChartComponent implements OnInit {
     for (let index = 0; index < items.length; index++) {
       const element = items[index];
       categories.push(element.InsuraceCompanyName);
-      seriesData.push(Number(element.RecoveryCount));
+      seriesData.push(Number(element.TotalCount));
 
     }
     const series = [

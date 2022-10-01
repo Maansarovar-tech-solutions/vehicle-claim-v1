@@ -65,6 +65,7 @@ export class ClaimStatusComponent implements OnInit {
   approvedSalvageValue:any="";approvedRepairCost:any="";
   approvedReplacementCost:any="";approvedTotalClaimCost:any="";
   faultCompany: boolean = false;
+  currencyLabel:any='';
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
@@ -125,6 +126,7 @@ export class ClaimStatusComponent implements OnInit {
     this.onCreateFormControl();
     this.onFetchInitialData();
     this.onGetUploadedDocuments();
+    this.onGetCurrencyLabeleName()
 
     combineLatest([
       this.f.claimStatus.valueChanges.pipe(startWith('')),
@@ -155,6 +157,8 @@ export class ClaimStatusComponent implements OnInit {
     this.claimStatusForm = this._formBuilder.group({
       claimStatus: ['PED', Validators.required],
       claimStatusRemarks: ['', Validators.required],
+      DebitNoteNo: ['', Validators.required],
+      CreditNoteNo: ['', Validators.required],
       reqAmount: ['', Validators.required],
       acceAmount: ['', Validators.required],
 
@@ -187,6 +191,15 @@ export class ClaimStatusComponent implements OnInit {
   // let index = this.claimStatusList.findIndex((ele:any)=>ele.StatusCode == this.f.claimStatus.value);
   // console.log(index)
   // this.statusName = this.claimStatusList[index].StatusDesc;
+  }
+  onGetCurrencyLabeleName() {
+    let UrlLink = `${this.ApiUrl1}dropdown/currencymaster`;
+    this.newClaimService.onGetMethodSync(UrlLink).subscribe(
+      (data: any) => {
+       this.currencyLabel = data.Result.CodeDescription
+      },
+      (err) => { }
+    );
   }
   onGetUploadedDocuments(){
     let UrlLink = `${this.ApiUrl1}getdoclist`;
@@ -552,6 +565,8 @@ export class ClaimStatusComponent implements OnInit {
       "StatusCode": this.f.claimStatus.value,
       "DocRefId":docIdList,
       "Remarks":this.f.claimStatusRemarks.value,
+      "DebitNote":this.f.DebitNoteNo.value,
+      "CreditNote":this.f.CreditNoteNo.value,
       "AcceptedReserveAmount":this.f.acceAmount.value,
       "ReserveAmount":this.f.reqAmount.value,
       "RecovClaimNo":this.recoveryClaimNo,
@@ -698,6 +713,8 @@ export class ClaimStatusComponent implements OnInit {
           }
 
           this.claimStatusList = await this.onGetInsuranceStatusList(this.commonInformation.Status)||[];
+          console.log(this.claimStatusList)
+          this.f.claimStatus.setValue(this.claimStatusList[0].StatusCode)
           //this.getCurrentStatusList(event);
         }
       },

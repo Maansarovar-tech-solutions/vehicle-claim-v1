@@ -1,4 +1,3 @@
-import { DashboardService } from './Modules/dashboard/dashboard.service';
 import { ExistingClaimComponent } from './Modules/existing-claim/existing-claim.component';
 import { ClaimStatusComponent } from './Modules/claim-status/claim-status.component';
 import { TablesModule } from './Shared/Tables/tables.module';
@@ -34,24 +33,20 @@ import { ToastNotificationsModule } from 'ngx-toast-notifications';
 import { ErrorPopupModule } from './Shared/Modal/error-popup.module';
 import { PageHeaderModule } from './Shared/Header/page-header.module';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
-import { AccountStatementComponent } from './Modules/account-statement/account-statement.component';
 import { BreadcrumbComponent } from './Modules/breadcrumb/breadcrumb.component';
-import { PolicyComponent } from './Modules/policy/policy.component';
 import { AddNewLoginDetailsComponent } from './Modules/admin/loginCreation/add-new-login-details/add-new-login-details.component';
-import { NewLoginDetailsComponent } from './Modules/admin/loginCreation/new-login-details/new-login-details.component';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { RecoveryClaimFormComponent } from './Modules/recovery-claim-form/recovery-claim-form.component';
-import { ExistingLoginDetailsComponent } from './Modules/admin/loginCreation/existing-login-details/existing-login-details.component';
 import { DragDropFileUploadDirective } from './Shared/Directives/drag-drop.directive';
-import { ClaimComponent } from './Modules/claim/claim.component';
-import { PieChartComponent } from './Modules/claim/Components/pie-chart/pie-chart.component';
 import { ClaimSubmittedComponent } from './Modules/reports/claim-submitted/claim-submitted.component';
 import { ClaimReceivedComponent } from './Modules/reports/claim-received/claim-received.component';
 import { AgeingAnalysisComponent } from './Modules/reports/ageing-analysis/ageing-analysis.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import { ChangePasswordComponent } from './Core/Components/change-password/change-password.component';
+import { WatchListComponent } from './Modules/watch-list/watch-list.component';
+import { StatementUploadComponent } from './Modules/statement-upload/statement-upload.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +67,7 @@ import { ChangePasswordComponent } from './Core/Components/change-password/chang
     ClaimReceivedComponent,
     AgeingAnalysisComponent,
     ChangePasswordComponent,
+    StatementUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +88,7 @@ import { ChangePasswordComponent } from './Core/Components/change-password/chang
     PageHeaderModule,
     ToastrModule.forRoot(),
     ToastNotificationsModule.forRoot({duration: 6000, type: 'primary',position:'top-right'}),
-    
+
     NgDynamicBreadcrumbModule,
     ButtonsModule,
     TimelineModule,

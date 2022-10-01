@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>Documen Upload</h2>
+<mat-dialog-content class="mat-typography">
+  <form >
+    <div class="row">
+      <!-- <div class="col-12 col-md-4 col-lg-4">
+        Insurance Company
+
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        Month
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        Year
+      </div> -->
+      <div class="col-12"  *ngIf="data.claimType == 'Payable'">
+        <input style="display: none;" type="file" (change)="onUploadDocument($event,'click')" #doc>
+        <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocument($event,'drop')" (click)="doc.click()">
+          <div>
+            <div class="center">
+              <b class="text-dark">
+                <i class="far fa-images"></i> Drag or Click</b>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-12" *ngIf="documentList?.length>0">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th>Claim Number</th>
+              <th>FileName</th>
+              <th>Document Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of documentList;let id = index;">
+              <tr>
+                <td>{{item?.ClaimNumber}}</td>
+                <td>{{item?.FileName}}</td>
+                <td>
+                  <button class="btn btn-light btn-sm text-primary mx-2" (click)="onDownloadDoc(item)">
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <ng-container *ngIf="data.claimType == 'Payable'">
+                    <button class="btn btn-light btn-sm text-danger mx-2" (click)="onDeleteDocument(item)">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

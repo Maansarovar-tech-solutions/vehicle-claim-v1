@@ -5,7 +5,7 @@
       <ng-template matStepLabel>Claim Intimation</ng-template>
       <form [formGroup]="claimForm">
 
-        <div class="vision-card" style="padding: 1rem 7rem;">
+        <div class="vision-card">
           <div>
             <div class="vision-card-body">
               <div class="recovery-claim-form">
@@ -100,40 +100,46 @@
                           </mat-error>
                         </mat-form-field>
                       </div>
-                      <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                        <mat-form-field appearance="outline">
-                          <mat-label>Select Hour</mat-label>
-                          <mat-select formControlName="AccidentHour" required>
-                            <ng-container *ngFor="let item of hoursList">
-                              <mat-option [value]="item">{{item}}</mat-option>
-                            </ng-container>
-                          </mat-select>
-                          <mat-error
-                            *ngIf="(f.AccidentHour.errors) || (!f.AccidentHour.valid && f.AccidentHour.touched)">
-                            <span *ngIf="f.AccidentHour.errors?.required" class="error-text">This
-                              field
-                              is
-                              required</span>
-                          </mat-error>
-                        </mat-form-field>
+                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                         <span>Select Accident Time</span>
+                         <div class="row">
+                          <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <mat-form-field appearance="outline">
+                              <mat-label>Select Hour</mat-label>
+                              <mat-select formControlName="AccidentHour" required>
+                                <ng-container *ngFor="let item of hoursList">
+                                  <mat-option [value]="item">{{item}}</mat-option>
+                                </ng-container>
+                              </mat-select>
+                              <mat-error
+                                *ngIf="(f.AccidentHour.errors) || (!f.AccidentHour.valid && f.AccidentHour.touched)">
+                                <span *ngIf="f.AccidentHour.errors?.required" class="error-text">This
+                                  field
+                                  is
+                                  required</span>
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <mat-form-field appearance="outline">
+                              <mat-label>Select Minutes</mat-label>
+                              <mat-select formControlName="AccidentMiniute" required>
+                                <ng-container *ngFor="let item of minutesList">
+                                  <mat-option [value]="item">{{item}}</mat-option>
+                                </ng-container>
+                              </mat-select>
+                              <mat-error
+                                *ngIf="(f.AccidentMiniute.errors) || (!f.AccidentMiniute.valid && f.AccidentMiniute.touched)">
+                                <span *ngIf="f.AccidentMiniute.errors?.required" class="error-text">This
+                                  field
+                                  is
+                                  required</span>
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                         </div>
                       </div>
-                      <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                        <mat-form-field appearance="outline">
-                          <mat-label>Select Minutes</mat-label>
-                          <mat-select formControlName="AccidentMiniute" required>
-                            <ng-container *ngFor="let item of minutesList">
-                              <mat-option [value]="item">{{item}}</mat-option>
-                            </ng-container>
-                          </mat-select>
-                          <mat-error
-                            *ngIf="(f.AccidentMiniute.errors) || (!f.AccidentMiniute.valid && f.AccidentMiniute.touched)">
-                            <span *ngIf="f.AccidentMiniute.errors?.required" class="error-text">This
-                              field
-                              is
-                              required</span>
-                          </mat-error>
-                        </mat-form-field>
-                      </div>
+
                       <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <mat-form-field appearance="outline">
                           <mat-label>Accident Description</mat-label>
@@ -650,8 +656,8 @@
                       <div class="col-12  col-lg-4 offset-lg-8">
                         <mat-form-field appearance="outline">
                           <mat-label>Total Value</mat-label>
-                          <input type="number" min="0" matInput placeholder="Total Value" formControlName="TotalValue">
-                          <mat-icon matSuffix>{{currencyLabel}}</mat-icon>
+                          <mat-icon matPrefix>{{currencyLabel}}</mat-icon>
+                          <input type="number" min="0" matInput placeholder="Total Value" formControlName="TotalValue" class="ps-3">
                           <mat-error *ngIf="(f.TotalValue.errors) || (!f.TotalValue.valid && f.TotalValue.touched)">
                             <span *ngIf="f.TotalValue.errors?.required" class="error-text">This field is required</span>
                           </mat-error>
@@ -674,7 +680,7 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Document Upload</ng-template>
-      <div class="vision-card" style="padding: 1rem 17rem;">
+      <div class="vision-card" >
         <div>
           <ul class="list-group claimdetails">
             <li class="list-group-item">
@@ -791,9 +797,9 @@
                 </div>
               </div>
               <div class="text-center">
-                <button class="vision-btn maroon-bg-color" matStepperPrevious>Back</button>
-                <button class="vision-btn blue-bg-color" (click)="onDocumentProceed('DFT')">Save</button>
-                <button class="vision-btn blue-bg-color" (click)="onDocumentProceed('PED')">Submit</button>
+                <button class="vision-btn maroon-bg-color m-1" matStepperPrevious>Back</button>
+                <button class="vision-btn blue-bg-color m-1" (click)="onDocumentProceed('DFT')">Save</button>
+                <button class="vision-btn blue-bg-color m-1" (click)="onDocumentProceed('PED')">Submit</button>
               </div>
             </div>
           </div>
@@ -802,7 +808,7 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Confirmation</ng-template>
-      <div class="vision-card" style="padding: 1rem 17rem;">
+      <div class="vision-card">
         <ul class="list-group claimdetails">
           <li class="list-group-item">
             <div>Claim Number</div>
@@ -852,7 +858,16 @@
       </div>
       <div class="modal-body">
         <h3 class="text-center">{{viewFileName}}</h3>
-        <img [src]="veiwSelectedDocUrl" width="100%">
+        <ng-container *ngIf="viewFileName.charAt(viewFileName.length - 1) == '4';else image;">
+          <video controls >
+            <source [src]="veiwSelectedDocUrl" type="video/mp4" />
+            Browser not supported
+          </video>
+
+        </ng-container>
+        <ng-template #image>
+          <img [src]="veiwSelectedDocUrl" width="100%">
+        </ng-template>
       </div>
     </div>
   </div>

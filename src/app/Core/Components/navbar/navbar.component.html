@@ -235,16 +235,18 @@
         <div class="well text-right">
           <div *ngIf="pageName == 'Receivable'">
             <button type="button" class="report-btn" (click)="uploadExcelModal()"><img
-                src="./assets/images/uploadIcon.png" class="report-icon" /> <span class="report-text">Claim
-                Upload</span></button>
+                src="./assets/images/uploadIcon.png" class="report-icon" />
+                <span class="report-text">Claim Upload</span>
+              </button>
             <button type="button" (click)="onStartNewClaim(11)" class="report-btn"><img
-                src="./assets/images/recovery.png" class="report-icon" /> <span class="report-text">Add
-                Recovery Claim</span></button>
+                src="./assets/images/recovery.png" class="report-icon" />
+                <span class="report-text">Add Recovery Claim</span>
+              </button>
           </div>
-          <div *ngIf="pageName == 'Statement Of Account'">
+          <!-- <div *ngIf="pageName == 'Statement Of Account'">
             <button type="button" class="report-btn"><img src="./assets/images/losses.png" class="report-icon" /> <span
                 class="report-text">Add SOA</span></button>
-          </div>
+          </div> -->
           <div *ngIf="pageName == 'Claim'">
             <button type="button" (click)="onStartNewClaim(12)" class="report-btn"><img src="./assets/images/losses.png"
                 class="report-icon" /> <span class="report-text">Add Claim</span></button>
@@ -275,7 +277,7 @@
 
     <div class="main-content">
       <div *ngIf="showIframe">
-        <iframe src="http://192.168.1.9:8081/swagger-ui/" WIDTH='98%' style="margin-left:20px;min-height: 900px;"
+        <iframe src="http://102.69.166.162:8080/VehRegistryApi/swagger-ui/" WIDTH='98%' style="margin-left:20px;min-height: 900px;"
           HEIGHT='100%'>
         </iframe>
       </div>

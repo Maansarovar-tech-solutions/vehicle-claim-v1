@@ -77,7 +77,6 @@ export class NavbarComponent implements OnInit {
         this.pageName = customData;
         console.log("PageName",this.pageName)
         this.sharedService.onGetPageTitle(this.pageName);
-
       });
 
   }

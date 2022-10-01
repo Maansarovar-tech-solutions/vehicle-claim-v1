@@ -504,13 +504,13 @@ export class RecoveryClaimFormComponent implements OnInit {
   onDisplayVehicleModel = (code: any) => {
     if (!code) return '';
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
-    if (index) return this.modelList[index].ModelDescription;
+    if (index != -1) return this.modelList[index].ModelDescription;
     else return '';
   };
   onDisplayVehicleModelother = (code: any) => {
     if (!code) return '';
     let index = this.modelListOther.findIndex((obj: any) => obj.ModelId == code);
-    if (index) return this.modelListOther[index].ModelDescription;
+    if (index != -1) return this.modelListOther[index].ModelDescription;
     else return '';
   };
   onDisplayRegistrationType = (code: any) => {
@@ -579,6 +579,10 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.f.AccidentDescription.setValue(
             AccidentInformation?.AccidentDescription
           );
+          this.f.WatchListYn.setValue(AccidentInformation?.WatchListYn);
+          this.f.CustomerName.setValue(AccidentInformation?.CustomerName);
+          this.f.AccidentHour.setValue(AccidentInformation?.AccidentHour);
+          this.f.AccidentMiniute.setValue(AccidentInformation?.AccidentMiniute);
           this.f.ClaimNumber.setValue(AccidentInformation?.ClaimNumber);
 
           this.f.LicenceNumber.setValue(DriverInformation?.LicenceNumber);

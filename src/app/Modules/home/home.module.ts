@@ -11,12 +11,15 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { HomeRoutingModule } from './home-routing.module';
 import { AccountStatementComponent } from '../account-statement/account-statement.component';
 import { PageHeaderModule } from 'src/app/Shared/Header/page-header.module';
+import { WatchListComponent } from '../watch-list/watch-list.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    AccountStatementComponent
+    AccountStatementComponent,
+    WatchListComponent,
+
     ],
   imports: [
     CommonModule,

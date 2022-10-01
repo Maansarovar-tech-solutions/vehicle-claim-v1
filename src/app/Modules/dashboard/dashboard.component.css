@@ -1,17 +1,21 @@
 .vision-grid {
-    grid-area: main;
     border-radius: 10px;
     display: grid;
     grid-auto-rows: auto;
     grid-gap: 20px;
 }
-
+/* .follow-chart{
+  grid-area: 1 / 1 / span 2 / span 2;
+}
+.company-chart{
+  grid-area: 2 / 1 / span 2 / span 2;
+} */
 .vision-grid-column-3 {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
 }
 
-.vision-grid-column-4 {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+.vision-grid-column-2 {
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .vision-grid-item {
@@ -25,7 +29,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 900;
+    font-weight: 600;
     padding: 15px;
     color: var(--theme2);
 }
@@ -42,12 +46,12 @@
     background-color: white;
 }
 
-.claim-card .vision-grid-item .vision-grid-item-body {
+/* .claim-card .vision-grid-item .vision-grid-item-body {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 15px;
-}
+} */
 
 .claim-card-count {
     display: flex;

@@ -5,6 +5,13 @@
   padding: 5px 10px;
 }
 
+.nav-item a {
+  color: #ffffff !important;
+  font-weight: bold;
+  font-size: 14px;
+  /* margin-top: 7px; */
+}
+
 .loginDetails-grid .user-details {
   padding: 10px;
 }

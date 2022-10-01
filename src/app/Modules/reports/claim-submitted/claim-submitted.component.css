@@ -21,7 +21,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 900;
+    font-weight: 600;
     padding: 15px;
     color: var(--theme2);
 }

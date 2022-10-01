@@ -2,4 +2,8 @@
   grid-template-columns: 1fr 1fr;
 }
 
-
+@media (max-width: 800px) {
+  .vision-grid-column-2{
+    grid-template-columns: 1fr;
+  }
+}

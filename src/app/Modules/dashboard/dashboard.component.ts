@@ -2,7 +2,7 @@ import { AppComponent } from './../../app.component';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import * as Mydatas from '../../../assets/app-config.json';
-
+import { getInstanceByDom, connect } from 'echarts';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -18,7 +18,7 @@ import {
   ApexNonAxisChartSeries,
 } from 'ng-apexcharts';
 import { DashboardService } from './dashboard.service';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 export type ChartOptions = {
@@ -75,6 +75,15 @@ export class DashboardComponent implements OnInit {
     startDay:0,
     endDay:5,
   };
+  public selectedDays2={
+    startDay:21,
+    endDay:365,
+  };
+  public followUpChart:any;
+  public topcompanyRecoveryChart:any;
+  public topAgecompanyRecoveryChart:any;
+
+
   constructor(
     private dashboardService: DashboardService,
     private router: Router,
@@ -82,6 +91,7 @@ export class DashboardComponent implements OnInit {
   ) {
     this.LoginDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType = sessionStorage.getItem("claimType");
+    console.log(this.recoveryType)
     if(this.LoginDetails?.LoginResponse?.ParticipantYn == "N"){
       this.statusName = 'Payable';
     }
@@ -110,13 +120,14 @@ export class DashboardComponent implements OnInit {
     this.onGetTplClaimRecoveryList();
     this.onGetInsuranceCompyList();
     this.onGetTotalNumberOfClaims();
-
+    this.onGetStatusWithFollowCount();
+    this.onGetCompanyWiesCount();
+    this.onGetAgeCompanyWiesCount();
   }
 
+
   compareFn(c1: any, c2: any): boolean {
-    return c1 && c2
-      ? c1.sortBy === c2.sortBy && c1.sortOrder === c2.sortOrder
-      : c1 === c2;
+    return c1 && c2 ? c1.startDay === c2.startDay : c1 === c2;
   }
 
   onStatusView(view: any) {
@@ -160,20 +171,39 @@ export class DashboardComponent implements OnInit {
   }
   onGetTplClaimRecoveryList() {
     let UrlLink = `${this.ApiUrl1}api/dashboard/recovery/statuscount`;
+    let UrlLink1 = `${this.ApiUrl1}api/dashboard/recovery/watchcount`;
+
     let userDetails = this.LoginDetails?.LoginResponse;
     let ReqObj = {
       "InsuranceId": userDetails?.InsuranceId,
       "CreatedBy": userDetails?.LoginId
     }
-    this.dashboardService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+    const otherStatusCountList = this.dashboardService.onPostMethodSync(UrlLink, ReqObj);
+    const watchStatusCountList = this.dashboardService.onPostMethodSync(UrlLink1, ReqObj);
+    const apiList = [
+      otherStatusCountList,
+      watchStatusCountList,
+    ];
+
+    const parallel = forkJoin(apiList);
+    parallel.subscribe(
       (data: any) => {
-        if (data?.Message == "Success") {
-          console.log(data)
-          this.DashboardDetails = data?.Result;
+        console.log(data)
+          let othersData = data[0].Result;
+          let watchData = data[1].Result;
+          othersData.ClaimPayable
+
+          let obj ={
+            ClaimPayable:[...othersData.ClaimPayable,watchData.ClaimPayable],
+            ClaimReceivable:[...othersData.ClaimReceivable,watchData.ClaimReceivable]
+
+          }
+           console.log(obj)
+        if (data[0]?.Message == "Success"|| data[1]?.Message == "Success") {
+          this.DashboardDetails = obj;
           this.statusName = this.recoveryType;
           if (this.statusName == 'Receivable') {
             this.statusList = this.DashboardDetails?.ClaimReceivable;
-
           }
           if (this.statusName == 'Payable') {
             this.statusList = this.DashboardDetails?.ClaimPayable;
@@ -212,7 +242,7 @@ export class DashboardComponent implements OnInit {
       "InsuranceId": userDetails?.InsuranceId,
       "StartDate": "12/03/2022",
       "EndDate": "30/05/2022",
-      "Claim": this.statusName
+      "Claim": this.recoveryType
     }
     this.dashboardService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -234,13 +264,76 @@ export class DashboardComponent implements OnInit {
       // "EndDate": "30/05/2022",
       "StartDay":this.selectedDays.startDay,
       "EndDay": this.selectedDays.endDay,
-      "Claim": this.statusName
+      "Claim": this.recoveryType
     }
     this.dashboardService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
         if (data?.Message == "Success") {
           console.log(data)
           this.totalGraphClaimCounts = data?.Result;
+        }
+      },
+      (err) => { }
+    );
+  }
+
+
+  onGetStatusWithFollowCount(){
+    let UrlLink = `${this.ApiUrl1}api/dashboard/statuscount`;
+
+    let userDetails = this.LoginDetails?.LoginResponse;
+    let ReqObj = {
+      "InsuranceId": userDetails?.InsuranceId,
+      "ClaimType": this.recoveryType
+    }
+    this.dashboardService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Message == "Success") {
+          console.log(data)
+         this.followUpChart = data?.Result;
+        }
+      },
+      (err) => { }
+    );
+  }
+
+  onGetCompanyWiesCount(){
+    let UrlLink = `${this.ApiUrl1}api/top/companies/recoverycount`;
+    let userDetails = this.LoginDetails?.LoginResponse;
+    let ReqObj = {
+      "InsuranceId": userDetails?.InsuranceId,
+      "ClaimType": this.recoveryType,
+      "TopCount" :"5"
+    }
+    this.dashboardService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Message == "Success") {
+          console.log(data)
+          this.topcompanyRecoveryChart = data?.Result;
+        }
+      },
+      (err) => { }
+    );
+  }
+  onChangeDropdown(){
+    this.onGetAgeCompanyWiesCount();
+  }
+  onGetAgeCompanyWiesCount(){
+    let UrlLink = `${this.ApiUrl1}api/top/companies/recoverycount/datewise`;
+
+    let userDetails = this.LoginDetails?.LoginResponse;
+    let ReqObj = {
+      "InsuranceId": userDetails?.InsuranceId,
+      "ClaimType": this.recoveryType,
+      "TopCount" :"5",
+      "StartDay":this.selectedDays2.startDay,
+      "EndDay": this.selectedDays2.endDay,
+    }
+    this.dashboardService.onPostMethodSync(UrlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Message == "Success") {
+          console.log(data)
+          this.topAgecompanyRecoveryChart = data?.Result;
         }
       },
       (err) => { }

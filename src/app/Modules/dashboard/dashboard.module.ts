@@ -1,5 +1,4 @@
 import { TablesModule } from 'src/app/Shared/Tables/tables.module';
-import { RecoveryClaimViewComponent } from './../recovery-claim-view/recovery-claim-view.component';
 import { IconsModule } from './../../Shared/Icons/icons.module';
 import { DashboardComponent } from './dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,14 +11,20 @@ import { NgModule } from '@angular/core';
 import { BarChartsComponent } from './Components/bar-charts/bar-charts.component';
 import { RadialBarChartComponent } from './Components/radial-bar-chart/radial-bar-chart.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { ClaimStatusComponent } from '../claim-status/claim-status.component';
-
-
+import { NgxEchartsModule } from 'ngx-echarts';
+import { PieChartComponent } from './Components/pie-chart/pie-chart.component';
+import { ColumnChartComponent } from './Components/column-chart/column-chart.component';
+import { DonutChartComponent } from './Components/donut-chart/donut-chart.component';
+import { BarChartComponent } from './Components/bar-chart/bar-chart.component';
 @NgModule({
   declarations: [
     DashboardComponent,
     BarChartsComponent,
     RadialBarChartComponent,
+    PieChartComponent,
+    ColumnChartComponent,
+    DonutChartComponent,
+    BarChartComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +35,10 @@ import { ClaimStatusComponent } from '../claim-status/claim-status.component';
     NgSelectModule,
     NgApexchartsModule,
     IconsModule,
-    TablesModule
+    TablesModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
   ],
 
   providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],

@@ -1,75 +1,109 @@
-
 <div class="page-content">
 
-    <!-- <div class="vision-card">
+  <div class="vision-card">
 
-        <div class="vision-card-body">
-            <div class="vision-grid claim-card vision-grid-column-4">
-                <div class="vision-grid-item">
-                    <div class="vision-grid-item-body">
-                        <div class="claim-card-name">Claims Approved</div>
-                        <div class="claim-card-count">{{totalClaimCounts?.ClaimApprovCount}}</div>
-                    </div>
-                </div>
-                <div class="vision-grid-item">
-                    <div class="vision-grid-item-body">
-                        <div class="claim-card-name">Claims Progress</div>
-                        <div class="claim-card-count">{{totalClaimCounts?.ClaimProgressCount}}</div>
-                    </div>
-                </div>
-                <div class="vision-grid-item">
-                    <div class="vision-grid-item-body">
-                        <div class="claim-card-name">Claims Rejected</div>
-                        <div class="claim-card-count">{{totalClaimCounts?.ClaimRejectCount}}</div>
-                    </div>
-                </div>
-                <div class="vision-grid-item">
-                    <div class="vision-grid-item-body">
-                        <div class="claim-card-name">Open Claims</div>
-                        <div class="claim-card-count">{{totalClaimCounts?.ClaimOpenCount}}</div>
-                    </div>
-                </div>
-            </div>
+    <div class="vision-card-body">
+      <div class="vision-grid claim-card vision-grid-column-3">
+        <div class="vision-grid-item follow-chart">
+          <div class="vision-grid-item-title">
+            <div>Follow Up Chart</div>
+            <div></div>
+          </div>
+          <div class="vision-grid-item-body">
+            <ng-container *ngIf="followUpChart">
+             <app-bar-chart [barChart]="followUpChart"></app-bar-chart>
+            </ng-container>
+          </div>
         </div>
-    </div> -->
+        <div class="vision-grid-item claim-status-item status-list">
+          <div class="vision-grid-item-title">
+            <div>Claim {{statusName}} Notification</div>
+            <div></div>
+          </div>
+          <div class="vision-grid-item-body">
+            <ul class="list-group">
+              <ng-container *ngFor="let item of statusList">
+                <li class="list-group-item list-group-item-action side-icon-btn" (click)="onStatusView(item)">
+                  <div><span class="mx-2"><img class="side-icon" src="{{leftMenuIcon[item['StatusCode']]}}" /></span>
+                    {{item?.StatusDesc}}</div>
+                  <div>{{item?.StatusCount}}</div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+        <div class="vision-grid-item company-chart">
+          <div class="vision-grid-item-title">
+            <div>Top 5 Companies</div>
+            <div>
+              <select [(ngModel)]="selectedDays2" [compareWith]="compareFn" (change)="onChangeDropdown()" class="form-select form-select-sm">
+                <ng-container *ngFor="let item of daysDropdown">
+                  <option [ngValue]="item">{{item.startDay}}-{{item.endDay}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="vision-grid-item-body">
+            <ng-container *ngIf="topAgecompanyRecoveryChart">
+             <app-column-chart [columnChart]="topAgecompanyRecoveryChart"></app-column-chart>
+            </ng-container>
+          </div>
+        </div>
 
-    <div class="vision-card">
-        <div class="vision-card-body">
-            <div class="vision-grid vision-grid-column-3">
-                <div class="vision-grid-item claim-status-item">
-                    <div class="vision-grid-item-title">
-                        <div>Claim {{statusName}} Notification</div>
-                        <div></div>
-                    </div>
-                    <div class="vision-grid-item-body">
-                        <ul class="list-group">
-                            <ng-container *ngFor="let item of statusList">
-                                <li class="list-group-item list-group-item-action side-icon-btn" (click)="onStatusView(item)">
-                                    <div><span class="mx-2"><img class="side-icon" src="{{leftMenuIcon[item['StatusCode']]}}"/></span> {{item?.StatusDesc}}</div>
-                                    <div>{{item?.StatusCount}}</div>
-                                </li>
-                            </ng-container>
-                        </ul>
-                    </div>
-                </div>
-                <div class="vision-grid-item claim-chart-item">
-                    <div class="vision-grid-item-title">
-                        <div>Total {{statusName}}</div>
-                        <div>
-                          <select [(ngModel)]="selectedDays"   [compareWith]="compareFn" class="form-select form-select-sm" (change)="onGetTotalClaimsGraph()">
-                             <ng-container *ngFor="let item of daysDropdown">
-                              <option [ngValue]="item">{{item.startDay}}-{{item.endDay}}</option>
-                             </ng-container>
-                          </select>
-                        </div>
-                    </div>
-                    <div class="vision-grid-item-body">
-                        <ng-container *ngIf="totalGraphClaimCounts">
-                            <app-bar-charts [totalGraphClaimCounts]="totalGraphClaimCounts"></app-bar-charts>
-                        </ng-container>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- <div class="vision-grid-item" >
+          <div class="vision-grid-item-title">
+            <div>Donut Chart</div>
+            <div></div>
+          </div>
+          <div class="vision-grid-item-body" style="display: flex;justify-content: center;">
+            <ng-container *ngIf="topAgecompanyRecoveryChart">
+             <app-donut-chart [donutChart]="topAgecompanyRecoveryChart"></app-donut-chart>
+            </ng-container>
+          </div>
+        </div> -->
+      </div>
     </div>
+  </div>
+
+  <!-- <div class="vision-card">
+    <div class="vision-card-body">
+      <div class="vision-grid vision-grid-column-3">
+        <div class="vision-grid-item claim-status-item">
+          <div class="vision-grid-item-title">
+            <div>Claim {{statusName}} Notification</div>
+            <div></div>
+          </div>
+          <div class="vision-grid-item-body">
+            <ul class="list-group">
+              <ng-container *ngFor="let item of statusList">
+                <li class="list-group-item list-group-item-action side-icon-btn" (click)="onStatusView(item)">
+                  <div><span class="mx-2"><img class="side-icon" src="{{leftMenuIcon[item['StatusCode']]}}" /></span>
+                    {{item?.StatusDesc}}</div>
+                  <div>{{item?.StatusCount}}</div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+        <div class="vision-grid-item claim-chart-item">
+          <div class="vision-grid-item-title">
+            <div>Total {{statusName}}</div>
+            <div>
+              <select [(ngModel)]="selectedDays" [compareWith]="compareFn" class="form-select form-select-sm"
+                (change)="onGetTotalClaimsGraph()">
+                <ng-container *ngFor="let item of daysDropdown">
+                  <option [ngValue]="item">{{item.startDay}}-{{item.endDay}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="vision-grid-item-body">
+            <ng-container *ngIf="totalGraphClaimCounts">
+              <app-bar-charts [totalGraphClaimCounts]="totalGraphClaimCounts"></app-bar-charts>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
 </div>

@@ -47,6 +47,8 @@ import { CaraccidentShieldIconComponent } from './Components/caraccident-shield-
 import { UmperllaIconComponent } from './Components/umberlla-icon';
 import { TotalclaimIconComponent } from './Components/totalclaim-icon';
 import { DocDownIconComponent } from './Components/doc-down-icon';
+import { QatarRiyaIconComponent } from './Components/qatar-riyal-icon';
+import { EyewatchIconComponent } from './Components/eyewatch-icon';
 
 
 
@@ -98,7 +100,9 @@ import { DocDownIconComponent } from './Components/doc-down-icon';
     CaraccidentShieldIconComponent,
     UmperllaIconComponent,
     TotalclaimIconComponent,
-    DocDownIconComponent
+    DocDownIconComponent,
+    QatarRiyaIconComponent,
+    EyewatchIconComponent
   ],
   imports: [
     CommonModule
@@ -150,7 +154,9 @@ import { DocDownIconComponent } from './Components/doc-down-icon';
     CaraccidentShieldIconComponent,
     UmperllaIconComponent,
     TotalclaimIconComponent,
-    DocDownIconComponent
+    DocDownIconComponent,
+    QatarRiyaIconComponent,
+    EyewatchIconComponent
   ],
 })
 export class IconsModule { }

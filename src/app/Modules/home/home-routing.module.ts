@@ -1,3 +1,4 @@
+import { WatchListComponent } from './../watch-list/watch-list.component';
 import { RecoveryClaimFormComponent } from './../recovery-claim-form/recovery-claim-form.component';
 import { HomeComponent } from './home.component';
 import { NgModule } from '@angular/core';
@@ -212,6 +213,14 @@ const routes: Routes = [
     data: {
       title: 'Existing Login Details',
       breadcrumb: 'Existing Login Details',
+    },
+  },
+  {
+    path: 'watch-list',
+    component: WatchListComponent,
+    data: {
+      title: 'Watch List',
+      breadcrumb: 'Watch List',
     },
   },
 ];

@@ -24,25 +24,29 @@ export class RecoveryClaimViewComponent implements OnInit {
 
   statusType: any;
   public step: any = '0';
-  public startDate:any='01/01/2022';
-  public endDate:any='30/05/2022';
+  public startDate: any = '01/01/2022';
+  public endDate: any = '30/05/2022';
   public recoveryType: any = '';
-  public finalLabelName:any;
+  public finalLabelName: any;
+  public urlCompanyCount:any='';
+  public urlCompanyList:any='';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private addVehicleService: AddVehicleService,
     private datePipe: DatePipe,
     private toaster: Toaster,
     private router: Router,
-    public app:AppComponent
+    public app: AppComponent
 
   ) {
 
-    this.endDate = this.datePipe.transform(new Date(),"dd/MM/yyyy");
+    this.endDate = this.datePipe.transform(new Date(), "dd/MM/yyyy");
     this.recoveryType = sessionStorage.getItem("claimType");
 
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.choosedList = JSON.parse(sessionStorage.getItem("selectStatusDetails") || '{}');
+    console.log(this.choosedList);
 
     // this.activatedRoute.queryParams.subscribe(
     //   params => {
@@ -51,17 +55,30 @@ export class RecoveryClaimViewComponent implements OnInit {
     //   }
     // )
   }
+
+
   ngOnInit(): void {
-    this.onGetCompanyListCount();
+    if (this.choosedList?.StatusCode == 'WTL') {
+      this.urlCompanyCount = `${this.ApiUrl1}api/companies/watchcount/datewise`;
+      this.urlCompanyList = `${this.ApiUrl1}api/company/watchlist/datewise`;
+
+    } else {
+      this.urlCompanyCount = `${this.ApiUrl1}api/companies/count/datewise`;
+      this.urlCompanyList = `${this.ApiUrl1}api/company/datewise`;
+
+    }
+    this.onGetCompanyListCount(this.urlCompanyCount);
+
+
   }
 
   companyFilter(id: any, insuredId: any) {
     this.step = id;
     this.FilterByInsuranceId = insuredId;
-    this.onGetExistClaim();
+    this.onGetExistClaim(this.urlCompanyList);
   }
 
-  daysFilter(event:any){
+  daysFilter(event: any) {
     event = Number(event);
     var enDate = new Date();
     var startDate = new Date();
@@ -78,18 +95,23 @@ export class RecoveryClaimViewComponent implements OnInit {
 
     this.startDate = startDD + '/' + startMM + '/' + startYYYY;
     this.endDate = endDD + '/' + endMM + '/' + endYYYY;
-    console.log(this.startDate,this.endDate);
-    if(event == 0){
-      this.startDate='01/01/2022';
-      this.endDate=this.datePipe.transform(new Date(),"dd/MM/yyyy");
+    console.log(this.startDate, this.endDate);
+    if (event == 0) {
+      this.startDate = '01/01/2022';
+      this.endDate = this.datePipe.transform(new Date(), "dd/MM/yyyy");
 
     }
-    this.onGetExistClaim();
-    this.onGetCompanyListCount();
+    this.onGetExistClaim(this.urlCompanyList);
+    this.onGetCompanyListCount(this.urlCompanyCount);
   }
 
-  onGetCompanyListCount() {
-    let UrlLink = `${this.ApiUrl1}api/companies/count/datewise`;
+
+
+
+
+
+  onGetCompanyListCount(UrlLinkVal:string) {
+    let UrlLink = UrlLinkVal;
     let userDetails = this.userDetails?.LoginResponse;
     let ReqObj = {
       "InsuranceId": userDetails?.InsuranceId,
@@ -105,20 +127,16 @@ export class RecoveryClaimViewComponent implements OnInit {
           console.log(data)
           this.insuranceList = data?.Result;
           this.FilterByInsuranceId = this.insuranceList[0].InsuranceId;
-          this.onGetExistClaim();
+          this.onGetExistClaim(this.urlCompanyList);
         }
       },
       (err) => { }
     );
   }
 
+  onGetExistClaim(urlCompanyList:string) {
 
-
-
-
-  onGetExistClaim() {
-
-    let UrlLink = `${this.ApiUrl1}api/company/datewise`;
+    let UrlLink = urlCompanyList;
     let userDetails = this.userDetails?.LoginResponse;
     let ReqObj = {
       "InsuranceId": userDetails?.InsuranceId,
@@ -142,13 +160,12 @@ export class RecoveryClaimViewComponent implements OnInit {
   }
 
   onLoadData(data: any[]) {
-    console.log(this.choosedList);
 
     if (this.recoveryType == 'Receivable') {
       let labelName = 'View';
-      if(this.choosedList.StatusCode == 'PAC' || this.choosedList.StatusCode =='CREQ' || this.choosedList.StatusCode =='ATP'){
+      if (this.choosedList.StatusCode == 'PAC' || this.choosedList.StatusCode == 'CREQ' || this.choosedList.StatusCode == 'ATP') {
         labelName = 'Process'
-      }else{
+      } else {
         labelName = 'View';
       }
       this.finalLabelName = labelName;
@@ -157,10 +174,12 @@ export class RecoveryClaimViewComponent implements OnInit {
           key: "actions", display: "Actions",
           config: {
             isEdit: true,
-            btnlabel:labelName
+            btnlabel: labelName
           },
         },
         { key: "ClaimNumber", display: "Claim Number" },
+        { key: "RequestedAmount", display: "Claim Amount" },
+        { key: "AcceptedAmount", display: "Accepted Amount" },
         { key: "CivilId", display: "Civil Id" },
         { key: "PolicyNumber", display: "Policy Number" },
         { key: "VehicleChassisNumber", display: "Chassis Number" },
@@ -174,14 +193,18 @@ export class RecoveryClaimViewComponent implements OnInit {
         //   },
         // },
       ];
+      if(this.choosedList.StatusCode == 'WTL'){
+        let statucolumn ={ key: "StatusDesc", display: "Status" };
+        this.columnHeader.push(statucolumn);
+      }
       this.tableData = data;
 
     }
     if (this.recoveryType == 'Payable') {
       let labelName = 'View';
-      if(this.choosedList.StatusCode == 'PED' || this.choosedList.StatusCode == 'CRES' || this.choosedList.StatusCode == 'DNT'){
+      if (this.choosedList.StatusCode == 'PED' || this.choosedList.StatusCode == 'CRES' || this.choosedList.StatusCode == 'DNT') {
         labelName = 'Process'
-      }else{
+      } else {
         labelName = 'View'
       }
       this.finalLabelName = labelName;
@@ -192,10 +215,14 @@ export class RecoveryClaimViewComponent implements OnInit {
           key: "actions", display: "Actions",
           config: {
             isEdit: true,
-            btnlabel:labelName
+            btnlabel: labelName
           },
         },
         { key: "ClaimNumber", display: "Claim Number" },
+
+        { key: "RequestedAmount", display: "Claim Amount" },
+        { key: "AcceptedAmount", display: "Accepted Amount" },
+
         { key: "CivilId", display: "Civil Id" },
         { key: "PolicyNumber", display: "Policy Number" },
         { key: "VehicleChassisNumber", display: "Chassis Number" },
@@ -210,6 +237,10 @@ export class RecoveryClaimViewComponent implements OnInit {
         // },
 
       ];
+      if(this.choosedList.StatusCode == 'WTL'){
+        let statucolumn ={ key: "StatusDesc", display: "Status" };
+        this.columnHeader.push(statucolumn);
+      }
       this.tableData = data;
 
 
@@ -218,11 +249,10 @@ export class RecoveryClaimViewComponent implements OnInit {
     }
   }
   onTrack(event: any) {
-    sessionStorage.setItem('selectedClaimDetails',JSON.stringify(event));
+    sessionStorage.setItem('selectedClaimDetails', JSON.stringify(event));
     this.router.navigate([`Home/${this.recoveryType}/recovery-claim-grid/Claim-Tracking`]);
 
   }
-
 
   onTplEdit(event: any) {
     sessionStorage.setItem('claimEditReq', JSON.stringify(event));
@@ -232,7 +262,7 @@ export class RecoveryClaimViewComponent implements OnInit {
   onProcced(event: any) {
     console.log(event)
     event['finalLabelName'] = this.finalLabelName;
-    sessionStorage.setItem('selectedClaimDetails',JSON.stringify(event));
+    sessionStorage.setItem('selectedClaimDetails', JSON.stringify(event));
     this.router.navigate([`Home/${this.recoveryType}/recovery-claim-grid/Claim-Details`]);
   }
 }

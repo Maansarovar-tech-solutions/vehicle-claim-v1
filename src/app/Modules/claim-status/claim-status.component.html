@@ -292,7 +292,8 @@
                         <div class="col-md-6">Total Claim Amount</div>
                         <div class="text-end"
                           [ngClass]="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT' ? 'col-md-3' : 'col-md-6'">
-                          {{accidentInformation?.TotalValue}}</div>
+                         <span class="mx-1">{{currencyLabel}}</span> {{accidentInformation?.TotalValue}}
+                        </div>
                         <div class="col-md-3 text-end"
                           *ngIf="claimStatusForm.controls['claimStatus'].value == 'PAC' || claimDetails?.Status=='PAC' || claimDetails?.Status=='ATP' || claimDetails?.Status=='DNT' || claimDetails?.Status=='CNT'">
                           <input type="number" min="0" formControlName="TotalValue"
@@ -386,14 +387,29 @@
                           {{commonInformation?.PreviousRemarks}}
                         </div>
                       </ng-container>
-                      <ng-container
-                        *ngIf="claimStatusForm.controls['claimStatus'].value =='CRES' || claimStatusForm.controls['claimStatus'].value =='CREQ' || claimStatusForm.controls['claimStatus'].value =='PAC'">
+                      <ng-container>
+                        <!-- *ngIf="claimStatusForm.controls['claimStatus'].value =='CRES' || claimStatusForm.controls['claimStatus'].value =='CREQ' || claimStatusForm.controls['claimStatus'].value =='PAC'" -->
                         <div class="vision-form-control-box">
                           <label class="vision-form-label">Remarks</label>
                           <textarea rows="2" class="vision-form-control" formControlName="claimStatusRemarks">
                           </textarea>
                         </div>
                       </ng-container>
+                      <ng-container *ngIf="claimStatusForm.controls['claimStatus'].value=='DNT'">
+                        <div class="vision-form-control-box">
+                          <label class="vision-form-label">DebitNote No</label>
+                          <textarea rows="2" class="vision-form-control" formControlName="DebitNoteNo">
+                          </textarea>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="claimStatusForm.controls['claimStatus'].value=='CNT'">
+                        <div class="vision-form-control-box">
+                          <label class="vision-form-label">CreditNote No</label>
+                          <textarea rows="2" class="vision-form-control" formControlName="CreditNoteNo">
+                          </textarea>
+                        </div>
+                      </ng-container>
+
                     </ng-container>
 
                   </div>
@@ -420,7 +436,7 @@
           </div>
           <div class="view-claim-information-item-body ">
             <div class="row">
-              <div class="col-md-6 col-lg-6 offset-3">
+              <div class="col-md-6 col-lg-6 offset-md-3">
                 <input style="display: none;" [multiple]="true" (change)="onUploadDocuments($event,null,'direct')"
                   type="file" #doc multiple>
                 <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')"
@@ -741,13 +757,13 @@
         <div class="col-md-6 col-lg-6">
           <div class="d-flex justify-content-between">
             <label>Requsted Amount</label>
-            <label>{{accidentInformation.TotalValue}}</label>
+            <label><span class="mx-1">{{currencyLabel}}</span>{{accidentInformation.TotalValue}}</label>
           </div>
         </div>
         <div class="col-md-6 col-lg-6">
           <div class="d-flex justify-content-between">
             <label>Approved Amount</label>
-            <label>{{showTotalValue}}</label>
+            <label><span class="mx-1">{{currencyLabel}}</span>{{showTotalValue}}</label>
           </div>
         </div>
       </div>

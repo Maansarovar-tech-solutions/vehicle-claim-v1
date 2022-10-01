@@ -60,3 +60,12 @@
   display: flex;
   justify-content: space-between;
 }
+@media (max-width: 800px) {
+  .policy-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .total-claims-grid {
+    grid-template-columns: 1fr;
+
+  }
+}
