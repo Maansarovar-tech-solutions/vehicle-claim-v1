@@ -94,7 +94,7 @@ export class BarChartComponent implements OnInit {
       const element = this.chartData[index];
       statusTotal.push(Number(element.StatusCount));
       nonFollowTotal.push(Number(element.NonFollowCount));
-      statusName.push(element.StatusCode);
+      statusName.push(element.StatusDesc);
     }
     series = [{name:'Total Count',data:statusTotal},{name:'Not Follow Count',data:nonFollowTotal}];
 

@@ -13,6 +13,12 @@ import { NewClaimService } from '../new-claim/new-claim.service';
 import { Toaster } from 'ngx-toast-notifications';
 import { PrimeIcons } from "primeng/api";
 declare var $:any;
+
+export const _filter2 = (opt: any[], value: any): any[] => {
+  const filterValue = value.toLowerCase();
+
+  return opt.filter(item => item.CodeDescription.toLowerCase().includes(filterValue));
+};
 @Component({
   selector: 'app-claim-status',
   templateUrl: './claim-status.component.html',
@@ -64,8 +70,11 @@ export class ClaimStatusComponent implements OnInit {
   recoveryClaimNo:any="";approvedVehicleValue:any="";
   approvedSalvageValue:any="";approvedRepairCost:any="";
   approvedReplacementCost:any="";approvedTotalClaimCost:any="";
-  faultCompany: boolean = false;
+  faultCompany: boolean = false;reasonList:any[]=[];
   currencyLabel:any='';
+  filterReasonList!: Observable<any[]>; filterinsuranceTypeList!: Observable<any[]>;
+  insuranceTypeList: any;
+ 
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
@@ -78,6 +87,8 @@ export class ClaimStatusComponent implements OnInit {
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem("Userdetails") || '{}');
     this.recoveryType=sessionStorage.getItem("claimType");
+    
+    
     this.events1 = [
       {
         status: "Ordered",
@@ -119,10 +130,49 @@ export class ClaimStatusComponent implements OnInit {
     console.log("Received Details",this.claimDetails);
     this.onGetClaimDetails(this.claimDetails)
     this.claimType = sessionStorage.getItem('claimType');
-
+   
+    
   }
-
-  ngOnInit(): void {
+  async onGetReasonList(){
+    let UrlLink = `${this.ApiUrl1}dropdown/rejectreasons`;
+    let response = (await this.newClaimService.onGetMethodAsync(UrlLink))
+      .toPromise()
+      .then((res: any) => {
+        return res?.Result;
+      })
+      .catch((err) => { });
+    return response;
+  }
+  async onGetInsuranceTypList() {
+    let UrlLink = `${this.ApiUrl1}api/groupof/insurancecompanies`;
+    let response = (await this.newClaimService.onGetMethodAsync(UrlLink))
+      .toPromise()
+      .then((res: any) => {
+        return res?.Result;
+      })
+      .catch((err) => { });
+    return response;
+  }
+  onDisplayReason = (code: any) => {
+    if (!code) return '';
+    let index = this.reasonList.findIndex((obj: any) => obj.Code == code);
+    if (index != -1) return this.reasonList[index].CodeDescription;
+    else return '';
+  };
+  onDisplayInsurComp = (code: any) => {
+    if (!code) return '';
+    let insurCompanyList = [...this.insuranceTypeList[0].names, ...this.insuranceTypeList[1].names]
+    let index = insurCompanyList.findIndex((obj: any) => obj.Code == code);
+    return insurCompanyList[index].CodeDescription;
+  };
+  onDisplayInsuranceComp = (option: any) => {
+    if (!option) return '';
+    let index = this.insuranceTypeList.findIndex(
+      (obj: any) => obj.Code == option
+    );
+    return this.insuranceTypeList[index].CodeDescription;
+  };
+  async ngOnInit(): Promise<void> {
     this.onCreateFormControl();
     this.onFetchInitialData();
     this.onGetUploadedDocuments();
@@ -148,9 +198,31 @@ export class ClaimStatusComponent implements OnInit {
           subVehicleAndSalvage = (Number(dataList[1]) - Number(dataList[2]))
       }
       let total = repaireCostBodyInjuProperty + perdayCost + subVehicleAndSalvage;
-      this.f.TotalValue.setValue(total);
+      //this.f.TotalValue.setValue(total);
     });
+    this.reasonList = await this.onGetReasonList();
+    this.filterReasonList = this.f.RejectedReason.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterRejected(value, this.reasonList))
+    );
+    this.insuranceTypeList = (await this.onGetInsuranceTypList()) || [];
+    let companyGroup = [
+      {
+        letter: 'Participants',
+        names: this.insuranceTypeList.Participants,
+      },
+      {
+        letter: 'Non Participants',
+        names: this.insuranceTypeList.NonParticipants,
+      },
 
+    ];
+    this.insuranceTypeList = companyGroup;
+    console.log('InsuranceList', this.insuranceTypeList);
+    this.filterinsuranceTypeList = this.f.InsuranceTypeId.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterGroup(value || ''))
+    );
   }
 
   onCreateFormControl() {
@@ -161,7 +233,7 @@ export class ClaimStatusComponent implements OnInit {
       CreditNoteNo: ['', Validators.required],
       reqAmount: ['', Validators.required],
       acceAmount: ['', Validators.required],
-
+      RejectedReason: [''],
       VehicleValue:[0, Validators.required],
       SalvageCost:[0, Validators.required],
       BodilyInjury:[0, Validators.required],
@@ -169,9 +241,10 @@ export class ClaimStatusComponent implements OnInit {
       RepairCost: [0, Validators.required],
       PerDayCost: [0, Validators.required],
       TotalValue: [0],
+      InsuranceTypeId: [''],
 
     });
-    this.claimStatusForm.controls['TotalValue'].disable();
+    //this.claimStatusForm.controls['TotalValue'].disable();
 
     if(this.claimDetails?.Status=='PAC' || this.claimDetails?.Status=='ATP' || this.claimDetails?.Status=='DNT' || this.claimDetails?.Status=='CNT'){
        this.isDisabledReqAmount = true;
@@ -241,12 +314,28 @@ export class ClaimStatusComponent implements OnInit {
       (err) => { }
     );
   }
+  private _filterRejected(value: any, data: any[]): any[] {
+    if (value == null) {
+      value = '';
+    }
+    const filterValue = value.toLowerCase();
+    return data.filter((option) => option?.CodeDescription?.toLowerCase().includes(filterValue));
+  }
   private _filter(value: any, data: any[]): any[] {
     if (value == null) {
       value = '';
     }
     const filterValue = value.toLowerCase();
     return data.filter((option) => option?.CodeDesc?.toLowerCase().includes(filterValue));
+  }
+  private _filterGroup(value: any): any[] {
+    if (value) {
+      return this.insuranceTypeList
+        .map((group: any) => ({ letter: group.letter, names: _filter2(group.names, value) }))
+        .filter((group: any) => group.names.length > 0);
+    }
+
+    return this.insuranceTypeList;
   }
   onGetOriginalImage(index:any,type:any){
     let rowData:any;
@@ -500,7 +589,8 @@ export class ClaimStatusComponent implements OnInit {
               if(this.f.claimStatus.value == 'PAC'){
                 this.showTotalValue = this.f.TotalValue.value
               }
-              this.modalService.open(this.content2, { size: 'lg', backdrop: 'static' });
+              //this.modalService.open(this.content2, { size: 'lg', backdrop: 'static' });
+              this.onAltSubmit();
             }
             else{
                 this.onAltSubmit();
@@ -571,15 +661,15 @@ export class ClaimStatusComponent implements OnInit {
       "ReserveAmount":this.f.reqAmount.value,
       "RecovClaimNo":this.recoveryClaimNo,
       "RecovPolicyNo":this.recoveryPolicyNo,
-
+      "RejectReason": this.f.RejectedReason.value,
       "RecovReplacementAmt": PerDayCost,
       "RecovVehicleValue": VehicleValue,
       "RecovSalvageCost": SalvageCost,
       "RecovRepairCost":RepairCost,
       "RecovBodilyInjury":BodilyInjury,
       "RecovPropertyDamage":PropertyDamage,
-      "RecovTotalValue":TotalValue,
-
+      "RecovTotalValue":this.f.TotalValue.value,
+      "RecoveryInsId": this.f.InsuranceTypeId.value
     }
     this.addVehicleService.onPostMethodSync(UrlLink, ReqObj).subscribe(
       (data: any) => {
@@ -691,7 +781,7 @@ export class ClaimStatusComponent implements OnInit {
           this.f.PropertyDamage.setValue(this.recoveryInformation?.RecovPropertyDamage)
           this.f.RepairCost.setValue(this.recoveryInformation?.RecovRepairCost)
           this.f.PerDayCost.setValue(this.recoveryInformation?.RecovReplamentAmt)
-
+          this.f.TotalValue.setValue(this.recoveryInformation?.RecovTotalValue)
           if(this.recoveryInformation?.InsuranceId){
             if(this.recoveryInformation?.InsuranceId == userDetails?.InsuranceId){
               this.faultCompany = true;
@@ -714,6 +804,7 @@ export class ClaimStatusComponent implements OnInit {
 
           this.claimStatusList = await this.onGetInsuranceStatusList(this.commonInformation.Status)||[];
           console.log(this.claimStatusList)
+          
           this.f.claimStatus.setValue(this.claimStatusList[0].StatusCode)
           //this.getCurrentStatusList(event);
         }
