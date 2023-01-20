@@ -378,6 +378,26 @@
                         </ng-container>
                       </mat-radio-group>
                     </div>
+                    <ng-container *ngIf="claimStatusForm.controls['claimStatus'].value=='CNT' || claimStatusForm.controls['claimStatus'].value=='ATP'">
+                        <div class="vision-form-control-box" *ngIf="accidentInformation?.DebitNoteNo!='' && accidentInformation?.DebitNoteNo!=null">
+                          <label class="vision-form-label">Debit Note no</label><br>
+                          {{accidentInformation?.DebitNoteNo == null ? "N/A" : accidentInformation?.DebitNoteNo  }}
+                        </div>
+                        <div class="vision-form-control-box" *ngIf="accidentInformation?.DebitAmount!='' && accidentInformation?.DebitAmount!=null">
+                          <label class="vision-form-label">Debit Amount</label><br>
+                          {{accidentInformation?.DebitAmount == null ? "N/A" : accidentInformation?.DebitAmount  }}
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="claimStatusForm.controls['claimStatus'].value=='ATP'">
+                        <div class="vision-form-control-box" *ngIf="accidentInformation?.CreditNoteNo!='' && accidentInformation?.CreditNoteNo!=null">
+                          <label class="vision-form-label">Credit Note no</label><br>
+                          {{accidentInformation?.CreditNoteNo == null ? "N/A" : accidentInformation?.CreditNoteNo  }}
+                        </div>
+                        <div class="vision-form-control-box" *ngIf="accidentInformation?.CreditAmount!='' && accidentInformation?.CreditAmount!=null">
+                          <label class="vision-form-label">Credit Amount</label><br>
+                          {{accidentInformation?.CreditAmount == null ? "N/A" : accidentInformation?.CreditAmount  }}
+                        </div>
+                      </ng-container>
                   </div>
                   <div class="col-12 col-lg-6">
                     <ng-container *ngIf="isProcess">
@@ -401,12 +421,22 @@
                           <textarea rows="2" class="vision-form-control" formControlName="DebitNoteNo">
                           </textarea>
                         </div>
+                        <div class="vision-form-control-box">
+                          <label class="vision-form-label">Debit Amount</label>
+                          <input type="number" min="0" formControlName="DebitAmount"
+                          class="vision-form-control">
+                        </div>
                       </ng-container>
                       <ng-container *ngIf="claimStatusForm.controls['claimStatus'].value=='CNT'">
                         <div class="vision-form-control-box">
                           <label class="vision-form-label">CreditNote No</label>
                           <textarea rows="2" class="vision-form-control" formControlName="CreditNoteNo">
                           </textarea>
+                        </div>
+                        <div class="vision-form-control-box">
+                          <label class="vision-form-label">CreditNote Amount</label>
+                          <input type="number" min="0" formControlName="CreditAmount"
+                          class="vision-form-control">
                         </div>
                       </ng-container>
 
@@ -460,7 +490,7 @@
                 </div>
               </div>
               <div class="view-claim-information-item-body p-3">
-                <ng-container *ngIf="ownerDocList.length!=0 || uploadDocList.length !=0">
+                <ng-container *ngIf="(ownerDocList.length!=0 || uploadDocList.length !=0)">
                   <table class="table table-border-1ed">
                     <thead>
                       <tr>
@@ -485,8 +515,14 @@
                             (click)="onViewUploadedDocument(i,'owner')"><i class="fa fa-eye"></i></a>
                         </td>
                         <td>
-                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete"
+                          <ng-container *ngIf="claimStatus=='ATP' || claimStatus=='DNT' || claimStatus=='CNT'">
+                            N/A
+                          </ng-container>
+                          <ng-container *ngIf="claimStatus!='ATP' && claimStatus!='DNT' && claimStatus!='CNT'">
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete"
                             (click)="onDeleteUploadedDoc(i,'owner')"><i class="fa fa-trash"></i></a>
+                          </ng-container>
+
                         </td>
                         <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
                             title="Download" (click)="onGetOriginalImage(i,'owner')"><i class="fa fa-download"></i></a>
@@ -554,7 +590,7 @@
                     <p>No Document Available</p>
                   </div>
                 </ng-container>
-                <ng-container *ngIf="recoveryDocList.length!=0 || uploadDocList.length !=0">
+                <ng-container *ngIf="(recoveryDocList.length!=0 || uploadDocList.length !=0)">
                   <table class="table table-border-1ed">
                     <thead>
                       <tr>
@@ -564,7 +600,7 @@
                         <th scope="col">View</th>
                         <th scope="col">Delete</th>
                         <th scope="col">Download</th>
-                        <th scope="col">AI Details<br>
+                        <th scope="col">AI Details<br>{{claimStatus}}
                           <small>*File Size must be Above 400kb</small>
                         </th>
                       </tr>
@@ -578,9 +614,19 @@
                           <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View"
                             (click)="onViewUploadedDocument(i,'receiver')"><i class="fa fa-eye"></i></a>
                         </td>
-                        <td *ngIf="claimType == 'Receivable'">
-                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
-                            (click)="onDeleteUploadedDoc(i,'receiver')"><i class="fa fa-trash"></i></a>
+                        <td >
+                          <div *ngIf="claimType != 'Receivable'">
+                            <ng-container *ngIf="claimStatus!='ATP' && claimStatus!='DNT' && claimStatus!='CNT'">
+                              <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                              (click)="onDeleteUploadedDoc(i,'receiver')"><i class="fa fa-trash"></i></a>
+                            </ng-container>
+                            <ng-container *ngIf="claimStatus=='ATP' || claimStatus=='DNT' || claimStatus=='CNT'">
+                              N/A
+                              </ng-container>
+                          </div>
+                          <ng-container *ngIf="claimType == 'Receivable'">
+                              N/A
+                          </ng-container>
                         </td>
                         <td><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
                             title="Download" (click)="onGetOriginalImage(i,'receiver')"><i

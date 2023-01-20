@@ -66,6 +66,7 @@ export class ClaimStatusComponent implements OnInit {
   approvedReplacementCost:any="";approvedTotalClaimCost:any="";
   faultCompany: boolean = false;
   currencyLabel:any='';
+  claimStatus: any;
   constructor(
     private _formBuilder: FormBuilder,
     private addVehicleService: AddVehicleService,
@@ -158,10 +159,11 @@ export class ClaimStatusComponent implements OnInit {
       claimStatus: ['PED', Validators.required],
       claimStatusRemarks: ['', Validators.required],
       DebitNoteNo: ['', Validators.required],
+      DebitAmount: ['', Validators.required],
       CreditNoteNo: ['', Validators.required],
+      CreditAmount: ['', Validators.required],
       reqAmount: ['', Validators.required],
       acceAmount: ['', Validators.required],
-
       VehicleValue:[0, Validators.required],
       SalvageCost:[0, Validators.required],
       BodilyInjury:[0, Validators.required],
@@ -566,7 +568,9 @@ export class ClaimStatusComponent implements OnInit {
       "DocRefId":docIdList,
       "Remarks":this.f.claimStatusRemarks.value,
       "DebitNote":this.f.DebitNoteNo.value,
+      "DebitAmount":this.f.DebitAmount.value,
       "CreditNote":this.f.CreditNoteNo.value,
+      "CreditAmount":this.f.CreditAmount.value,
       "AcceptedReserveAmount":this.f.acceAmount.value,
       "ReserveAmount":this.f.reqAmount.value,
       "RecovClaimNo":this.recoveryClaimNo,
@@ -671,6 +675,7 @@ export class ClaimStatusComponent implements OnInit {
         if(data?.Message == 'Success'){
           this.claimInformation=data?.Result;
           this.commonInformation = this.claimInformation?.CommonInformation;
+          this.claimStatus = this.commonInformation.Status;
           this.accidentInformation=this.claimInformation?.AccidentInformation;
           this.driverInformation=this.claimInformation?.DriverInformation;
           this.policyInformation=this.claimInformation?.PolicyInformation;
@@ -678,7 +683,10 @@ export class ClaimStatusComponent implements OnInit {
           this.vehicleInformation=this.claimInformation?.VehicleInformation;
           this.recoveryClaimNo = this.recoveryInformation?.RecovClaimNo;
           this.recoveryPolicyNo = this.recoveryInformation?.RecovPolicyNo;
-
+          this.claimStatusForm.controls['DebitNoteNo'].setValue(this.accidentInformation?.DebitNoteNo);
+          this.claimStatusForm.controls['DebitAmount'].setValue(this.accidentInformation?.DebitAmount);
+          this.claimStatusForm.controls['CreditNoteNo'].setValue(this.accidentInformation?.CreditNoteNo);
+          this.claimStatusForm.controls['CreditAmount'].setValue(this.accidentInformation?.CreditAmount);
           // this.approvedRepairCost = this.recoveryInformation?.RecovRepairCost;
           // this.approvedReplacementCost = this.recoveryInformation?.RecovReplamentAmt;
           // this.approvedTotalClaimCost = this.recoveryInformation?.RecovTotalValue;
