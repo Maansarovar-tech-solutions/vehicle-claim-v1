@@ -104,7 +104,8 @@ export class RecoveryClaimFormComponent implements OnInit {
   documentAIDetails: any;
   isLinear = false;
   claimStatus: any;
-  currencyLabel:any='QAR';
+  currencyLabel:any='QAR';bodyTypeList: any[]=[];
+  public filterBodyTypeList!: Observable<any[]>;
   constructor(
     private _formBuilder: FormBuilder,
     private newClaimService: NewClaimService,
@@ -304,7 +305,6 @@ export class RecoveryClaimFormComponent implements OnInit {
     );
 
     this.makeList = await this.onGetVehicleMakeList();
-    console.log('MakeList', this.insuranceTypeList);
     this.filterMakeListOur = this.f.VehicleMakeIdOur.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value, this.makeList))
@@ -313,7 +313,11 @@ export class RecoveryClaimFormComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value, this.makeList))
     );
-
+    this.bodyTypeList = await this.onGetBodyTypeList();
+    this.filterBodyTypeList = this.f.VehicleBodyId.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value, this.bodyTypeList))
+    );
     this.registrationTypeList = (await this.onGetRegistrationTypList()) || [];
     this.filterRegistrationTypeList =
       this.f.RegistrationTypeId.valueChanges.pipe(
@@ -395,7 +399,7 @@ export class RecoveryClaimFormComponent implements OnInit {
   }
 
   async onGetVehicleMakeList() {
-    let UrlLink = `${this.ApiUrl1}dropdown/vehiclemake`;
+    let UrlLink = `${this.ApiUrl1}dropdown/moimake`;
     let response = (await this.newClaimService.onGetMethodAsync(UrlLink))
       .toPromise()
       .then((res: any) => {
@@ -404,18 +408,31 @@ export class RecoveryClaimFormComponent implements OnInit {
       .catch((err) => { });
     return response;
   }
-
+  async onGetBodyTypeList() {
+    let UrlLink = `${this.ApiUrl1}dropdown/moibodytype`;
+    let response = (await this.newClaimService.onGetMethodAsync(UrlLink))
+      .toPromise()
+      .then((res: any) => {
+        return res?.Result;
+      })
+      .catch((err) => { });
+    return response;
+  }
   async onChangeVehicleMake(Code: any) {
     this.modelList = await this.onGetVehicleModelList(Code);
-    this.filterModelListOur = this.f.VehicleModelIdOur.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filterModelList(value, this.modelList))
-    );
+    console.log("Model List",this.modelList);
+    if(this.modelList.length!=0){
+      this.filterModelListOur = this.f.VehicleModelIdOur.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filterModelList(value, this.modelList))
+      );
+    }
+    
 
   }
   async onChangeVehicleMakeOther(Code: any) {
     this.modelListOther = await this.onGetVehicleModelList(Code);
-
+    
     this.filterModelListOther = this.f.VehicleModelIdOther.valueChanges.pipe(
       startWith(''),
       map((value) => this._filterModelList(value, this.modelListOther))
@@ -426,25 +443,29 @@ export class RecoveryClaimFormComponent implements OnInit {
 
   async onChangeVehicleModel(Code: any) {
     let index = this.modelList.findIndex((obj: any) => obj.ModelId == Code);
-    this.f.VehicleBodyId.setValue(this.modelList[index].BodyDescription);
-    this.vehicleBodyId = this.modelList[index].BodyId;
+    // this.f.VehicleBodyId.setValue(this.modelList[index].BodyDescription);
+    // this.vehicleBodyId = this.modelList[index].BodyId;
   }
-
+  // async onChangeBodyType(Code: any) {
+  //   let index = this.bodyTypeList.findIndex((obj: any) => obj.ModelId == Code);
+  //   this.f.VehicleBodyId.setValue(this.bodyTypeList[index].BodyDescription);
+  //   this.vehicleBodyId = this.bodyTypeList[index].BodyId;
+  // }
   async onGetVehicleModelList(makeId: any) {
     this.isVehicleModel = true;
-    let UrlLink = `${this.ApiUrl1}dropdown/makemodelbodytypes/${makeId}`;
+    let UrlLink = `${this.ApiUrl1}dropdown/moimodel/${makeId}`;
     let response = (await this.newClaimService.onGetMethodAsync(UrlLink))
       .toPromise()
       .then((res: any) => {
         this.isVehicleModel = false;
-
+        
         return res?.Result;
       })
       .catch((err) => { });
     return response;
   }
   async onGetRegistrationTypList() {
-    let UrlLink = `${this.ApiUrl1}dropdown/registrationtypes`;
+    let UrlLink = `${this.ApiUrl1}dropdown/moivehicleusage`;
     let response = (await this.newClaimService.onGetMethodAsync(UrlLink))
       .toPromise()
       .then((res: any) => {
@@ -496,21 +517,30 @@ export class RecoveryClaimFormComponent implements OnInit {
   };
 
   onDisplayVehicleMake = (code: any) => {
+    console.log("MakeList on Display",this.makeList)
     if (!code) return '';
-    let index = this.makeList.findIndex((obj: any) => obj.Code == code);
-    return this.makeList[index].CodeDescription;
+    let makeObj = this.makeList.find((obj: any) => obj.Code == code);
+    console.log("edit",makeObj,code);
+    if(makeObj) return makeObj.CodeDescription;
+    else return '';
   };
 
   onDisplayVehicleModel = (code: any) => {
     if (!code) return '';
-    let index = this.modelList.findIndex((obj: any) => obj.ModelId == code);
-    if (index != -1) return this.modelList[index].ModelDescription;
+    let index = this.modelList.findIndex((obj: any) => obj.Code == code);
+    if (index != -1) return this.modelList[index].CodeDescription;
+    else return '';
+  };
+  onDisplayBodyType = (code: any) => {
+    if (!code) return '';
+    let index = this.bodyTypeList.findIndex((obj: any) => obj.Code == code);
+    if (index != -1) return this.bodyTypeList[index].CodeDescription;
     else return '';
   };
   onDisplayVehicleModelother = (code: any) => {
     if (!code) return '';
-    let index = this.modelListOther.findIndex((obj: any) => obj.ModelId == code);
-    if (index != -1) return this.modelListOther[index].ModelDescription;
+    let index = this.modelListOther.findIndex((obj: any) => obj.Code == code);
+    if (index != -1) return this.modelListOther[index].CodeDescription;
     else return '';
   };
   onDisplayRegistrationType = (code: any) => {
@@ -543,7 +573,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     }
     const filterValue = value.toLowerCase();
     return data.filter((option) =>
-      option?.ModelDescription?.toLowerCase().includes(filterValue)
+      option?.CodeDescription?.toLowerCase().includes(filterValue)
     );
   }
 
@@ -593,6 +623,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           this.ClaimReferenceNumber = claim?.ClaimReferenceNumber;
           this.PolicyReferenceNumber = claim?.PolicyReferenceNumber;
           this.f.VehicleMakeIdOther.setValue(RecoveryInformation?.VehMakeId);
+
           this.modelListOther = await this.onGetVehicleModelList(
             RecoveryInformation?.VehMakeId
           );
@@ -662,6 +693,7 @@ export class RecoveryClaimFormComponent implements OnInit {
           );
           this.f.OurPlateCode.setValue(VehicleDetails?.PlateCode);
           this.f.OurPlateNumber.setValue(VehicleDetails?.PlateNumber);
+          this.f.VehicleBodyId.setValue(VehicleDetails?.VehicleBodyId);
           this.f.VehicleMakeIdOur.setValue(VehicleDetails?.VehicleMakeId);
           this.modelList = await this.onGetVehicleModelList(
             VehicleDetails?.VehicleMakeId
@@ -765,8 +797,8 @@ export class RecoveryClaimFormComponent implements OnInit {
         {
           VehicleMakeId: this.f.VehicleMakeIdOur.value,
           VehicleModelId: this.f.VehicleModelIdOur.value,
-          VehicleBodyId: this.vehicleBodyId,
-          RegistrationTypeId: "1",
+          VehicleBodyId: this.f.VehicleBodyId.value,
+          RegistrationTypeId: this.f.RegistrationTypeId.value,
           ManufactureYear: this.f.ManufactureYear.value,
           ColorId: this.f.ColorId.value,
           PlateCode: this.f.OurPlateCode.value,
@@ -1053,7 +1085,7 @@ export class RecoveryClaimFormComponent implements OnInit {
     let ReqObj = {
       "ClaimNumber": this.ClaimReferenceNumber,
       "DocumentReferenceNumber": this.uploadedDocList[index].DocumentReferenceNumber,
-      "DocumentTypeId": this.uploadedDocList[index].DocTypeId,
+      "DocumentTypeId": this.uploadedDocList[index].DocumentTypeId,
       "InsuranceId": this.uploadedDocList[index]?.InsuranceId
     }
     this.newClaimService.onPostMethodSync(UrlLink, ReqObj).subscribe(

@@ -1,19 +1,19 @@
 <div class="page-content">
-  <div class="vision-card">
-    <div class="vision-card-body">
-      <div class="vision-grid vision-grid-column-2">
-        <div class="vision-grid-item">
-          <div class="vision-grid-item-body">
-            <mat-form-field appearance="standard">
-              <mat-label>Search Company</mat-label>
-              <input matInput placeholder="company name">
-              <span matSuffix><i class="fas fa-search"></i></span>
-            </mat-form-field>
-            <div class="status-radio-grid">
-              <div class="radio-toolbar">
-                <ng-container *ngFor="let item of insuranceList;let id = index;">
-                  <input id="isVehicleOwned_{{id}}" type="radio" [(ngModel)]="FilterByInsuranceId" name="isVehicleOwned" (click)="companyFilter(id,item.InsuranceId)" [value]="item.InsuranceId">
-                  <label for="isVehicleOwned_{{id}}">
+    <div class="vision-card">
+        <div class="vision-card-body">
+            <div class="vision-grid vision-grid-column-2">
+                <div class="vision-grid-item">
+                    <div class="vision-grid-item-body">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Search Company</mat-label>
+                            <input matInput placeholder="company name">
+                            <span matSuffix><i class="fas fa-search"></i></span>
+                        </mat-form-field>
+                        <div class="status-radio-grid">
+                            <div class="radio-toolbar">
+                                <ng-container *ngFor="let item of insuranceList;let id = index;">
+                                    <input id="isVehicleOwned_{{id}}" type="radio" [(ngModel)]="FilterByInsuranceId" name="isVehicleOwned" (click)="companyFilter(id,item.InsuranceId)" [value]="item.InsuranceId">
+                                    <label for="isVehicleOwned_{{id}}">
                     <div class="company-name">
                       <div>{{item?.InsuranceCompnayName}}</div>
                       <div>
@@ -22,21 +22,21 @@
                       </div>
                     </div>
                   </label>
-                </ng-container>
-              </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vision-grid-item">
+                    <div class="vision-grid-item-body">
+                        <ng-container *ngIf="tableData">
+                            <app-recovery-grid [cols]="columnHeader" [data]="tableData" (onTplEdit)="onTplEdit($event)" (onTrack)="onTrack($event)" (daysFilter)="daysFilter($event)" (onProcced)="onProcced($event)">
+                            </app-recovery-grid>
+                        </ng-container>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="vision-grid-item">
-          <div class="vision-grid-item-body">
-            <ng-container *ngIf="tableData">
-              <app-recovery-grid [cols]="columnHeader" [data]="tableData" (onTplEdit)="onTplEdit($event)" (onTrack)="onTrack($event)" (daysFilter)="daysFilter($event)"  (onProcced)="onProcced($event)">
-              </app-recovery-grid>
-            </ng-container>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 <router-outlet></router-outlet>

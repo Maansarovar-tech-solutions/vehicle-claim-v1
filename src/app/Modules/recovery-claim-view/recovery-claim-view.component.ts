@@ -163,7 +163,7 @@ export class RecoveryClaimViewComponent implements OnInit {
 
     if (this.recoveryType == 'Receivable') {
       let labelName = 'View';
-      if (this.choosedList.StatusCode == 'PAC' || this.choosedList.StatusCode == 'CREQ' || this.choosedList.StatusCode == 'ATP') {
+      if (this.choosedList.StatusCode == 'PAC' || this.choosedList.StatusCode == 'CREQ' || this.choosedList.StatusCode == 'GQS' || this.choosedList.StatusCode == 'ATQ' || this.choosedList.StatusCode == 'REJ' ) {
         labelName = 'Process'
       } else {
         labelName = 'View';
@@ -202,7 +202,7 @@ export class RecoveryClaimViewComponent implements OnInit {
     }
     if (this.recoveryType == 'Payable') {
       let labelName = 'View';
-      if (this.choosedList.StatusCode == 'PED' || this.choosedList.StatusCode == 'CRES' || this.choosedList.StatusCode == 'DNT') {
+      if (this.choosedList.StatusCode == 'PED' || this.choosedList.StatusCode == 'CRES' || this.choosedList.StatusCode == 'DNT' || this.choosedList.StatusCode == 'ATP' || this.choosedList.StatusCode == 'RTA') {
         labelName = 'Process'
       } else {
         labelName = 'View'
@@ -220,7 +220,7 @@ export class RecoveryClaimViewComponent implements OnInit {
         },
         { key: "ClaimNumber", display: "Claim Number" },
 
-        { key: "RequestedAmount", display: "Claim Amount" },
+       // { key: "RequestedAmount", display: "Claim Amount" },
         { key: "AcceptedAmount", display: "Accepted Amount" },
 
         { key: "CivilId", display: "Civil Id" },
