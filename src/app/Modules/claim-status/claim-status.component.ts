@@ -125,7 +125,7 @@ export class ClaimStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.onCreateFormControl();
-    this.onFetchInitialData();
+    // this.onFetchInitialData();
     this.onGetUploadedDocuments();
     this.onGetCurrencyLabeleName()
 
@@ -187,13 +187,13 @@ export class ClaimStatusComponent implements OnInit {
   }
   get f() { return this.claimStatusForm.controls; };
 
-  async onFetchInitialData(){
+  // async onFetchInitialData(){
 
 
-  // let index = this.claimStatusList.findIndex((ele:any)=>ele.StatusCode == this.f.claimStatus.value);
-  // console.log(index)
-  // this.statusName = this.claimStatusList[index].StatusDesc;
-  }
+  // // let index = this.claimStatusList.findIndex((ele:any)=>ele.StatusCode == this.f.claimStatus.value);
+  // // console.log(index)
+  // // this.statusName = this.claimStatusList[index].StatusDesc;
+  // }
   onGetCurrencyLabeleName() {
     let UrlLink = `${this.ApiUrl1}dropdown/currencymaster`;
     this.newClaimService.onGetMethodSync(UrlLink).subscribe(
@@ -483,7 +483,7 @@ export class ClaimStatusComponent implements OnInit {
     }
     console.log("Recieved View",rowData);
     this.viewFileName = rowData.FileName;
-    this.veiwSelectedDocUrl = rowData.ImgUrl;
+    this.veiwSelectedDocUrl = rowData.CommonFilePath;
     this.modalService.open(this.content, { size: 'md', backdrop: 'static' });
   }
    hide() {

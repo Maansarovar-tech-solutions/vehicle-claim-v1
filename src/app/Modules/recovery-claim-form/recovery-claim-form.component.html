@@ -20,10 +20,7 @@
                                                     <mat-label>Insured/Driver Name</mat-label>
                                                     <input matInput placeholder="Driver Name" required formControlName="CustomerName">
                                                     <mat-error *ngIf="(f.CustomerName.errors) || (!f.CustomerName.valid && f.CustomerName.touched)">
-                                                        <span *ngIf="f.CustomerName.errors?.required" class="error-text">This
-                              field
-                              is
-                              required</span>
+                                                        <span *ngIf="f.CustomerName.errors?.required" class="error-text">This field is required</span>
                                                     </mat-error>
                                                 </mat-form-field>
                                             </div>
@@ -132,7 +129,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4" style="position: relative;top: 0.5rem;">
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Accident Description</mat-label>
                                                     <textarea matInput placeholder="Accident Description" formControlName="AccidentDescription"></textarea>
@@ -158,7 +155,7 @@
                                                         <input matInput placeholder="Salvage Amount" formControlName="SalvageAmount">
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6" style="position: relative;bottom: 10rem;">
                                                     <div class="py-3">
                                                         <mat-slide-toggle formControlName="SalvagePortal">Do You Want Salvage Portal:
                                                             <span class="text-primary">{{f.SalvagePortal.value==true?'Yes':'No'}}</span>
@@ -621,7 +618,7 @@
                     </div>
                   
                   </div>
-                </div> -->
+                 </div> -->
 
                             </div>
                         </div>
@@ -660,11 +657,6 @@
                             <div class="claim-form-grid-item" *ngIf="uploadedDocList.length!=0  || uploadDocList.length!=0">
 
                                 <div class="claim-form-grid-item-body">
-                                    <!-- <ng-container *ngIf="uploadedDocList.length==0">
-                                  <div class="text-center">
-                                      <p>No Document Available</p>
-                                  </div>
-                              </ng-container> -->
                                     <ng-container *ngIf="uploadedDocList.length!=0 || uploadDocList.length!=0">
                                         <table class="table">
                                             <thead>
